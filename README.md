@@ -82,7 +82,7 @@ markets:
     evidence_refs: [EVD001]
 ```
 
-**3. Validate** (once tooling is installed):
+**3. Validate:**
 
 ```bash
 npx @archally/brandvoice-schema validate .brandvoice/v1.6
