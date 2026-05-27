@@ -1,0 +1,176 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Strategy — Capacity & Roadmap
+description: >
+  Schema for capacity planning and quarterly roadmap modeling.
+  Introduced in schema v1.5.0 to support solo and small-team brandvoice models
+  where revenue stream prioritization and phased delivery are first-class concerns.
+
+  File convention: strategy/capacity-priorities.yaml
+
+  Entities:
+    PRI### — priority_stream  (revenue / service stream with priority, rationale, and refs)
+    RMP### — roadmap_phase    (quarterly or milestone phase with goals, budget, KPI)
+
+  Non-entity block:
+    capacity_model — scalar config object (total_working_days_per_year, allocations).
+                     Not extracted as a graph entity; used for dashboard / viewer context.
+
+$defs:
+
+  priority_stream:
+    type: object
+    required: [id, name, priority]
+    additionalProperties: false
+    description: >
+      A prioritized revenue or service stream. Captures strategic rationale,
+      time investment, revenue estimate, and links to offerings and opportunities.
+    properties:
+      id:
+        type: string
+        pattern: "^([a-z][a-z0-9-]*\\.)?PRI\\d{3,}$"
+        description: "Typed entity ID, e.g. PRI001."
+      name:
+        type: string
+        description: "Human-readable stream name."
+      priority:
+        type: integer
+        minimum: 1
+        description: "Rank within the plan (1 = highest priority)."
+      rationale:
+        type: string
+        description: "Why this stream is prioritized at this rank."
+      time_investment:
+        type: string
+        description: "Estimated time cost (free text, e.g. '10 dni')."
+      revenue_estimate:
+        type: string
+        description: "Expected annual revenue range (free text)."
+      strategic_value:
+        type: string
+        description: "Qualitative strategic importance label."
+      timing:
+        type: string
+        description: "Expected launch or milestone timing (free text)."
+      dependencies:
+        type: array
+        items:
+          type: string
+        description: "Prerequisite conditions or tasks before launch."
+      offering_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+      opportunity_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  roadmap_phase:
+    type: object
+    required: [id, name]
+    additionalProperties: false
+    description: >
+      A quarterly or milestone-bounded delivery phase. Groups goals, budget
+      allocation, and success KPIs into a single traceable entity.
+    properties:
+      id:
+        type: string
+        pattern: "^([a-z][a-z0-9-]*\\.)?RMP\\d{3,}$"
+        description: "Typed entity ID, e.g. RMP001."
+      name:
+        type: string
+        description: "Short phase label, e.g. 'Q2 2026: FUNDAMENT'."
+      period:
+        type: string
+        description: "Human-readable calendar span, e.g. 'kwiecień-czerwiec 2026'."
+      goals:
+        type: array
+        items:
+          type: string
+        description: "Concrete deliverables targeted in this phase."
+      budget:
+        type: string
+        description: "Estimated spend for the phase (free text)."
+      kpi:
+        type: string
+        description: "Primary success metric(s) for the phase."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  capacity_model:
+    type: object
+    additionalProperties: true
+    description: >
+      Non-entity configuration block describing working-day allocation for a
+      solo or small-team model. All properties are free-form integers or strings.
+      Not extracted as a graph entity — used for dashboard and viewer context only.
+    properties:
+      total_working_days_per_year:
+        type: integer
+      reserved_for_ipn_projects:
+        type: integer
+      reserved_for_administration:
+        type: integer
+      reserved_for_marketing_content:
+        type: integer
+      reserved_for_preparation:
+        type: integer
+      available_for_movarte_delivery:
+        type: integer
+      note:
+        type: string
+
+type: object
+additionalProperties: false
+# Root schema for a strategy/capacity-priorities.yaml file.
+# Combine priority_streams, roadmap, and optional operational_risks and capacity_model
+# in a single file under the strategy/ subdirectory.
+# (Description kept as a comment rather than a `description:` key because the root of
+# this file already has a top-level `description:` at line 4 — two sibling `description`
+# keys at root level would be a duplicate-key YAML error.)
+properties:
+  version:
+    type: string
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  capacity_model:
+    $ref: "#/$defs/capacity_model"
+  priority_streams:
+    type: array
+    items:
+      $ref: "#/$defs/priority_stream"
+    description: "Prioritized revenue or service streams (PRI### entities)."
+  roadmap:
+    type: array
+    items:
+      $ref: "#/$defs/roadmap_phase"
+    description: "Sequential delivery phases (RMP### entities)."
+  operational_risks:
+    type: array
+    description: >
+      Operational risks specific to this capacity plan. Items follow the same
+      shape as governance/decisions.yaml risks (RSK### IDs). Extracted by the
+      core as 'risk' entities, same as governance-plane risks.
+    items:
+      type: object
+      required: [id, name]
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+          pattern: "^([a-z][a-z0-9-]*\\.)?RSK\\d{3,}$"
+        name:
+          type: string
+        probability:
+          type: string
+          enum: [low, medium, high]
+        impact:
+          type: string
+          enum: [low, medium, high, critical]
+        mitigation:
+          type: string
+        evidence_refs:
+          $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

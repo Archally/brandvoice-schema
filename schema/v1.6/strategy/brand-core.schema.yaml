@@ -1,0 +1,523 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Strategy - Brand Core
+description: >
+  Core brand identity, narrative backbone, tone system, and distinctive assets.
+  These elements keep communication coherent across channels and campaigns.
+  Rationale: encode durable brand intent and verbal behavior so execution can
+  scale without relying on tacit founder knowledge.
+type: object
+additionalProperties: false
+required:
+  - version
+  - brands
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  brands:
+    type: array
+    items:
+      $ref: "#/$defs/brand"
+  brand_scripts:
+    type: array
+    description: >
+      One or more narrative backbones (e.g. StoryBrand BrandScripts) per brand, keyed by brand_ref.
+      Rationale: multiple materially different audiences require separate SB7-level stories while the
+      brand remains a single guide identity on BRD.
+    items:
+      $ref: "#/$defs/brand_script"
+  archetypes:
+    type: array
+    items:
+      $ref: "#/$defs/archetype"
+  tone_guidelines:
+    type: array
+    items:
+      $ref: "#/$defs/tone"
+  verbal_guidelines:
+    type: array
+    description: >
+      Practical writing system rules (terminology, inclusivity, and syntax).
+      Rationale: teams need explicit lexical guidance, not only abstract tone
+      labels, to produce consistent copy in high-volume operations.
+    items:
+      $ref: "#/$defs/verbal_guideline"
+  distinctive_assets:
+    type: array
+    items:
+      $ref: "#/$defs/asset"
+  personal_brand_profiles:
+    type: array
+    description: >
+      Optional founder, executive, or expert overlays that describe how an
+      individual communicates within or alongside the broader brand system.
+      Rationale: personal brands often carry the ideas, authority, and
+      relationship capital that organizational messaging alone cannot express.
+    items:
+      $ref: "#/$defs/personal_brand_profile"
+
+$defs:
+  narrative_backbone:
+    type: object
+    additionalProperties: false
+    properties:
+      framework:
+        type: string
+        description: >
+          Name of the narrative framework used (for example `sb7`, `pixar`,
+          `freytag`, or a house style). Rationale: makes interpretation and
+          review deterministic even when teams use different story structures.
+      hero:
+        type: string
+        description: "Who the story centers on (usually customer)."
+      audience_role:
+        type: string
+        description: "How the audience participates in the story (hero, witness, co-builder, movement member)."
+      problem:
+        type: string
+      guide:
+        type: string
+      plan:
+        type: string
+      call_to_action:
+        type: string
+      success:
+        type: string
+      failure:
+        type: string
+      core_tension:
+        type: string
+        description: "Central tension the brand helps resolve. Rationale: strong narratives are organized around conflict, not only claims."
+      transformation:
+        type: string
+        description: "Change in identity, capability, or status the audience experiences."
+      proof_basis:
+        type: string
+        description: "Why the story is believable in the real world (evidence, experience, credibility, or operating proof)."
+      pattern_blocks:
+        type: object
+        additionalProperties: true
+        description: >
+          Framework-specific extensions for narrative systems that need
+          additional structure. Rationale: keeps the core narrative validated
+          while still allowing controlled specialization.
+    description: >
+      Shared narrative field bundle for brand-level and brand_script-level storytelling.
+
+  brand_script:
+    type: object
+    additionalProperties: false
+    required: [id, name, brand_ref, narrative]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_script_ref"
+      name:
+        type: string
+        description: "Label for this script (e.g. segment or persona story name)."
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Brand this narrative script belongs to."
+      narrative:
+        $ref: "#/$defs/narrative_backbone"
+        description: >
+          Framework-specific story fields (SB7-like by convention). Canonical copy for this script;
+          BRD.narrative may mirror the default script for backward compatibility.
+      primary_audience_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+        description: "Audience segments this script primarily targets."
+      primary_persona_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/persona_ref"
+        description: "Personas this script primarily targets."
+      is_default:
+        type: boolean
+        description: >
+          When multiple scripts exist for one brand, marks the script that should be used as the
+          umbrella or primary story unless a message or UI selects another.
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  brand:
+    type: object
+    additionalProperties: false
+    required: [id, name, promise, purpose]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+      name:
+        type: string
+      brand_role:
+        type: string
+        enum: [organization, product, service, portfolio, personal, initiative]
+        description: >
+          Strategic role of this brand in the portfolio. Rationale: clarifies
+          whether the modeled brand is the parent system, a sub-brand, or a
+          person-led identity with different communication obligations.
+      architecture_role:
+        type: string
+        enum: [master-brand, endorsed-brand, sub-brand, standalone-brand, ingredient-brand]
+        description: >
+          Portfolio architecture role. Rationale: helps teams model branded
+          house, house of brands, and endorsement patterns without relying on
+          narrative interpretation alone.
+      purpose:
+        type: string
+        description: "Why the brand exists beyond revenue. Rationale: anchors strategic coherence."
+      vision:
+        type: string
+        description: >
+          Future state the brand aims to help create. Rationale: helps teams
+          evaluate whether initiatives reinforce long-term direction.
+      promise:
+        type: string
+        description: >
+          Primary value promise to customers. Rationale: clarifies the minimum
+          outcome every message and experience should reinforce.
+      values:
+        type: array
+        description: >
+          Core decision principles. Rationale: translates brand intent into
+          practical decision filters for content and product teams.
+        items:
+          type: string
+      personality:
+        type: array
+        items:
+          type: string
+        description: "Stable personality traits."
+      narrative:
+        description: >
+          Optional legacy or denormalized narrative backbone on the brand row. When brand_scripts
+          exist, the default script's narrative should match this field for consumers that only read BRD.
+        allOf:
+          - $ref: "#/$defs/narrative_backbone"
+      archetypes:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/archetype_ref"
+      tone_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
+      asset_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/asset_ref"
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      parent_brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: >
+          Optional parent or endorsing brand. Rationale: gives portfolio
+          structure explicit graph edges for brand architecture analysis.
+      child_brand_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Optional child or sub-brand references for portfolio navigation."
+      positioning_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+        description: "Positioning statements this brand operationalizes."
+      pursuing_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Strategic opportunities this brand is built to capture."
+      swot:
+        $ref: "../metamodel.schema.yaml#/$defs/swot"
+        description: >
+          Optional SWOT snapshot for this brand. Opportunities may link to OPP
+          entities and threats may link to RSK entities when they exist.
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      blueprint_links:
+        $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  archetype:
+    type: object
+    additionalProperties: false
+    required: [id, name, description]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/archetype_ref"
+      name:
+        type: string
+      description:
+        type: string
+      anti_patterns:
+        type: array
+        items:
+          type: string
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  tone:
+    type: object
+    additionalProperties: false
+    required: [id, label, do, avoid, dimensions]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
+      label:
+        type: string
+      do:
+        type: array
+        items:
+          type: string
+        description: "Recommended writing behaviors. Rationale: convert tone intent into execution rules."
+      avoid:
+        type: array
+        items:
+          type: string
+        description: "Disallowed writing behaviors. Rationale: prevent drift and off-brand voice."
+      dimensions:
+        type: object
+        additionalProperties: false
+        required: [humor, formality, respect, enthusiasm]
+        description: >
+          Quantitative tone profile using four widely used UX tone
+          dimensions. Rationale: numeric calibration makes review and testing
+          less subjective across channels; required for radar visualization.
+        properties:
+          humor:
+            type: integer
+            minimum: -2
+            maximum: 2
+            description: "-2 serious ... +2 funny"
+          formality:
+            type: integer
+            minimum: -2
+            maximum: 2
+            description: "-2 casual ... +2 formal"
+          respect:
+            type: integer
+            minimum: -2
+            maximum: 2
+            description: "-2 irreverent ... +2 respectful"
+          enthusiasm:
+            type: integer
+            minimum: -2
+            maximum: 2
+            description: "-2 matter-of-fact ... +2 enthusiastic"
+      context_notes:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [context, adaptation]
+          properties:
+            context:
+              type: string
+            adaptation:
+              type: string
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  verbal_guideline:
+    type: object
+    additionalProperties: false
+    required: [id, name, rationale]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/verbal_guideline_ref"
+        description: >
+          Dedicated verbal-guideline identifier. Rationale: keeps lexical and
+          copy-system governance distinct from tonal guidance.
+      name:
+        type: string
+      rationale:
+        type: string
+        description: "Why this rule exists and what risk it mitigates."
+      preferred_terms:
+        type: array
+        description: "Preferred wording map for consistent terminology."
+        items:
+          type: object
+          additionalProperties: false
+          required: [term, use_instead_of]
+          properties:
+            term:
+              type: string
+            use_instead_of:
+              type: array
+              items:
+                type: string
+            notes:
+              type: string
+      banned_terms:
+        type: array
+        description: "Terms to avoid because they are vague, exclusionary, or misleading."
+        items:
+          type: object
+          additionalProperties: false
+          required: [term, reason]
+          properties:
+            term:
+              type: string
+            reason:
+              type: string
+            replacement:
+              type: string
+      inclusivity_rules:
+        type: array
+        description: >
+          Inclusivity and accessibility language expectations. Rationale:
+          codifies respectful communication standards at authoring time.
+        items:
+          type: string
+      grammar_rules:
+        type: array
+        description: "Grammar and mechanics constraints for consistency."
+        items:
+          type: string
+      examples:
+        type: array
+        description: "On-brand vs off-brand examples for practical onboarding."
+        items:
+          type: object
+          additionalProperties: false
+          required: [context, on_brand]
+          properties:
+            context:
+              type: string
+            on_brand:
+              type: string
+            off_brand:
+              type: string
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  personal_brand_profile:
+    type: object
+    additionalProperties: false
+    required: [id, name, subject_brand_ref, signature_ideas]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/personal_brand_profile_ref"
+      name:
+        type: string
+        description: "Profile label for the individual voice system."
+      subject_brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: >
+          Brand this personal profile belongs to or extends. Rationale: links
+          founder/expert expression back to the parent brand system.
+      primary_actor_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Optional actor record representing the person operationally."
+      role_in_system:
+        type: string
+        enum: [founder, executive, operator, evangelist, creator, analyst, advisor, community-lead]
+        description: "Communication role this person plays in the brand system."
+      audience_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+        description: "Audience segments this personal brand is primarily designed to influence."
+      signature_ideas:
+        type: array
+        items:
+          type: string
+        description: >
+          Repeatable ideas the person should become known for. Rationale:
+          personal-brand authority compounds through recurring idea ownership.
+      authority_sources:
+        type: array
+        description: "Structured credibility anchors for this profile."
+        items:
+          $ref: "#/$defs/authority_source"
+      relationship_contract:
+        type: string
+        description: "How the person should relate to the audience (teacher, peer, provocateur, translator, etc.)."
+      boundaries:
+        type: array
+        items:
+          type: string
+        description: >
+          Guardrails clarifying what the personal brand should or should not own.
+          Rationale: prevents conflict between person-led and org-led messaging.
+      linked_messages:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  authority_source:
+    type: object
+    additionalProperties: false
+    required: [type, name]
+    properties:
+      type:
+        type: string
+        enum: [role, experience, credential, publication, speaking, case-study, community, media, award, other]
+        description: "Why this person is believable on the ideas they communicate."
+      name:
+        type: string
+      topic:
+        type: string
+      issuer:
+        type: string
+      year:
+        type: integer
+      url:
+        type: string
+        pattern: "^[a-z]+://.+$"
+        description: "Canonical URL for this authority source when one exists."
+      notes:
+        type: string
+      counters_competitor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+        description: "Competitor positioning claims this authority source directly counters."
+
+  asset:
+    type: object
+    additionalProperties: false
+    required: [id, name, type]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/asset_ref"
+      name:
+        type: string
+      type:
+        type: string
+        enum: [verbal, visual, sonic, mnemonic]
+      cue:
+        type: string
+        description: "The recognizable marker used for memory structures."
+      category_entry_points:
+        type: array
+        items:
+          type: string
+        description: "Usage contexts where this asset should trigger recall."
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

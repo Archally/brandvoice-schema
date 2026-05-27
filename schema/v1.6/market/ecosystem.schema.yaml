@@ -1,0 +1,192 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Market - Ecosystem Players
+description: >
+  Ecosystem player model (added in schema v1.6.0). First-class entity for
+  referral partners, co-presenters, distribution channels, complementary
+  experts, and coopetition peers that live in the brand's market but are
+  modeled as *cooperators* rather than *competitors*.
+
+  Rationale: competitor profiles (market/competition.yaml) frame players
+  through threat_level, need_fit, weaknesses, and switching barriers —
+  strategy artifacts that answer "how do we win against them?". This is
+  the wrong frame for a training company we want to refer clients with,
+  a podcast host we want as a guest, a distribution platform that reaches
+  our audience, or a fellow expert in an adjacent specialization we could
+  co-present with. Those relationships need a cooperation-first vocabulary:
+  why partner with them, what relationship type, what collaboration ideas
+  are concrete today, where are we in the relationship lifecycle.
+
+  Entries that are simultaneously a competitor AND an ecosystem player
+  (coopetition — e.g., a direct competitor who could also co-present at
+  a conference) MAY link to the CPR side via `also_competitor_ref`. No
+  automatic mirror is created on the competitor side; the reference is
+  informational.
+
+  File convention: market/ecosystem.yaml (co-located with landscape,
+  competition, opportunities).
+
+  Entities:
+    EPL### — ecosystem_player
+
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  ecosystem_players:
+    type: array
+    description: >
+      Cooperation-oriented profiles of people, organizations, communities,
+      and platforms in the brand's market. Each entry answers:
+      who are they, how do we relate, what could we build together,
+      and what is the state of the relationship today.
+    items:
+      $ref: "#/$defs/ecosystem_player"
+
+$defs:
+  ecosystem_player:
+    type: object
+    additionalProperties: false
+    required: [id, name, type, relationship_type]
+    description: >
+      A single cooperator in the brand's market. Not a competitor profile —
+      those live in competition.schema.yaml. See `also_competitor_ref` for
+      the coopetition case where an entry is simultaneously a competitor.
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/ecosystem_player_ref"
+      name:
+        type: string
+        description: >
+          Human or organization name (e.g., "Sławomir Sobótka / Bottega IT Minds",
+          "Architecture Weekly", "DevTalk podcast").
+      type:
+        type: string
+        enum: [individual, organization, community, platform, publication, event]
+        description: >
+          What kind of entity this is. individual = named person; organization =
+          company or formal entity; community = informal network; platform =
+          distribution or content platform; publication = newsletter/blog/book;
+          event = recurring conference, meetup, or summit.
+      relationship_type:
+        type: string
+        enum:
+          - referral-partner
+          - co-presenter
+          - distribution-channel
+          - complementary-expert
+          - coopetition
+          - community-ally
+          - conference-network
+          - content-peer
+          - podcast-host
+          - mentor
+          - other
+        description: >
+          Primary mode of cooperation. referral-partner = upstream/downstream
+          client referrals; co-presenter = joint talks or workshops;
+          distribution-channel = their platform reaches our audience at scale;
+          complementary-expert = adjacent specialization that pairs with ours;
+          coopetition = simultaneously competitor and cooperator (must set
+          also_competitor_ref); community-ally = community with audience overlap;
+          conference-network = fellow speaker circuit; content-peer = parallel
+          content creator in the same domain; podcast-host = guest opportunity;
+          mentor = source of expertise or introductions; other = free-form.
+      cooperation_potential:
+        type: string
+        description: >
+          Narrative description of why this relationship matters and what
+          cooperation could look like. This is the free-text reasoning that
+          survives from hand-authored ecosystem notes — the "HIGH PARTNER VALUE"
+          paragraph. Rationale: a concrete enum covers the category, but the
+          specific partnership hypothesis (e.g., "Bottega trains, we deliver;
+          natural referral pipeline") is the strategic insight that triggers
+          action.
+      description:
+        type: string
+        description: "Brief profile summary of who they are and what they do."
+      website:
+        type: string
+        pattern: "^[a-z]+://.+$"
+      also_competitor_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+        description: >
+          Optional link to a competitor profile (CPR###) in competition.yaml
+          for entries that are simultaneously a competitor. Required when
+          relationship_type is "coopetition". Rationale: avoids duplicating
+          profile data when an entity genuinely plays both roles; lets tools
+          walk the competitor↔ecosystem edge.
+      target_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actors this ecosystem player primarily reaches or influences."
+      target_markets:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+        description: "Markets this ecosystem player operates in."
+      key_offerings:
+        type: array
+        items:
+          type: string
+        description: >
+          Notable products, services, events, or content this player owns.
+          Free-text strings (not typed refs) — these are THEIR offerings, not ours.
+      strengths:
+        type: array
+        items:
+          type: string
+        description: >
+          Why this player is worth cooperating with — reputation, reach,
+          credibility, audience, expertise, or unique assets.
+      collaboration_ideas:
+        type: array
+        items:
+          type: string
+        description: >
+          Concrete co-creation hypotheses: joint workshops, podcast episodes,
+          co-authored articles, cross-referrals, bundled offerings. Rationale:
+          separates strategic *intent* (relationship_type) from tactical *next
+          actions* the team can actually book.
+      status:
+        type: string
+        enum: [prospective, active, engaged, paused, lapsed]
+        description: >
+          Where this relationship sits in its lifecycle. prospective = not yet
+          contacted; active = in regular contact; engaged = actively cooperating
+          on something concrete; paused = temporarily inactive; lapsed = was
+          active, now dormant.
+      owner:
+        type: string
+        description: >
+          Internal owner who manages this relationship (e.g., name of the
+          founder, partnerships lead, or personal brand profile holder).
+          Free-text; can be a PBP### id or a person's name.
+      last_contact_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "Most recent meaningful contact with this player."
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "When this profile was last validated."
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability of the cooperation relationship.
+          Use to distinguish a globally-reachable distribution channel from a
+          country-specific referral partner. See metamodel.geo_scope.
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

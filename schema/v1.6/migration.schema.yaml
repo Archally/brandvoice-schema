@@ -1,0 +1,197 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Migration Schema
+description: >
+  Ordered model changes for brandvoice evolution. Supports both ontology-level
+  structure changes and communication-level campaign/message evolution.
+type: object
+additionalProperties: false
+required: [migration, changes]
+properties:
+  schemaVersion:
+    $ref: "metamodel.schema.yaml#/$defs/schema_version"
+  migration:
+    type: object
+    additionalProperties: false
+    required: [id, name, date, status, change_scope]
+    properties:
+      id:
+        $ref: "metamodel.schema.yaml#/$defs/migration_ref"
+      name:
+        type: string
+        pattern: "^[a-z0-9-]+$"
+      date:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      status:
+        type: string
+        enum: [draft, pending, applied, rolled-back]
+      change_scope:
+        type: string
+        enum: [ontology, communication, mixed]
+        description: "ontology=structure/model semantics, communication=campaign/message updates."
+      intent:
+        type: string
+        enum:
+          - discover
+          - refine
+          - reclassify
+          - invalidate
+          - pivot
+          - expand
+          - consolidate
+          - measure
+        description: >
+          Semantic intent behind this migration. Captures WHY the change
+          was made at a strategic level, complementing the mechanical
+          change kinds (add/modify/deprecate) that describe WHAT changed.
+      description:
+        type: string
+      evidence_refs:
+        $ref: "metamodel.schema.yaml#/$defs/evidence_refs"
+      related_decisions:
+        type: array
+        items:
+          $ref: "metamodel.schema.yaml#/$defs/decision_ref"
+      tags:
+        $ref: "metamodel.schema.yaml#/$defs/tags"
+
+  changes:
+    type: object
+    additionalProperties: false
+    properties:
+      entities:
+        type: array
+        items:
+          $ref: "#/$defs/entity_change"
+      properties:
+        type: array
+        items:
+          $ref: "#/$defs/property_change"
+      relationships:
+        type: array
+        items:
+          $ref: "#/$defs/relationship_change"
+      content_timeline:
+        type: array
+        description: "Communication-level content and campaign lifecycle changes."
+        items:
+          $ref: "#/$defs/content_change"
+
+$defs:
+  entity_change:
+    type: object
+    additionalProperties: false
+    required: [kind, entity_type, target]
+    properties:
+      kind:
+        type: string
+        enum: [add, modify, deprecate, remove, split, merge]
+      entity_type:
+        type: string
+        enum:
+          - actor
+          - action
+          - asset
+          - audience
+          - brand
+          - brand-script
+          - business-model
+          - campaign
+          - channel
+          - competitor
+          - content
+          - context
+          - decision
+          - evidence
+          - experiment
+          - job
+          - journey-stage
+          - kpi
+          - market
+          - market-force
+          - message
+          - metric
+          - need
+          - offering
+          - opportunity
+          - outcome
+          - persona
+          - position-map
+          - positioning
+          - proof
+          - risk
+          - tone
+          - value
+          - verbal-guideline
+          - personal-brand-profile
+          - message-house
+          - message-pillar
+          - program
+          - content-pillar
+          - white-space
+      target:
+        type: string
+      before:
+        type: object
+      after:
+        type: object
+      reason:
+        type: string
+
+  property_change:
+    type: object
+    additionalProperties: false
+    required: [kind, target, property]
+    properties:
+      kind:
+        type: string
+        enum: [set, unset, rename, append, remove-item]
+      target:
+        type: string
+      property:
+        type: string
+      value: {}
+      old_value: {}
+      new_name:
+        type: string
+      reason:
+        type: string
+
+  relationship_change:
+    type: object
+    additionalProperties: false
+    required: [kind, subject, predicate, object]
+    properties:
+      kind:
+        type: string
+        enum: [add, remove, redirect, modify]
+      subject:
+        type: string
+      predicate:
+        type: string
+      object:
+        type: string
+      new_object:
+        type: string
+      reason:
+        type: string
+
+  content_change:
+    type: object
+    additionalProperties: false
+    required: [target, change, effective_date]
+    properties:
+      target:
+        oneOf:
+          - $ref: "metamodel.schema.yaml#/$defs/message_ref"
+          - $ref: "metamodel.schema.yaml#/$defs/campaign_ref"
+          - $ref: "metamodel.schema.yaml#/$defs/content_ref"
+      change:
+        type: string
+        enum: [launch, pause, resume, retire, rewrite, resegment, retarget, repurpose]
+      effective_date:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      reason:
+        type: string

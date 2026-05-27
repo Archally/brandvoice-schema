@@ -1,0 +1,303 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Market - Landscape
+description: >
+  Market definition, sizing (TAM/SAM/SOM), segmentation, and environmental
+  forces that shape demand and competition. The descriptive foundation that
+  strategy responds to.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  markets:
+    type: array
+    description: "Extended market definitions with structured sizing and segmentation."
+    items:
+      $ref: "#/$defs/market_definition"
+  forces:
+    type: array
+    description: "Environmental forces shaping market dynamics."
+    items:
+      $ref: "#/$defs/market_force"
+
+$defs:
+  market_definition:
+    type: object
+    additionalProperties: false
+    required: [id, name, category]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      name:
+        type: string
+        description: "Human-readable market label (e.g., 'US SMB project management SaaS')."
+      category:
+        type: string
+        description: "Industry vertical or category name."
+      description:
+        type: string
+      maturity:
+        type: string
+        enum: [emerging, growing, mature, declining]
+      growth_rate:
+        type: string
+        description: "Annual growth estimate (e.g., '12% CAGR 2024-2028')."
+      sizing:
+        type: object
+        additionalProperties: false
+        description: >
+          Market sizing across TAM/SAM/SOM tiers. Each tier can have
+          multiple segments with independent sizing and assumptions.
+        properties:
+          tam:
+            $ref: "#/$defs/sizing_tier"
+          sam:
+            $ref: "#/$defs/sizing_tier"
+          som:
+            $ref: "#/$defs/sizing_tier"
+          methodology_notes:
+            type: string
+            description: "Overall sizing approach (top-down, bottom-up, triangulated)."
+          base_year:
+            type: string
+            pattern: "^\\d{4}$"
+            description: "Year the sizing data reflects."
+          evidence_refs:
+            $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      segments:
+        type: array
+        description: >
+          Market segments within this market. Each segment can have its own
+          sizing, actors, needs, and growth characteristics.
+        items:
+          $ref: "#/$defs/market_segment"
+      key_competitors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+      actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      contexts:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      forces:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
+        description: "Environmental forces affecting this market."
+      position_maps:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+        description: "Competitive position maps for this market."
+      opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Identified opportunities within this market."
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "When this market definition was last validated."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability of this market definition. See
+          metamodel.geo_scope. Added in v1.4.0.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  sizing_tier:
+    type: object
+    additionalProperties: false
+    required: [value]
+    properties:
+      value:
+        type: string
+        description: "Total size estimate (e.g., '$4.2B', '120M users')."
+      value_numeric:
+        type: number
+        description: "Machine-readable value in base currency units."
+      currency:
+        type: string
+        description: "ISO 4217 currency code (e.g., 'USD', 'EUR')."
+      unit:
+        type: string
+        enum: [revenue, users, transactions, units, other]
+        description: "What the value measures."
+      methodology:
+        type: string
+        description: "How this tier was calculated (e.g., 'Gartner 2025 × US SMB share')."
+      constraints:
+        type: array
+        items:
+          type: string
+        description: "Scope constraints (e.g., 'US only', 'companies <500 employees')."
+      assumptions:
+        type: array
+        items:
+          type: string
+        description: "Key assumptions (e.g., '15% annual SaaS adoption growth')."
+      segments:
+        type: array
+        items:
+          $ref: "#/$defs/sizing_segment"
+        description: "Breakdown of this tier into sub-segments."
+      confidence:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+
+  sizing_segment:
+    type: object
+    additionalProperties: false
+    required: [name, value]
+    properties:
+      name:
+        type: string
+        description: "Segment name (e.g., 'Real estate agents', 'Freelance designers')."
+      value:
+        type: string
+        description: "Segment size estimate."
+      value_numeric:
+        type: number
+      share_of_parent:
+        type: string
+        description: "Percentage of parent tier (e.g., '23%')."
+      actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actor types in this segment."
+      needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Primary needs of this segment."
+      growth_rate:
+        type: string
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+
+  market_segment:
+    type: object
+    additionalProperties: false
+    required: [name]
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      segment_type:
+        type: string
+        enum: [geographic, vertical, firmographic, behavioral, use-case]
+      actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      sizing:
+        $ref: "#/$defs/sizing_tier"
+        description: "Optional segment-level sizing."
+      growth_rate:
+        type: string
+      penetration:
+        type: string
+        description: "Current market penetration for this segment (e.g., '8% adoption')."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  market_force:
+    type: object
+    additionalProperties: false
+    required: [id, name, force_type, direction]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
+      name:
+        type: string
+        description: "Force name (e.g., 'AI adoption in SMB operations')."
+      description:
+        type: string
+      force_type:
+        type: string
+        enum:
+          - technological
+          - economic
+          - social
+          - political
+          - regulatory
+          - environmental
+          - industry
+          - behavioral
+        description: "Category of force. Aligns with PESTEL + industry/behavioral."
+      direction:
+        type: string
+        enum: [emerging, accelerating, stable, decelerating, reversing]
+        description: "Current trajectory of this force."
+      impact:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+        description: "Assessed impact level (reuses priority enum: critical/high/medium/low)."
+      time_horizon:
+        type: string
+        enum: [immediate, near-term, medium-term, long-term]
+        description: >
+          When this force will peak in impact. immediate=0-6mo, near-term=6-18mo,
+          medium-term=18mo-3yr, long-term=3yr+.
+      affected_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs this force amplifies or diminishes."
+      affected_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actors most impacted by this force."
+      affected_markets:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      creates_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities enabled or amplified by this force."
+      creates_threats:
+        type: array
+        items:
+          type: string
+        description: "Threat descriptions created by this force."
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      confidence:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability of this market force. See
+          metamodel.geo_scope. Added in v1.4.0.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

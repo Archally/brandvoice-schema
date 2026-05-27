@@ -1,0 +1,387 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Market - Competition
+description: >
+  Deep competitive intelligence model. Extended competitor profiles with
+  offerings, pricing, need-fit analysis, target segments, and competitive
+  timeline. Covers direct competitors, indirect alternatives, substitutes
+  (manual processes, hiring, status quo), and potential entrants.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  competitors:
+    type: array
+    description: >
+      Extended competitor profiles. Uses the same CPR### IDs as
+      strategy/market-product.schema.yaml. This file adds depth;
+      the strategy file retains the lightweight version.
+    items:
+      $ref: "#/$defs/competitor_profile"
+
+$defs:
+  competitor_profile:
+    type: object
+    additionalProperties: false
+    required: [id, name, type]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+      name:
+        type: string
+        description: >
+          Competitor name. For substitutes, use descriptive names:
+          'Manual spreadsheet tracking', 'Hiring a freelance designer',
+          'Internal team (status quo)'.
+      type:
+        type: string
+        enum: [direct, indirect, substitute, status-quo, potential-entrant]
+        description: >
+          direct = same category, same needs. indirect = different category,
+          overlapping needs. substitute = non-product alternative (manual process,
+          hiring, DIY). status-quo = doing nothing / current workaround.
+          potential-entrant = not competing today but could enter.
+
+      description:
+        type: string
+        description: "Brief profile summary."
+      website:
+        type: string
+      founded:
+        type: string
+        pattern: "^\\d{4}$"
+      funding:
+        type: string
+        description: "Funding stage and amount (e.g., 'Series B, $45M')."
+      business_model:
+        type: string
+        description: "How they make money (e.g., 'SaaS subscription', 'marketplace commission')."
+      estimated_revenue:
+        type: string
+        description: "Revenue estimate if available (e.g., '$10-15M ARR')."
+      estimated_users:
+        type: string
+        description: "User base estimate (e.g., '50K+ teams', '2M registered users')."
+      growth_trajectory:
+        type: string
+        enum: [declining, flat, growing, fast-growing, hyper-growth, unknown]
+
+      key_features:
+        type: array
+        items:
+          type: string
+        description: "Core feature capabilities."
+      differentiators:
+        type: array
+        items:
+          type: string
+        description: "What makes them stand out vs. other competitors."
+      pricing:
+        $ref: "#/$defs/competitor_pricing"
+
+      target_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actor types this competitor primarily targets."
+      target_markets:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+
+      need_fit:
+        type: array
+        description: >
+          How well this competitor addresses specific needs. This is the core
+          competitive analysis structure — it answers 'for NED001, how good
+          is CPR002 and where do they fall short?'
+        items:
+          $ref: "#/$defs/need_fit_assessment"
+
+      strengths:
+        type: array
+        items:
+          type: string
+      weaknesses:
+        type: array
+        description: "Competitor weaknesses and exploitable gaps."
+        items:
+          oneOf:
+            - type: string
+              description: "Free-form weakness description (backward compatible)."
+            - type: object
+              additionalProperties: false
+              required: [description]
+              properties:
+                description:
+                  type: string
+                  description: "What this weakness is."
+                exploitable_by_refs:
+                  type: array
+                  items:
+                    $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+                  description: "Our offerings that exploit this weakness."
+                severity:
+                  type: string
+                  enum: [critical, high, medium, low]
+                  description: "How significant this weakness is."
+
+      adoption_model:
+        type: string
+        description: >
+          How people adopt this substitute. For non-product alternatives:
+          'organic habit', 'word of mouth', 'necessity', 'employer mandated'.
+          For products: 'freemium', 'sales-led', 'PLG'.
+      switching_cost:
+        type: string
+        enum: [none, low, moderate, high, prohibitive]
+        description: "Cost (time, money, effort) to switch away from this competitor."
+      switching_barriers:
+        type: array
+        items:
+          type: string
+        description: >
+          Specific barriers to switching. Works for all types:
+          'data migration' (product), 'relationship trust' (freelancer),
+          'organizational inertia' (status quo), 'contractual lock-in' (product).
+      lock_in_mechanisms:
+        type: array
+        items:
+          type: string
+        description: "How this competitor retains users (e.g., 'proprietary format', 'network effects')."
+
+      positioning_statement:
+        type: string
+        description: "How they position themselves (their claim, not yours)."
+      messaging_themes:
+        type: array
+        items:
+          type: string
+        description: "Key themes in their marketing (e.g., 'enterprise-grade', 'AI-powered', 'simple')."
+      brand_perception:
+        type: string
+        description: "How the market perceives them (e.g., 'reliable but expensive', 'innovative but buggy')."
+
+      competitive_moves:
+        type: array
+        description: >
+          Chronological record of significant competitive actions. Enables
+          tracking of competitor evolution and strategic shifts over time.
+        items:
+          $ref: "#/$defs/competitive_move"
+
+      for_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs this competitor addresses (backward compat with lightweight version)."
+      position_map_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+      opportunity_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this competitor threatens or could capture."
+
+      threat_level:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+        description: "Overall competitive threat (critical/high/medium/low)."
+      monitored:
+        type: boolean
+        description: "Whether this competitor is actively monitored."
+
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "When this profile was last validated."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability of this competitor. Use to
+          distinguish a global marketplace from a country-specific
+          substitute. See metamodel.geo_scope. Added in v1.4.0.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  competitor_pricing:
+    type: object
+    additionalProperties: false
+    description: "Competitor pricing model and tiers."
+    properties:
+      model:
+        type: string
+        enum:
+          - free
+          - freemium
+          - flat-rate
+          - per-seat
+          - usage-based
+          - tiered
+          - enterprise
+          - quote-based
+          - one-time
+          - marketplace
+          - hybrid
+          - non-monetary
+        description: >
+          Pricing model. Use 'non-monetary' for substitutes where cost is
+          time/effort rather than money (e.g., manual process, hiring). Use
+          'enterprise' when pricing is negotiated portfolio-wide and not
+          represented by public SKU tiers.
+      currency:
+        type: string
+        description: "ISO 4217 code (e.g., 'USD'). Omit for non-monetary."
+      tiers:
+        type: array
+        items:
+          $ref: "#/$defs/pricing_tier"
+      non_monetary_cost:
+        type: string
+        description: >
+          For substitutes: the real cost in non-monetary terms.
+          E.g., 'Avg. 8 hours/week of manual work', 'Full-time hire at $65K/yr'.
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+
+  pricing_tier:
+    type: object
+    additionalProperties: false
+    required: [name]
+    properties:
+      name:
+        type: string
+        description: "Tier name (e.g., 'Free', 'Pro', 'Enterprise')."
+      price:
+        type: string
+        description: "Display price (e.g., '$12/user/mo', '$99/mo flat')."
+      price_numeric:
+        type: number
+        description: "Machine-readable monthly price per unit."
+      billing_period:
+        type: string
+        enum: [monthly, annual, one-time, custom]
+      includes:
+        type: array
+        items:
+          type: string
+        description: "Key features or limits in this tier."
+      target_segment:
+        type: string
+        description: "Who this tier is designed for (e.g., 'solo users', 'teams of 10-50')."
+      limitations:
+        type: array
+        items:
+          type: string
+        description: "Notable restrictions (e.g., '5 projects max', 'no API access')."
+
+  need_fit_assessment:
+    type: object
+    additionalProperties: false
+    required: [need, fulfillment]
+    properties:
+      need:
+        $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "The need being assessed."
+      fulfillment:
+        $ref: "../metamodel.schema.yaml#/$defs/fulfillment_level"
+        description: "How well this competitor serves this need."
+      how:
+        type: string
+        description: >
+          How they address the need (e.g., 'built-in Gantt charts',
+          'marketplace of freelancers', 'the customer does it manually').
+      gaps:
+        type: array
+        items:
+          type: string
+        description: "Where the competitor falls short on this need."
+      friction:
+        type: array
+        items:
+          type: string
+        description: "Pain points users experience when using this competitor for this need."
+      actors_served:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Which actor types they serve well for this need (may not be all)."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+
+  competitive_move:
+    type: object
+    additionalProperties: false
+    required: [date, move_type, summary]
+    properties:
+      date:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      move_type:
+        type: string
+        enum:
+          - product-launch
+          - feature-release
+          - pricing-change
+          - positioning-shift
+          - market-expansion
+          - market-exit
+          - partnership
+          - acquisition
+          - funding-round
+          - leadership-change
+          - messaging-change
+          - regulatory-response
+          - other
+        description: "Category of competitive action."
+      summary:
+        type: string
+        description: "What happened."
+      impact_assessment:
+        type: string
+        description: "How this move affects our competitive position."
+      severity:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+        description: "How much this move matters to us (critical/high/medium/low)."
+      affected_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs affected by this move."
+      affected_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities threatened or opened by this move."
+      requires_response:
+        type: boolean
+        description: "Whether this move requires a strategic response from us."
+      response_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/decision_ref"
+        description: "Decision record for our response to this move."
+      source:
+        type: string
+        description: "Where this was observed (e.g., 'press release', 'Product Hunt', 'customer report')."
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

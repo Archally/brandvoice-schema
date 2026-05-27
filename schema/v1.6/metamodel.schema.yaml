@@ -1,0 +1,668 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Metamodel
+description: >
+  Cross-cutting definitions for brandvoice schemas. Provides typed IDs,
+  versioning, shared refs, optional links to blueprint entities, and common
+  traceability patterns for strategy, activation, and governance planes.
+
+$defs:
+  semver:
+    type: string
+    pattern: "^\\d+\\.\\d+\\.\\d+$"
+    description: "Semantic version string (MAJOR.MINOR.PATCH)."
+
+  schema_version:
+    type: string
+    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1"]
+    description: >
+      Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy,
+      SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for
+      multiple StoryBrand / narrative backbones per brand and optional brand_script_ref on messages.
+      v1.4.0 adds an optional `geo_scope` object (see `$defs/geo_scope`) on market-level entities
+      — evidence, markets, competitors, forces, opportunities, risks — so multi-region portfolios
+      can tag provenance and applicability without losing backward compatibility.
+      v1.5.0 adds capacity planning entities: `priority_stream (PRI###)` for revenue stream
+      prioritization and `roadmap_phase (RMP###)` for quarterly roadmap phases, both modeled
+      in `strategy/capacity-priorities.yaml`.
+      v1.6.0 adds `ecosystem_player (EPL###)` in `market/ecosystem.yaml` — a first-class entity
+      for referral partners, co-presenters, distribution channels, complementary experts, and
+      coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat
+      and need-fit, ecosystem players frame cooperation intent, relationship status, and
+      collaboration ideas. Entries that are both (e.g., a direct competitor who could also
+      co-present) link to the CPR side via `also_competitor_ref`.
+
+  tags:
+    type: array
+    items:
+      type: string
+    description: "Free-form tags for filtering and grouping."
+
+  context_prefix:
+    type: string
+    pattern: "^[a-z][a-z0-9-]*$"
+    description: "Scope prefix in kebab-case for multi-brand or multi-market modeling."
+
+  # --- ID refs (3-letter prefixes) ---
+  brand_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?BRD\\d{3}$"
+    description: "Brand identity reference."
+
+  brand_script_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?BSC\\d{3}$"
+    description: >
+      Brand narrative script reference (StoryBrand / SB7-style backbone or other framework rows
+      scoped to one brand). Rationale: one BRD can own multiple scripts for different audiences.
+
+  audience_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?AUD\\d{3}$"
+    description: "Audience segment reference."
+
+  persona_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PER\\d{3}$"
+    description: "Persona reference."
+
+  job_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?JOB\\d{3}$"
+    description: "Jobs-to-be-done reference."
+
+  value_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?VAL\\d{3}$"
+    description: "Value proposition reference."
+
+  position_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?POS\\d{3}$"
+    description: "Positioning reference."
+
+  message_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MSG\\d{3}$"
+    description: "Message reference."
+
+  proof_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PRF\\d{3}$"
+    description: "Proof point reference."
+
+  tone_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?TON\\d{3}$"
+    description: "Tone guideline reference."
+
+  verbal_guideline_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?VRB\\d{3}$"
+    description: "Verbal guideline reference."
+
+  asset_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?AST\\d{3}$"
+    description: "Distinctive brand asset reference."
+
+  archetype_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?ARC\\d{3}$"
+    description: "Brand archetype reference."
+
+  model_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?BMD\\d{3}$"
+    description: "Business model strategy element reference."
+
+  channel_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CHN\\d{3}$"
+    description: "Channel reference."
+
+  campaign_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CMP\\d{3}$"
+    description: "Campaign reference."
+
+  content_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CNT\\d{3}$"
+    description: "Content asset reference."
+
+  actor_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?ACT\\d{3}$"
+    description: "Actor reference."
+
+  need_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?NED\\d{3}$"
+    description: "Need reference."
+
+  offering_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?OFF\\d{3}$"
+    description: "Offering reference."
+
+  journey_stage_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?JSG\\d{3}$"
+    description: "Journey stage reference."
+
+  action_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?ACN\\d{3}$"
+    description: "Action reference."
+
+  outcome_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?OUT\\d{3}$"
+    description: "Outcome reference."
+
+  competitor_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CPR\\d{3}$"
+    description: "Competitor reference."
+
+  context_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CTX\\d{3}$"
+    description: "Context reference."
+
+  decision_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?DEC\\d{3}$"
+    description: "Governance decision reference."
+
+  evidence_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?EVD\\d{3}$"
+    description: "Evidence record reference."
+
+  test_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?TST\\d{3}$"
+    description: "Experiment or test reference."
+
+  metric_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MET\\d{3}$"
+    description: "Metric reference."
+
+  kpi_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?KPI\\d{3}$"
+    description: "KPI reference."
+
+  risk_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?RSK\\d{3}$"
+    description: "Risk reference."
+
+  migration_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MIG\\d{3}$"
+    description: "Migration reference."
+
+  personal_brand_profile_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PBP\\d{3}$"
+    description: "Personal brand profile reference."
+
+  message_house_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MHS\\d{3}$"
+    description: "Message house reference."
+
+  message_pillar_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MPL\\d{3}$"
+    description: "Message pillar reference."
+
+  program_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PRG\\d{3}$"
+    description: "Activation program reference."
+
+  content_pillar_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?CPL\\d{3}$"
+    description: "Content pillar reference."
+
+  market_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MKT\\d{3}$"
+    description: "Market reference."
+
+  market_force_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?MFR\\d{3}$"
+    description: "Market force reference."
+
+  opportunity_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?OPP\\d{3}$"
+    description: "Opportunity reference."
+
+  position_map_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PMP\\d{3}$"
+    description: "Position map reference."
+
+  white_space_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?WSP\\d{3}$"
+    description: "Position-map white space reference."
+
+  priority_stream_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?PRI\\d{3}$"
+    description: "Priority revenue stream reference (added v1.5.0)."
+
+  roadmap_phase_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?RMP\\d{3}$"
+    description: "Roadmap phase reference (added v1.5.0)."
+
+  ecosystem_player_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?EPL\\d{3}$"
+    description: >
+      Ecosystem player reference (added v1.6.0). Points to a referral partner,
+      co-presenter, distribution channel, complementary expert, or coopetition
+      peer defined in `market/ecosystem.yaml`. See `$defs/ecosystem_player_ref`
+      in `market/ecosystem.schema.yaml` for the full entity shape.
+
+  file_ref_placeholder:
+    type: object
+    additionalProperties: false
+    required: [$ref]
+    properties:
+      $ref:
+        type: string
+        description: "Relative path to the plane content file (e.g., 'market/landscape.yaml')."
+    description: >
+      Composition placeholder used in root brandvoice.yaml plane slots to include
+      a separate YAML file's content at that position. The referenced file is
+      loaded and validated separately against its own plane schema by the
+      per-file validator. Root-level schema only verifies that the wiring is a
+      well-formed single-key `$ref` object. Introduced (documented) in v1.6.0 to
+      make this convention schema-legal — previously the root validator rejected
+      `{$ref: "..."}` placeholders as "additional property" errors on the
+      referenced plane slot even though the per-file validator was already
+      handling the content correctly.
+
+  any_entity_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?(BRD|AUD|PER|JOB|VAL|POS|MSG|PRF|TON|VRB|AST|ARC|BMD|CHN|CMP|CNT|ACT|NED|OFF|JSG|ACN|OUT|CPR|CTX|DEC|TST|MET|KPI|RSK|MIG|PBP|MHS|MPL|PRG|CPL|EVD|MKT|OPP|MFR|PMP|WSP|PRI|RMP|EPL)\\d{3}$"
+    description: >
+      Reference to any entity in the brandvoice schema. Union of all typed
+      ID prefixes. MAINTENANCE: update this pattern when adding new entity types.
+
+  # --- Optional interoperability with blueprint schema ---
+  blueprint_ref:
+    type: string
+    pattern: "^([a-z][a-z0-9-]*\\.)?(CN|CMD|EVT|QRY|DOC|ACT|G|R|D|CAP|TC|EC|ER|SCR|UAC|UNV|TM|DPT|PRT)\\d{3}$"
+    description: "Optional reference to blueprint entity identifiers."
+
+  optional_blueprint_links:
+    type: object
+    additionalProperties: false
+    description: "Optional links to blueprint entities for integration."
+    properties:
+      entities:
+        type: array
+        items:
+          $ref: "#/$defs/blueprint_ref"
+      rationale:
+        type: string
+        description: "Why this brandvoice element links to blueprint entities."
+
+  evidence_refs:
+    type: array
+    items:
+      $ref: "#/$defs/evidence_ref"
+    description: "References to supporting evidence records."
+
+  empathy_map_item:
+    type: object
+    additionalProperties: false
+    required: [statement]
+    description: >
+      Single observation within an empathy-map quadrant. The statement captures
+      a concrete thought, feeling, signal, pain, or gain associated with the
+      persona. Intensity is optional and supports viewer prioritization.
+    properties:
+      statement:
+        type: string
+        description: "Empathy observation or quote."
+      intensity:
+        type: string
+        enum: [low, medium, high, critical]
+        description: "Optional signal strength for visualization or prioritization."
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  empathy_map:
+    type: object
+    additionalProperties: false
+    description: >
+      Structured empathy map for a persona. All quadrants are optional.
+      Semantics are intentionally distinct from persona.goals and
+      persona.barriers: gains capture value received from a solution, while
+      pains capture current frustrations in the persona's world.
+    properties:
+      thinks:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      feels:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      sees:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      hears:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      says_and_does:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      pains:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+      gains:
+        type: array
+        items:
+          $ref: "#/$defs/empathy_map_item"
+
+  swot_item:
+    type: object
+    additionalProperties: false
+    required: [statement]
+    description: "Single SWOT statement for strengths or weaknesses."
+    properties:
+      statement:
+        type: string
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  swot_opportunity_item:
+    type: object
+    additionalProperties: false
+    required: [statement]
+    description: "SWOT opportunity statement with optional canonical opportunity linkage."
+    properties:
+      statement:
+        type: string
+      opportunity_ref:
+        $ref: "#/$defs/opportunity_ref"
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  swot_threat_item:
+    type: object
+    additionalProperties: false
+    required: [statement]
+    description: "SWOT threat statement with optional canonical risk linkage."
+    properties:
+      statement:
+        type: string
+      risk_ref:
+        $ref: "#/$defs/risk_ref"
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  swot:
+    type: object
+    additionalProperties: false
+    description: >
+      SWOT snapshot for a brand. Strengths and weaknesses describe internal
+      factors; opportunities and threats describe external factors.
+    properties:
+      strengths:
+        type: array
+        items:
+          $ref: "#/$defs/swot_item"
+      weaknesses:
+        type: array
+        items:
+          $ref: "#/$defs/swot_item"
+      opportunities:
+        type: array
+        items:
+          $ref: "#/$defs/swot_opportunity_item"
+      threats:
+        type: array
+        items:
+          $ref: "#/$defs/swot_threat_item"
+
+  vpc_pain_reliever:
+    type: object
+    additionalProperties: false
+    required: [need_ref, mechanism]
+    description: >
+      Structured pain reliever linking a value proposition to a specific need
+      with an explanation of how the pain is reduced.
+    properties:
+      need_ref:
+        $ref: "#/$defs/need_ref"
+      mechanism:
+        type: string
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  vpc_gain_creator:
+    type: object
+    additionalProperties: false
+    required: [need_ref, mechanism]
+    description: >
+      Structured gain creator linking a value proposition to a specific need
+      with an explanation of how the gain is created.
+    properties:
+      need_ref:
+        $ref: "#/$defs/need_ref"
+      mechanism:
+        type: string
+      evidence_refs:
+        $ref: "#/$defs/evidence_refs"
+
+  impact_links:
+    type: object
+    additionalProperties: false
+    description: "Cross-entity impact references for traceability."
+    properties:
+      actors:
+        type: array
+        items:
+          $ref: "#/$defs/actor_ref"
+      needs:
+        type: array
+        items:
+          $ref: "#/$defs/need_ref"
+      offerings:
+        type: array
+        items:
+          $ref: "#/$defs/offering_ref"
+      channels:
+        type: array
+        items:
+          $ref: "#/$defs/channel_ref"
+      journey_stages:
+        type: array
+        items:
+          $ref: "#/$defs/journey_stage_ref"
+      actions:
+        type: array
+        items:
+          $ref: "#/$defs/action_ref"
+      outcomes:
+        type: array
+        items:
+          $ref: "#/$defs/outcome_ref"
+      competitors:
+        type: array
+        items:
+          $ref: "#/$defs/competitor_ref"
+      contexts:
+        type: array
+        items:
+          $ref: "#/$defs/context_ref"
+      markets:
+        type: array
+        items:
+          $ref: "#/$defs/market_ref"
+      audiences:
+        type: array
+        items:
+          $ref: "#/$defs/audience_ref"
+      values:
+        type: array
+        items:
+          $ref: "#/$defs/value_ref"
+      positioning:
+        type: array
+        items:
+          $ref: "#/$defs/position_ref"
+      messages:
+        type: array
+        items:
+          $ref: "#/$defs/message_ref"
+      campaigns:
+        type: array
+        items:
+          $ref: "#/$defs/campaign_ref"
+      kpis:
+        type: array
+        items:
+          $ref: "#/$defs/kpi_ref"
+      evidence:
+        type: array
+        items:
+          $ref: "#/$defs/evidence_ref"
+      verbal_guidelines:
+        type: array
+        items:
+          $ref: "#/$defs/verbal_guideline_ref"
+      ecosystem_players:
+        type: array
+        items:
+          $ref: "#/$defs/ecosystem_player_ref"
+
+  # --- Shared vocab ---
+  priority:
+    type: string
+    enum: [critical, high, medium, low]
+    description: "Relative importance for planning and execution."
+
+  lifecycle_status:
+    type: string
+    enum: [draft, active, paused, deprecated, archived]
+    description: "Lifecycle status of an entity."
+
+  evidence_level:
+    type: string
+    enum: [hypothesis, weak-signal, moderate-evidence, strong-evidence]
+    description: "Confidence level backed by evidence quality."
+
+  market_sizing_tier:
+    type: string
+    enum: [tam, sam, som]
+    description: >
+      Market sizing tier. TAM = Total Addressable Market (entire demand universe),
+      SAM = Serviceable Addressable Market (reachable with current model),
+      SOM = Serviceable Obtainable Market (realistic near-term capture).
+
+  demand_intensity:
+    type: string
+    enum: [latent, emerging, moderate, strong, urgent]
+    description: >
+      Strength of buyer demand signal. latent = need exists but buyers don't
+      actively seek solutions, urgent = buyers actively spending to solve now.
+
+  fulfillment_level:
+    type: string
+    enum: [unmet, poorly-met, adequately-met, well-met, over-served]
+    description: >
+      How well a need is currently being served in the market. Based on
+      Christensen's jobs-to-be-done satisfaction spectrum.
+
+  buyer_readiness:
+    type: string
+    enum: [unaware, problem-aware, solution-aware, product-aware, ready-to-buy]
+    description: >
+      Eugene Schwartz awareness stages. Indicates how ready buyers in a
+      segment or white space are to purchase.
+
+  universal_phase:
+    type: string
+    enum: [unaware, aware, engaged, committed, active, loyal, advocate]
+    description: >
+      Normalized journey phase. Maps across frameworks:
+      unaware (pre-funnel), aware (AARRR:acquisition, AIDA:attention, RACE:reach, STDC:see),
+      engaged (AARRR:activation, AIDA:interest, RACE:act, STDC:think),
+      committed (AIDA:desire, RACE:convert, STDC:do),
+      active (AARRR:retention, RACE:convert),
+      loyal (AARRR:revenue, RACE:engage, STDC:care),
+      advocate (AARRR:referral, RACE:engage, STDC:care).
+
+  geo_scope:
+    type: object
+    additionalProperties: false
+    required: [level]
+    description: >
+      Geographic applicability of a market-level record (evidence, market,
+      competitor, force, opportunity, risk). `level` is the coarse scope
+      the viewer uses for filtering and badges. When `level = country`,
+      the `countries` array names one or more ISO 3166-1 alpha-2 codes —
+      this is how PL-only, DE-only, and multi-country national scopes are
+      expressed. `region_label` carries informal human labels ("DACH",
+      "Nordics", "Pomorze", "Benelux"). Omit the whole block when the
+      record has no meaningful geographic constraint — such records are
+      treated as "untagged" by the viewer (never silently assumed to be
+      any particular region). Added in schema v1.4.0.
+    properties:
+      level:
+        type: string
+        enum: [local, country, europe, global]
+        description: >
+          local   — city / voivodeship / metro (pair with `region_label`).
+          country — one or more specific countries (REQUIRES `countries`).
+          europe  — EU / EEA / UK / wider Europe.
+          global  — worldwide.
+      countries:
+        type: array
+        items:
+          type: string
+          pattern: "^[A-Z]{2}$"
+        minItems: 1
+        uniqueItems: true
+        description: >
+          ISO 3166-1 alpha-2 country codes (e.g. PL, DE, FR, NL, GB, US).
+          Required when `level = country`; optional otherwise (e.g. to
+          narrow a `europe`-level record to the 2-3 countries it really
+          covers).
+      region_label:
+        type: string
+        description: >
+          Informal human label for the scope: "DACH", "Nordics",
+          "Pomorze", "Benelux", etc. Pairs well with `local` and
+          `europe` to give a human-readable chip in the viewer.
+      notes:
+        type: string
+        description: "Rationale or caveats for the geographic tag."
+    allOf:
+      - if:
+          properties:
+            level:
+              const: country
+          required: [level]
+        then:
+          required: [countries]

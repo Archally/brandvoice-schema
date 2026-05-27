@@ -1,0 +1,310 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Strategy - Messaging
+description: >
+  Message architecture and reusable communication units. Enables Message House,
+  AIDA/PAS/BAB structures, and audience-specific variants with proof links.
+  Core primitive entities modeled here: Journey Stage, Action, and Outcome.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  journey_stages:
+    type: array
+    items:
+      $ref: "#/$defs/journey_stage"
+  actions:
+    type: array
+    items:
+      $ref: "#/$defs/action"
+  outcomes:
+    type: array
+    items:
+      $ref: "#/$defs/outcome"
+  proof_points:
+    type: array
+    items:
+      $ref: "#/$defs/proof_point"
+  message_houses:
+    type: array
+    description: >
+      Higher-order messaging architectures that organize a roof claim, support
+      pillars, and proof. Rationale: teams usually communicate from a structured
+      message house, not from isolated message rows alone.
+    items:
+      $ref: "#/$defs/message_house"
+  messages:
+    type: array
+    items:
+      $ref: "#/$defs/message"
+
+$defs:
+  journey_stage:
+    type: object
+    additionalProperties: false
+    required: [id, name]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+      name:
+        type: string
+      intent:
+        type: string
+      universal_phase:
+        $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
+      order:
+        type: integer
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  action:
+    type: object
+    additionalProperties: false
+    required: [id, name]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/action_ref"
+      name:
+        type: string
+      action_type:
+        type: string
+        enum: [discover, click, read, subscribe, request-demo, trial, purchase, refer, retain, custom]
+      actor:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      stage:
+        $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+        description: "Journey stage this action belongs to."
+      channel:
+        $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
+      cta:
+        type: string
+        description: "Call-to-action text or template."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  outcome:
+    type: object
+    additionalProperties: false
+    required: [id, name]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
+      name:
+        type: string
+      description:
+        type: string
+      statement:
+        type: string
+        description: "Formal outcome statement for measurement context."
+      success_signal:
+        type: string
+      target:
+        type: string
+        description: "Quantitative target for this outcome."
+      measured_by:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
+        description: "Metrics used to measure this outcome directly."
+      linked_metrics:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
+        description: "Additional related metrics (may overlap with measured_by)."
+      linked_kpis:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  proof_point:
+    type: object
+    additionalProperties: false
+    required: [id, claim, evidence]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+      claim:
+        type: string
+      evidence:
+        type: string
+      source:
+        type: string
+        description: "Source of proof (case study, benchmark, research, testimonial)."
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  message_house:
+    type: object
+    additionalProperties: false
+    required: [id, name, roof_claim, pillars]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
+      name:
+        type: string
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Brand this message house belongs to."
+      audience_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+        description: "Audience segments this architecture is optimized for."
+      actor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Primitive-aligned actor targets for this architecture."
+      roof_claim:
+        type: string
+        description: >
+          The umbrella statement every pillar reinforces. Rationale: gives
+          campaigns and content a single strategic center of gravity.
+      foundation:
+        type: string
+        description: "Optional mission, purpose, or belief statement that grounds the house."
+      positioning_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+      pillars:
+        type: array
+        minItems: 1
+        items:
+          $ref: "#/$defs/message_pillar"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  message_pillar:
+    type: object
+    additionalProperties: false
+    required: [id, title, summary]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/message_pillar_ref"
+      title:
+        type: string
+      summary:
+        type: string
+        description: "Strategic point this pillar proves."
+      message_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+        description: "Messages that execute this pillar."
+      proof_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+        description: "Proof points substantiating this pillar."
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  message:
+    type: object
+    additionalProperties: false
+    required: [id, title, core_statement]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      title:
+        type: string
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Primary brand context for this message in multi-brand or person-brand models."
+      brand_script_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_script_ref"
+        description: >
+          Optional link to a specific brand narrative script (e.g. SB7 row) when the brand has
+          multiple scripts. Rationale: disambiguates message house lines per audience story.
+      audience:
+        $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      actor:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      offering:
+        $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+      journey_stages:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+      intended_actions:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/action_ref"
+      expected_outcomes:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
+      context_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      core_statement:
+        type: string
+      supporting_points:
+        type: array
+        items:
+          type: string
+      framework_pattern:
+        type: string
+        enum: [message-house, sb7, aida, pas, bab, stdc, custom]
+      pattern_blocks:
+        type: object
+        additionalProperties: true
+        description: "Optional framework-specific fields."
+      tone:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
+      proof_points:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+      message_house_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
+        description: "Message houses this message derives from."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      linked_values:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/value_ref"
+      linked_positioning:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      blueprint_links:
+        $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

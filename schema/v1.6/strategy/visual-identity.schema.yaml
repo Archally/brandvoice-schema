@@ -1,0 +1,282 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Strategy - Visual Identity
+description: >
+  Visual identity system for brand bible completeness: logo, color, typography,
+  imagery, and iconography usage guidance. Rationale: verbal strategy alone is
+  insufficient for consistent brand expression; teams need explicit visual rules
+  to avoid interpretation drift across channels and contributors.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  logo_systems:
+    type: array
+    description: >
+      Approved logo lockups and usage constraints. Rationale: logo misuse is a
+      common source of brand inconsistency and legal risk.
+    items:
+      $ref: "#/$defs/logo_system"
+  color_palettes:
+    type: array
+    description: >
+      Named color systems with semantic role mapping. Rationale: semantic color
+      roles improve design-system portability and accessibility governance.
+    items:
+      $ref: "#/$defs/color_palette"
+  typography_systems:
+    type: array
+    description: >
+      Brand typography foundations and hierarchy rules. Rationale: typography
+      strongly influences perceived tone, trust, and readability.
+    items:
+      $ref: "#/$defs/typography_system"
+  imagery_guidelines:
+    type: array
+    description: >
+      Guidance for photo/illustration style selection. Rationale: uncontrolled
+      imagery creates narrative mismatch even when copy is on-brand.
+    items:
+      $ref: "#/$defs/imagery_guideline"
+  iconography_guidelines:
+    type: array
+    description: >
+      Icon style and usage policies. Rationale: icon inconsistency harms product
+      wayfinding and weakens visual identity recognition.
+    items:
+      $ref: "#/$defs/iconography_guideline"
+  layout_principles:
+    type: array
+    description: >
+      Reusable composition principles for brand materials. Rationale: explicit
+      layout heuristics reduce design variance across distributed teams.
+    items:
+      type: string
+  accessibility_requirements:
+    $ref: "#/$defs/accessibility_requirements"
+
+$defs:
+  logo_system:
+    type: object
+    additionalProperties: false
+    required: [name, purpose, usage_principles]
+    properties:
+      name:
+        type: string
+      brand:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Optional owning brand reference for multi-brand portfolios."
+      purpose:
+        type: string
+        description: "Why this lockup exists (for example primary mark, compact mark)."
+      file_refs:
+        type: array
+        description: "Asset or repository references for implementation handoff."
+        items:
+          type: string
+      usage_principles:
+        type: array
+        description: "Rules that preserve recognizability and legal clarity."
+        items:
+          type: string
+      clear_space_rule:
+        type: string
+        description: "Minimum visual buffer around the logo."
+      min_size_rule:
+        type: string
+        description: "Minimum size to preserve legibility."
+      allowed_backgrounds:
+        type: array
+        items:
+          type: string
+      incorrect_usage:
+        type: array
+        description: "Explicit anti-patterns (stretching, recoloring, effects)."
+        items:
+          type: string
+      legal_notes:
+        type: string
+        description: >
+          Trademark and legal constraints. Rationale: prevents accidental misuse
+          in external materials.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  color_palette:
+    type: object
+    additionalProperties: false
+    required: [name, intent, tokens]
+    properties:
+      name:
+        type: string
+      brand:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+      intent:
+        type: string
+        description: "Narrative role of the palette (for example premium, approachable)."
+      tokens:
+        type: array
+        items:
+          $ref: "#/$defs/color_token"
+      combinations_to_avoid:
+        type: array
+        description: "Combinations known to fail accessibility or visual harmony."
+        items:
+          type: string
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  color_token:
+    type: object
+    additionalProperties: false
+    required: [name, value, role]
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+        pattern: "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"
+      role:
+        type: string
+        enum: [primary, secondary, accent, neutral, success, warning, danger, background, text, border, custom]
+      usage_notes:
+        type: string
+        description: "Where and why this token should be used."
+      contrast_ratio_target:
+        type: string
+        description: "Target WCAG contrast rule when this token is used for text."
+
+  typography_system:
+    type: object
+    additionalProperties: false
+    required: [name, rationale, families, hierarchy]
+    properties:
+      name:
+        type: string
+      brand:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+      rationale:
+        type: string
+        description: "Why these type choices fit the brand promise and audience."
+      families:
+        type: array
+        items:
+          $ref: "#/$defs/font_family"
+      hierarchy:
+        type: array
+        description: "Text style hierarchy (heading/body/caption/system labels)."
+        items:
+          $ref: "#/$defs/type_style"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  font_family:
+    type: object
+    additionalProperties: false
+    required: [name, role]
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+        enum: [display, heading, body, mono, ui, fallback]
+      source:
+        type: string
+        description: "Font source or licensing note."
+      usage_notes:
+        type: string
+
+  type_style:
+    type: object
+    additionalProperties: false
+    required: [name, size, weight, line_height]
+    properties:
+      name:
+        type: string
+      size:
+        type: string
+      weight:
+        type: string
+      line_height:
+        type: string
+      tracking:
+        type: string
+      usage:
+        type: string
+
+  imagery_guideline:
+    type: object
+    additionalProperties: false
+    required: [name, narrative_intent, do, avoid]
+    properties:
+      name:
+        type: string
+      brand:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+      narrative_intent:
+        type: string
+        description: "Emotional or strategic effect imagery should create."
+      do:
+        type: array
+        items:
+          type: string
+      avoid:
+        type: array
+        items:
+          type: string
+      representative_examples:
+        type: array
+        description: "Optional links to canonical reference examples."
+        items:
+          type: string
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  iconography_guideline:
+    type: object
+    additionalProperties: false
+    required: [name, style_principles]
+    properties:
+      name:
+        type: string
+      style_principles:
+        type: array
+        items:
+          type: string
+      stroke_rule:
+        type: string
+      corner_rule:
+        type: string
+      motion_rule:
+        type: string
+        description: "Optional motion behavior for animated icon systems."
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  accessibility_requirements:
+    type: object
+    additionalProperties: false
+    description: >
+      Accessibility obligations for visual system usage. Rationale: codifying
+      accessibility prevents late remediation and strengthens inclusivity.
+    properties:
+      contrast_standard:
+        type: string
+        enum: [wcag-aa, wcag-aaa, custom]
+      reduced_motion_policy:
+        type: string
+      text_on_color_policy:
+        type: string
+      image_alt_text_policy:
+        type: string
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

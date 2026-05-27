@@ -1,0 +1,200 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Meta-Schema
+description: >
+  Unified schema for modeling brand communication strategy, business and product
+  strategy, activation, and governance over time. Designed as a standalone model
+  with optional interoperability links to blueprint schema entities. Rationale:
+  keep market-to-message execution, governance, and brand-system assets in one
+  composable contract so teams can generate consistent narrative artifacts and
+  audit strategic decisions over time.
+type: object
+additionalProperties: false
+required:
+  - version
+  - name
+properties:
+  version:
+    $ref: "metamodel.schema.yaml#/$defs/semver"
+    description: "Brandvoice model content version."
+  schemaVersion:
+    $ref: "metamodel.schema.yaml#/$defs/schema_version"
+    description: "Brandvoice schema version. Omit to assume latest."
+  name:
+    type: string
+    description: "Name of the modeled brand/system."
+  description:
+    type: string
+    description: "Brief summary of brand scope and market context."
+  scope:
+    $ref: "metamodel.schema.yaml#/$defs/context_prefix"
+    description: "Optional modeling scope for portfolios or regional variants."
+  tags:
+    $ref: "metamodel.schema.yaml#/$defs/tags"
+
+  # ── Plane slot composition pattern ──────────────────────────────────────
+  # Each plane slot below accepts TWO shapes:
+  #   1. Inline: the full plane schema shape (for small/mono-file projects)
+  #   2. $ref placeholder: `{$ref: "path/to/file.yaml"}` — the per-file validator
+  #      loads the target file separately and validates it against the plane schema
+  # Custom plane slot names (e.g., movarte's `cross_domain_opportunities`,
+  # `capacity_priorities`, `research_evidence`) are allowed via `additionalProperties`
+  # but must use the $ref placeholder form so the per-file validator can find them.
+  # This matches the feedback_sub_file_splitting convention: split by semantic
+  # cluster, one file per concern, wired from brandvoice.yaml root.
+  market:
+    type: object
+    description: >
+      External market reality the brand responds to. Sizing, forces,
+      competitive landscape, opportunity mapping, and (v1.6.0+) ecosystem
+      players — the cooperation-first counterpart to competition.
+    properties:
+      landscape:
+        oneOf:
+          - $ref: "market/landscape.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      competition:
+        oneOf:
+          - $ref: "market/competition.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      opportunities:
+        oneOf:
+          - $ref: "market/opportunities.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      ecosystem:
+        oneOf:
+          - $ref: "market/ecosystem.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+    additionalProperties:
+      $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+
+  # Planes optimized for brand development pain:
+  # - Market plane: strategy lacks external grounding
+  # - Strategy plane: fragmented positioning and audience understanding
+  # - Activation plane: campaign/channel execution drift from strategy
+  # - Governance plane: weak evidence, unclear decisions, and poor evolution control
+  strategy:
+    type: object
+    description: >
+      Why and for whom the brand creates value, how it is positioned, and how
+      verbal/visual identity standards keep execution consistent. Rationale:
+      strategy should not only define what to say, but also how brand expression
+      remains coherent across teams, portfolio brands, personal brands, and
+      message systems.
+    properties:
+      brand_core:
+        oneOf:
+          - $ref: "strategy/brand-core.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      market_product:
+        oneOf:
+          - $ref: "strategy/market-product.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      messaging:
+        oneOf:
+          - $ref: "strategy/messaging.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      visual_identity:
+        oneOf:
+          - $ref: "strategy/visual-identity.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+    additionalProperties:
+      $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+
+  activation:
+    type: object
+    description: >
+      Where and how strategy is executed through channels, programs, campaigns,
+      and content. Rationale: execution needs both burst campaigns and always-on
+      communication systems to stay aligned with strategy.
+    properties:
+      channels:
+        oneOf:
+          - $ref: "activation/channels.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      campaigns:
+        oneOf:
+          - $ref: "activation/campaigns.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+    additionalProperties:
+      $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+
+  governance:
+    type: object
+    description: "Evidence, experimentation, and decision traceability for continuous evolution."
+    properties:
+      measurement:
+        oneOf:
+          - $ref: "governance/measurement.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      decisions:
+        oneOf:
+          - $ref: "governance/decisions.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      evidence:
+        oneOf:
+          - $ref: "governance/evidence.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+      experiments:
+        oneOf:
+          - $ref: "governance/experiments.schema.yaml"
+          - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+    additionalProperties:
+      $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
+
+  migrations:
+    type: array
+    description: >
+      Ordered model evolution records. Supports ontology-level changes and
+      campaign/message changes over time.
+    items:
+      oneOf:
+        - $ref: "migration.schema.yaml"
+        - type: object
+          required: [file]
+          additionalProperties: false
+          properties:
+            file:
+              type: string
+              description: "Relative path to migration file."
+
+  profiles:
+    type: array
+    description: >
+      Optional framework overlays/patterns (for example SB7, JTBD, STP, AARRR,
+      RACE). They guide usage without being mandatory sections.
+    items:
+      $ref: "#/$defs/profile"
+
+$defs:
+  profile:
+    type: object
+    additionalProperties: false
+    required: [name]
+    properties:
+      name:
+        type: string
+        description: "Profile name."
+      category:
+        type: string
+        enum:
+          - messaging
+          - strategy
+          - research
+          - growth
+          - planning
+          - measurement
+      status:
+        type: string
+        enum: [draft, active, deprecated]
+      description:
+        type: string
+      applies_to:
+        type: array
+        items:
+          type: string
+        description: "List of schema sections this profile applies to."
+      pattern:
+        type: object
+        additionalProperties: true
+        description: "Optional profile-specific structure and conventions."

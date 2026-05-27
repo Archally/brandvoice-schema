@@ -1,0 +1,81 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Activation - Channels
+description: >
+  Channel portfolio and channel policies for message distribution, media mix,
+  and tone adaptation.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  channels:
+    type: array
+    items:
+      $ref: "#/$defs/channel"
+
+$defs:
+  channel:
+    type: object
+    additionalProperties: false
+    required: [id, name, media_type]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
+      name:
+        type: string
+      media_type:
+        type: string
+        enum: [owned, paid, earned, shared]
+      audience_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      actor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Primitive-aligned targeting. Prefer this over audience_refs."
+      context_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      journey_stage_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+      message_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      tone_adaptation:
+        type: string
+        description: "How core voice is adapted for this channel."
+      objective:
+        type: string
+        enum: [awareness, engagement, consideration, conversion, retention, advocacy]
+      universal_phases:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
+        description: >
+          Normalized journey phases this channel primarily serves.
+          Prefer this over the legacy objective enum for cross-schema queries.
+      constraints:
+        type: array
+        items:
+          type: string
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

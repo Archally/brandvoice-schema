@@ -1,0 +1,100 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Governance - Measurement
+description: >
+  Measurement layer for strategic and campaign outcomes. Supports NSM, KPIs,
+  and operational metrics across acquisition, engagement, and retention.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  north_star_metric:
+    $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
+  metrics:
+    type: array
+    items:
+      $ref: "#/$defs/metric"
+  kpis:
+    type: array
+    items:
+      $ref: "#/$defs/kpi"
+  outcomes:
+    type: array
+    description: "Primitive outcomes tied to measurable business impact."
+    items:
+      $ref: "../strategy/messaging.schema.yaml#/$defs/outcome"
+
+$defs:
+  metric:
+    type: object
+    additionalProperties: false
+    required: [id, name, formula]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
+      name:
+        type: string
+      formula:
+        type: string
+      cadence:
+        type: string
+        enum: [real-time, daily, weekly, monthly, quarterly]
+      source:
+        type: string
+      owner:
+        type: string
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  kpi:
+    type: object
+    additionalProperties: false
+    required: [id, name, metric, target]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
+      name:
+        type: string
+      metric:
+        $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
+      target:
+        type: string
+      stage:
+        type: string
+        enum: [awareness, acquisition, activation, engagement, retention, referral, revenue, strategic]
+      universal_phase:
+        $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
+        description: >
+          Normalized journey phase for this KPI. Prefer this over
+          the legacy stage enum for cross-schema queries.
+      linked_campaigns:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
+      linked_messages:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      linked_values:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/value_ref"
+      linked_outcomes:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

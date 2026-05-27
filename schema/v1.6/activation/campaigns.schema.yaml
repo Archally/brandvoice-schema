@@ -1,0 +1,378 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Activation - Campaigns
+description: >
+  Campaign execution model with message-channel mapping, content assets, funnel
+  stages, and learning loops.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  campaigns:
+    type: array
+    items:
+      $ref: "#/$defs/campaign"
+  programs:
+    type: array
+    description: >
+      Always-on or multi-campaign initiatives that coordinate a shared strategic
+      narrative over time. Rationale: not all communication work is a discrete
+      campaign burst, and teams need a level above campaigns for coherent planning.
+    items:
+      $ref: "#/$defs/program"
+  actions:
+    type: array
+    description: "Primitive Action instances used in campaign execution."
+    items:
+      $ref: "../strategy/messaging.schema.yaml#/$defs/action"
+  outcomes:
+    type: array
+    description: "Primitive Outcome targets tracked at campaign level."
+    items:
+      $ref: "../strategy/messaging.schema.yaml#/$defs/outcome"
+  content_assets:
+    type: array
+    items:
+      $ref: "#/$defs/content_asset"
+  content_pillars:
+    type: array
+    description: >
+      Recurring editorial themes used to build authority and maintain topic
+      consistency across channels. Rationale: campaigns need a reusable content
+      strategy layer between message architecture and individual assets.
+    items:
+      $ref: "#/$defs/content_pillar"
+
+$defs:
+  program:
+    type: object
+    additionalProperties: false
+    required: [id, name, objective]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/program_ref"
+      name:
+        type: string
+      objective:
+        type: string
+        description: "Strategic reason this program exists."
+      primary_idea:
+        type: string
+        description: "Unifying narrative or organizing idea across campaigns in this program."
+      opportunity_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this program is designed to capture or educate."
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      message_house_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
+      campaign_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
+      content_pillar_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
+      owner:
+        type: string
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  campaign:
+    type: object
+    additionalProperties: false
+    required: [id, name, objective, start_date]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
+      name:
+        type: string
+      program_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/program_ref"
+        description: "Optional parent program coordinating this campaign."
+      objective:
+        type: string
+      primary_idea:
+        type: string
+        description: >
+          Central creative or communication idea for the campaign. Rationale:
+          integrated campaigns work best when channels orbit one memorable idea.
+      stage:
+        type: string
+        enum: [see, think, do, care, awareness, activation, retention, referral, revenue]
+      universal_phases:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
+        description: >
+          Normalized journey phases for this campaign. Prefer this over
+          the legacy stage enum for cross-schema queries.
+      journey_stages:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+      target_audiences:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      target_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      context_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      competitor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+        description: "Markets this campaign is addressing or educating."
+      opportunity_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this campaign is intended to activate."
+      message_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      message_house_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
+        description: "Message houses guiding this campaign."
+      channel_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
+      action_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/action_ref"
+      outcome_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
+      north_star:
+        $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
+      guardrail_metrics:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
+      pillar_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
+        description: "Content pillars this campaign activates."
+      creative_brief:
+        type: object
+        additionalProperties: false
+        description: >
+          Brief-level inputs used to align campaign production. Rationale:
+          strategic campaign intent should be explicit, not reconstructed from refs.
+        properties:
+          problem:
+            type: string
+            description: "Market or buyer problem the campaign responds to."
+          audience_insight:
+            type: string
+            description: "Core audience insight informing the creative approach."
+          promise:
+            type: string
+            description: "Primary promise this campaign should reinforce."
+          proof:
+            type: string
+            description: "Most important reason the promise is believable."
+          call_to_action:
+            type: string
+            description: "Primary call to action across the campaign."
+          constraints:
+            type: array
+            items:
+              type: string
+            description: "Operational, regulatory, or brand constraints."
+      budget:
+        type: object
+        additionalProperties: false
+        description: "Budget envelope and allocation hints for campaign planning."
+        properties:
+          currency:
+            type: string
+            description: "ISO 4217 currency code."
+          total:
+            type: number
+            description: "Total planned spend in the stated currency."
+          split_hint:
+            type: object
+            additionalProperties: false
+            description: "Optional channel-bucket allocation guidance."
+            properties:
+              paid:
+                type: number
+              owned:
+                type: number
+              earned:
+                type: number
+              shared:
+                type: number
+      milestones:
+        type: array
+        description: "Key delivery checkpoints for integrated campaign execution."
+        items:
+          type: object
+          additionalProperties: false
+          required: [date, name]
+          properties:
+            date:
+              type: string
+              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+            name:
+              type: string
+            description:
+              type: string
+      start_date:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      end_date:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      blueprint_links:
+        $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  content_asset:
+    type: object
+    additionalProperties: false
+    required: [id, name, format]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/content_ref"
+      name:
+        type: string
+      program_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/program_ref"
+        description: "Optional program this asset belongs to."
+      campaign_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
+        description: "Campaigns this content asset supports. Rationale: content-to-campaign pointer avoids duplicating CNT IDs across campaign entities and naturally handles many-to-many."
+      format:
+        type: string
+        enum: [post, article, video, email, ad, landing-page, deck, webinar, case-study, tutorial, talk, other]
+      channel:
+        $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
+      primary_message:
+        $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      journey_stage:
+        $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
+      action:
+        $ref: "../metamodel.schema.yaml#/$defs/action_ref"
+      expected_outcomes:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
+      actor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Target actors for this content."
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      pillar_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
+        description: "Editorial pillars this asset supports."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tone:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
+      cta:
+        type: string
+      published_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  content_pillar:
+    type: object
+    additionalProperties: false
+    required: [id, name, angle]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
+      name:
+        type: string
+      angle:
+        type: string
+        description: >
+          Strategic lens or recurring point of view for this pillar. Rationale:
+          authority is built through repeated angles, not only repeated formats.
+      purpose:
+        type: string
+        enum: [awareness, consideration, demand, retention, advocacy, learning, community, partnership, other]
+        description: "Strategic intent for this pillar: what outcome is it designed to drive."
+      audience_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      actor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      message_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_ref"
+      message_house_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
+      program_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/program_ref"
+      status:
+        $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

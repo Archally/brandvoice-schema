@@ -1,0 +1,586 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Strategy - Market and Product
+description: >
+  Customer and market understanding plus business and product strategy entities.
+  Supports JTBD, segmentation, positioning, and business model structures.
+  Core primitive entities are modeled directly here: Actor, Need, Offering,
+  Competitor, and Context.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  actors:
+    type: array
+    description: "Core primitive: who participates in buying/using/influencing."
+    items:
+      $ref: "#/$defs/actor"
+  needs:
+    type: array
+    description: "Core primitive: customer needs/problems/progress criteria."
+    items:
+      $ref: "#/$defs/need"
+  offerings:
+    type: array
+    description: "Core primitive: what is offered to satisfy needs."
+    items:
+      $ref: "#/$defs/offering"
+  competitors:
+    type: array
+    description: "Core primitive: alternatives in the competitive frame."
+    items:
+      $ref: "#/$defs/competitor"
+  contexts:
+    type: array
+    description: "Core primitive: situational context shaping demand and decisions."
+    items:
+      $ref: "#/$defs/context"
+  market_refs:
+    type: array
+    description: >
+      Canonical market definitions this strategy depends on. Rationale: market
+      entities are owned by the market plane and referenced from strategy to
+      avoid duplicate or diverging `MKT###` records.
+    items:
+      $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+  audiences:
+    type: array
+    description: "Legacy alias: audience segment. Prefer actors."
+    items:
+      $ref: "#/$defs/audience"
+  personas:
+    type: array
+    items:
+      $ref: "#/$defs/persona"
+  jobs:
+    type: array
+    items:
+      $ref: "#/$defs/job"
+  value_propositions:
+    type: array
+    items:
+      $ref: "#/$defs/value_proposition"
+  positioning:
+    type: array
+    items:
+      $ref: "#/$defs/positioning"
+  business_model:
+    type: array
+    description: "Optional BMC/Lean Canvas style elements."
+    items:
+      $ref: "#/$defs/business_model_element"
+
+$defs:
+  actor:
+    type: object
+    additionalProperties: false
+    required: [id, name, role]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      name:
+        type: string
+      description:
+        type: string
+        description: "Freeform context about who this actor is and why they matter."
+      role:
+        type: string
+        enum: [buyer, user, influencer, champion, approver, gatekeeper, partner, internal]
+      characteristics:
+        type: array
+        items:
+          type: string
+      priority:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  need:
+    type: object
+    additionalProperties: false
+    required: [id, statement, actors]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      statement:
+        type: string
+      actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+      need_type:
+        type: string
+        enum: [functional, emotional, social, economic]
+      urgency:
+        type: string
+        enum: [low, medium, high, critical]
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      context_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      current_fulfillment:
+        type: array
+        description: >
+          How this need is currently met in the market. Models the demand
+          landscape: what exists today, how satisfied buyers are, and what
+          friction prevents switching.
+        items:
+          type: object
+          additionalProperties: false
+          required: [served_by, fulfillment]
+          properties:
+            served_by:
+              type: string
+              description: >
+                What currently serves this need. Use CPR### for known competitors
+                or freeform text for categories (e.g., 'manual spreadsheets', 'hiring freelancers').
+            fulfillment:
+              $ref: "../metamodel.schema.yaml#/$defs/fulfillment_level"
+            friction_points:
+              type: array
+              items:
+                type: string
+              description: "Pain points with the current solution."
+            switching_barriers:
+              type: array
+              items:
+                type: string
+              description: "What prevents switching (e.g., 'data lock-in', 'team inertia', 'contractual')."
+            willingness_to_switch:
+              type: string
+              enum: [resistant, reluctant, open, eager, desperate]
+            observed_at:
+              type: string
+              pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+            evidence_refs:
+              $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  offering:
+    type: object
+    additionalProperties: false
+    required: [id, name, value_statement]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+      name:
+        type: string
+      value_statement:
+        type: string
+      capabilities:
+        type: array
+        description: >
+          Concrete product or service capabilities grounded in evidence.
+          Each entry describes a specific, verifiable capability — not
+          aspirational language. Used to bridge product reality into
+          brand strategy and website content.
+        items:
+          type: string
+      solves_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      addresses_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this offering was built to capture."
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: >
+          Brand this offering belongs to in a multi-brand portfolio. When set,
+          scoped views can filter offerings per brand; omit for shared offerings.
+      proof_points:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      linked_business_model:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/model_ref"
+      blueprint_links:
+        $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  competitor:
+    type: object
+    additionalProperties: false
+    required: [id, name, type]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+      name:
+        type: string
+      type:
+        type: string
+        enum: [direct, indirect, substitute, status-quo]
+      strengths:
+        type: array
+        items:
+          type: string
+      weaknesses:
+        type: array
+        items:
+          type: string
+      for_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      position_map_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+        description: "Position maps featuring this competitor."
+      opportunity_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this competitor threatens or could capture."
+      threat_level:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+        description: "Overall competitive threat level."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability. Strategy-plane competitor
+          profiles are lightweight; prefer putting detailed geo on the
+          market/competition.schema.yaml profile of the same CPR### ID.
+          See metamodel.geo_scope. Added in v1.4.0.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  context:
+    type: object
+    additionalProperties: false
+    required: [id, name, trigger]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/context_ref"
+      name:
+        type: string
+      trigger:
+        type: string
+      constraints:
+        type: array
+        items:
+          type: string
+      market_conditions:
+        type: array
+        items:
+          type: string
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  audience:
+    type: object
+    additionalProperties: false
+    required: [id, name, need]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      name:
+        type: string
+      need:
+        type: string
+      actor:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: >
+          Optional bridge to the canonical Actor primitive. Rationale: keeps
+          legacy audience views aligned with actor-centric strategy models.
+      segment_type:
+        type: string
+        enum: [demographic, behavioral, psychographic, firmographic, intent]
+      priority:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      blueprint_links:
+        $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: >
+          Optional brand this audience primarily belongs to in a portfolio. When set, scoped
+          views (e.g. SB7 persona lists) can filter to this brand; omit for shared segments.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  persona:
+    type: object
+    additionalProperties: false
+    required: [id, name, audience]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/persona_ref"
+      name:
+        type: string
+      audience:
+        $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      actor:
+        $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Optional bridge to primitive Actor."
+      goals:
+        type: array
+        items:
+          type: string
+      barriers:
+        type: array
+        items:
+          type: string
+      decision_criteria:
+        type: array
+        items:
+          type: string
+      empathy_map:
+        $ref: "../metamodel.schema.yaml#/$defs/empathy_map"
+        description: >
+          Optional structured empathy map for this persona. Coexists with goals,
+          barriers, and decision_criteria, which keep their existing semantics.
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: >
+          Optional brand this persona primarily supports. When set, SB7 and other scoped views
+          can list personas per brand; omit if the persona applies across the portfolio.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  job:
+    type: object
+    additionalProperties: false
+    required: [id, statement, audience]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/job_ref"
+      statement:
+        type: string
+      audience:
+        $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      need:
+        $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Optional bridge to primitive Need."
+      job_type:
+        type: string
+        enum: [functional, emotional, social]
+      current_alternatives:
+        type: array
+        items:
+          type: string
+      desired_outcome:
+        type: string
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  value_proposition:
+    type: object
+    additionalProperties: false
+    required: [id, audience, value_statement]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/value_ref"
+      offering:
+        $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+        description: "Optional bridge to primitive Offering."
+      audience:
+        $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      value_statement:
+        type: string
+      pains_addressed:
+        type: array
+        items:
+          type: string
+      gains_created:
+        type: array
+        items:
+          type: string
+      pain_relievers:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/vpc_pain_reliever"
+        description: >
+          Structured pain relievers with explicit need linkage. Coexists with
+          flat pains_addressed strings for lightweight capture.
+      gain_creators:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/vpc_gain_creator"
+        description: >
+          Structured gain creators with explicit need linkage. Coexists with
+          flat gains_created strings for lightweight capture.
+      jobs_supported:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/job_ref"
+      proof_points:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+      addresses_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities this value proposition targets."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  positioning:
+    type: object
+    additionalProperties: false
+    required: [id, market_category, differentiated_claim]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+      brand_ref:
+        $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
+        description: "Brand this positioning belongs to in a portfolio or endorsed-brand system."
+      market_category:
+        type: string
+        description: "Category label used publicly or internally to frame competition."
+      category_strategy:
+        type: object
+        additionalProperties: false
+        description: >
+          Structured category framing choices. Rationale: category strategy is
+          often distinct from the differentiated claim and should be reviewable
+          as its own modeling concern.
+        properties:
+          frame_of_reference:
+            type: string
+            description: "What the buyer should compare this offer against."
+          category_definition:
+            type: string
+            description: "How the category is defined in brand language."
+          category_move:
+            type: string
+            enum: [enter, redefine, create, defend, bridge]
+            description: "Strategic move relative to the category."
+          story:
+            type: string
+            description: "Why this category frame matters for buyer interpretation."
+      target_audiences:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      based_on_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+        description: "Opportunities that justify this positioning."
+      differentiated_claim:
+        type: string
+      alternatives:
+        type: array
+        items:
+          type: string
+      competitors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+      position_map_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+        description: "Position maps where this positioning is visualized."
+      reasons_to_believe:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  business_model_element:
+    type: object
+    additionalProperties: false
+    required: [id, block, statement]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/model_ref"
+      block:
+        type: string
+        enum:
+          - customer-segments
+          - value-proposition
+          - channels
+          - customer-relationships
+          - revenue-streams
+          - key-resources
+          - key-activities
+          - key-partners
+          - cost-structure
+          - problem
+          - existing-alternatives
+          - solution
+          - unfair-advantage
+          - key-metrics
+      statement:
+        type: string
+      linked_values:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/value_ref"
+      linked_positions:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+      linked_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actors relevant to this business model block."
+      linked_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs this block addresses or depends on."
+      linked_offerings:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+        description: "Offerings related to this block."
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"

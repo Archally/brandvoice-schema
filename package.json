@@ -1,0 +1,37 @@
+{
+  "name": "@archally/brandvoice-schema",
+  "version": "1.6.1",
+  "description": "YAML-based schema for brand communication strategy modeling — market reality, brand strategy, activation, and governance",
+  "license": "Apache-2.0",
+  "author": "Adam Walkowski <adam.walkowski@inperceptic.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/archally/brandvoice-schema"
+  },
+  "homepage": "https://archally.pro",
+  "keywords": [
+    "brandvoice",
+    "brand-strategy",
+    "marketing",
+    "schema",
+    "yaml",
+    "json-schema",
+    "positioning",
+    "messaging",
+    "competitive-intelligence",
+    "storybrand"
+  ],
+  "type": "module",
+  "exports": {
+    "./schema/v1.6/*": "./schema/v1.6/*"
+  },
+  "files": [
+    "schema/",
+    "tools/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

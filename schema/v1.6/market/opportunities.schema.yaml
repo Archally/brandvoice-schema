@@ -1,0 +1,348 @@
+---
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Brandvoice Market - Opportunities
+description: >
+  Strategic opportunities, competitive position maps, and white space analysis.
+  The analytical layer that identifies where brand strategy should focus.
+type: object
+additionalProperties: false
+required:
+  - version
+properties:
+  version:
+    $ref: "../metamodel.schema.yaml#/$defs/semver"
+  schemaVersion:
+    $ref: "../metamodel.schema.yaml#/$defs/schema_version"
+  scope:
+    $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
+  tags:
+    $ref: "../metamodel.schema.yaml#/$defs/tags"
+  opportunities:
+    type: array
+    description: "Strategic opportunity theses backed by evidence."
+    items:
+      $ref: "#/$defs/opportunity"
+  position_maps:
+    type: array
+    description: "Competitive position maps with white space analysis."
+    items:
+      $ref: "#/$defs/position_map"
+
+$defs:
+  opportunity:
+    type: object
+    additionalProperties: false
+    required: [id, name, thesis, status]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+      name:
+        type: string
+        description: "Short opportunity label."
+      thesis:
+        type: string
+        description: >
+          Full strategic thesis. Template: 'We believe [actor] has [need] that is
+          [fulfillment level] because [gap]. Given [force], there is a window to
+          [hypothesis].'
+      status:
+        type: string
+        enum:
+          - identified
+          - exploring
+          - validating
+          - validated
+          - pursued
+          - abandoned
+        description: "Current state of opportunity investigation."
+      target_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actor segments this opportunity targets."
+      unmet_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs that are underserved or unmet."
+      demand_intensity:
+        $ref: "../metamodel.schema.yaml#/$defs/demand_intensity"
+        description: "How strongly buyers signal demand in this space."
+      buyer_readiness:
+        $ref: "../metamodel.schema.yaml#/$defs/buyer_readiness"
+        description: "Dominant awareness stage of buyers in this opportunity."
+      enabling_forces:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
+        description: "Market forces that create or widen this opportunity."
+      blocking_forces:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
+        description: "Market forces that threaten or narrow this opportunity."
+      time_horizon:
+        type: string
+        enum: [immediate, near-term, medium-term, long-term]
+      window_closes:
+        type: string
+        description: "What could close this window (e.g., 'competitor launch', 'regulation')."
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+        description: "Markets this opportunity exists within."
+      estimated_size:
+        type: string
+        description: "Opportunity size estimate (e.g., '20% of $800M SAM = $160M')."
+      estimated_size_numeric:
+        type: number
+        description: "Machine-readable size in base currency units."
+      current_gap:
+        type: string
+        description: "What's missing in how the market currently addresses this need."
+      competitor_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+        description: "Competitors that fail to address this opportunity (or don't exist)."
+      white_space_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/white_space_ref"
+        description: >
+          Stable references to white space entries in related position maps.
+          Rationale: durable IDs make strategic traceability safer than string labels.
+      position_map_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+        description: "Position maps where this opportunity's white space is visible."
+      addressed_by_offerings:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+        description: "Offerings that respond to this opportunity."
+      addressed_by_positioning:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/position_ref"
+        description: "Positioning statements built on this opportunity."
+      addressed_by_values:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/value_ref"
+        description: "Value propositions targeting this opportunity."
+      confidence:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+      validated_by:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
+        description: "Evidence supporting this opportunity."
+      invalidated_by:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
+        description: "Evidence challenging this opportunity."
+      related_experiments:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/test_ref"
+        description: "Experiments designed to validate or invalidate this opportunity."
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "When this opportunity was first identified."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      geo_scope:
+        $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
+        description: >
+          Optional geographic applicability of this opportunity. See
+          metamodel.geo_scope. Added in v1.4.0.
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  position_map:
+    type: object
+    additionalProperties: false
+    required: [id, name, axes]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
+      name:
+        type: string
+        description: "Map title (e.g., 'SMB PM Tools: Price vs. Automation Depth')."
+      description:
+        type: string
+      market_refs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/market_ref"
+      axes:
+        type: array
+        minItems: 2
+        items:
+          $ref: "#/$defs/map_axis"
+      placements:
+        type: array
+        items:
+          $ref: "#/$defs/map_placement"
+      white_spaces:
+        type: array
+        items:
+          $ref: "#/$defs/white_space"
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        description: "When this map was created or last validated."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      tags:
+        $ref: "../metamodel.schema.yaml#/$defs/tags"
+
+  map_axis:
+    type: object
+    additionalProperties: false
+    required: [name, low_label, high_label]
+    properties:
+      name:
+        type: string
+        description: "Axis name (e.g., 'Price', 'Feature Depth', 'Ease of Use')."
+      low_label:
+        type: string
+        description: "Label for the low end (e.g., 'Free/Low-cost')."
+      high_label:
+        type: string
+        description: "Label for the high end (e.g., 'Enterprise pricing')."
+      buyer_importance:
+        $ref: "../metamodel.schema.yaml#/$defs/priority"
+        description: "How much buyers weight this dimension in decisions."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+        description: "Evidence that buyers evaluate on this axis."
+
+  map_placement:
+    type: object
+    additionalProperties: false
+    required: [entity, coordinates]
+    properties:
+      entity:
+        type: string
+        description: >
+          The entity being placed. Use BRD### for own brand, CPR### for competitors.
+          Accepts any valid brand_ref or competitor_ref.
+      label:
+        type: string
+        description: "Optional display label if different from entity name."
+      coordinates:
+        type: object
+        additionalProperties: true
+        description: >
+          Position on each axis. Keys are axis names, values are 0-100.
+          Example: { 'Price': 25, 'Feature Depth': 80 }
+      movement:
+        type: object
+        additionalProperties: false
+        description: "Optional trend — where this entity is heading."
+        properties:
+          direction:
+            type: object
+            additionalProperties: true
+            description: >
+              Per-axis movement direction. Keys are axis names, values are
+              'increasing', 'stable', or 'decreasing'.
+          velocity:
+            type: string
+            enum: [slow, moderate, fast]
+      observed_at:
+        type: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+
+  white_space:
+    type: object
+    additionalProperties: false
+    required: [id, name, region]
+    properties:
+      id:
+        $ref: "../metamodel.schema.yaml#/$defs/white_space_ref"
+        description: "Stable identifier for this white space region."
+      name:
+        type: string
+        description: "White space label (e.g., 'Affordable + Advanced Automation')."
+      description:
+        type: string
+        description: "Why this gap exists and why it matters."
+      region:
+        type: object
+        additionalProperties: true
+        description: >
+          Coordinate ranges defining this white space on the map. Keys are axis
+          names, values are objects with min/max (0-100).
+          Example: { 'Price': { min: 10, max: 40 }, 'Automation': { min: 60, max: 90 } }
+      demand_signal:
+        type: string
+        description: "Evidence of buyer interest in this region (e.g., 'search volume for affordable AI tools')."
+      demand_intensity:
+        $ref: "../metamodel.schema.yaml#/$defs/demand_intensity"
+      buyer_readiness:
+        $ref: "../metamodel.schema.yaml#/$defs/buyer_readiness"
+        description: "Dominant awareness level of buyers attracted to this space."
+      unmet_needs:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+        description: "Needs that would be served by filling this space."
+      target_actors:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
+        description: "Actor segments most attracted to this region."
+      willingness_to_pay:
+        type: object
+        additionalProperties: false
+        description: "Buyer spending potential in this white space."
+        properties:
+          estimate:
+            type: string
+            description: "Price range estimate (e.g., '$50-100/mo', '$500-2000/yr')."
+          estimate_numeric_low:
+            type: number
+            description: "Low end in base currency units (monthly)."
+          estimate_numeric_high:
+            type: number
+            description: "High end in base currency units (monthly)."
+          basis:
+            type: string
+            description: "How this was estimated (e.g., 'competitor pricing + survey data')."
+          price_sensitivity:
+            type: string
+            enum: [very-sensitive, sensitive, moderate, low-sensitivity, price-insensitive]
+          confidence:
+            $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+          evidence_refs:
+            $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
+      estimated_size:
+        type: string
+        description: "Revenue or volume potential of this white space."
+      estimated_size_numeric:
+        type: number
+      related_opportunities:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
+      competitor_adjacents:
+        type: array
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+        description: "Competitors closest to this region who might expand into it."
+      entry_barriers:
+        type: array
+        items:
+          type: string
+        description: "What makes it hard to fill this gap (e.g., 'technical complexity', 'regulation')."
+      evidence_refs:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
