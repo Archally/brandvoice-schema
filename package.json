@@ -32,10 +32,12 @@
     "README.md"
   ],
   "scripts": {
-    "validate": "node tools/validator/src/cli.mjs"
+    "validate": "node tools/validator/src/cli.mjs",
+    "check": "node tools/semantic-checker/src/cli.mjs"
   },
   "bin": {
-    "brandvoice-validate": "tools/validator/src/cli.mjs"
+    "brandvoice-validate": "tools/validator/src/cli.mjs",
+    "brandvoice-check": "tools/semantic-checker/src/cli.mjs"
   },
   "dependencies": {
     "ajv": "^8.17.0",
