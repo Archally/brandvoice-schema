@@ -1,0 +1,83 @@
+version: "1.0.0"
+message_houses:
+  - id: MHS001
+    name: "Adaptive fitness message house"
+    roof_claim: "Your workout adapts to your life — not the other way around"
+    positioning_refs: [POS001]
+    pillars:
+      - id: MPL001
+        title: "AI that learns your patterns"
+        summary: "FitPulse's AI gets smarter with every workout, learning your energy patterns, preferences, and progress trajectory."
+        proof_refs: [PRF001]
+        message_refs: [MSG001]
+      - id: MPL002
+        title: "Any schedule, any equipment, any energy level"
+        summary: "No matter how your day changes, FitPulse rebuilds your workout in seconds to match your reality."
+        proof_refs: [PRF002]
+        message_refs: [MSG002]
+      - id: MPL003
+        title: "Progress you can see and feel"
+        summary: "Visible strength gains, consistency streaks, and capacity growth keep users motivated through real data."
+        proof_refs: [PRF003]
+        message_refs: [MSG003]
+
+messages:
+  - id: MSG001
+    title: "AI learns you"
+    core_statement: >-
+      FitPulse learns from every workout — your energy, your feedback,
+      your biometrics — and gets smarter about what works for you.
+    proof_points: [PRF001]
+    journey_stages: [JSG001]
+    evidence_refs: [EVD001]
+
+  - id: MSG002
+    title: "Fits your reality"
+    core_statement: >-
+      Got 20 minutes instead of 45? Traveling with no gym? Feeling drained?
+      FitPulse rebuilds your workout in seconds to match what you actually
+      have today.
+    proof_points: [PRF002]
+    journey_stages: [JSG002]
+    evidence_refs: [EVD002]
+
+  - id: MSG003
+    title: "Consistency beats intensity"
+    core_statement: >-
+      Three months of adapted workouts beats three weeks of perfect plans
+      followed by three months of nothing. FitPulse keeps the streak alive.
+    proof_points: [PRF003]
+    journey_stages: [JSG003]
+    evidence_refs: [EVD002]
+
+proof_points:
+  - id: PRF001
+    claim: "AI personalization improves workout relevance"
+    evidence: "AI-driven fitness personalization increases user engagement by 35-50% compared to static programming."
+    evidence_refs: [EVD001]
+
+  - id: PRF002
+    claim: "Schedule-aware programming reduces skip rate by 40%"
+    evidence: "Apps with schedule adaptation features retain 38% at 30 days vs. industry average of 22%."
+    evidence_refs: [EVD002]
+
+  - id: PRF003
+    claim: "Visible progress tracking increases 90-day retention to 58%"
+    evidence: "Users with progress visibility features average 3.8 workouts/week after 90 days vs. industry avg of 1.2."
+    evidence_refs: [EVD002]
+
+journey_stages:
+  - id: JSG001
+    name: "Discovery"
+    intent: "User realizes existing fitness approach is not working and searches for alternatives."
+    universal_phase: aware
+
+  - id: JSG002
+    name: "Trial"
+    intent: "User downloads the free tier and completes first 3-5 adaptive workouts."
+    universal_phase: engaged
+
+  - id: JSG003
+    name: "Conversion"
+    intent: "User hits free tier limits and evaluates Pro subscription."
+    universal_phase: committed

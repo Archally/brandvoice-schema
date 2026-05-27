@@ -1,0 +1,37 @@
+version: "1.0.0"
+decisions:
+  - id: DEC001
+    title: "Freemium over free trial model"
+    status: accepted
+    date: "2026-01-20"
+    rationale:
+      problem: >-
+        Choosing between a 14-day free trial of Pro features and a permanent
+        free tier with limited adaptive workouts.
+      alternatives:
+        - "14-day free trial: higher short-term conversion, lower retention"
+        - "Paid-only with money-back guarantee: lowest friction to churn"
+      selected: >-
+        Adopt freemium with 3 adaptive workouts/week on free tier. This gives
+        users enough time to build the habit and experience adaptation before
+        hitting the limit — conversion happens from demonstrated value, not
+        deadline pressure.
+      why: >-
+        Free trial models in fitness apps show high download-to-trial rates
+        but poor trial-to-paid conversion (8-12%). Freemium models with
+        meaningful free value show lower initial conversion but higher LTV
+        due to habit formation before paywall.
+    evidence_refs: [EVD002]
+
+risks:
+  - id: RSK001
+    title: "AI recommendation quality at launch"
+    likelihood: medium
+    impact: high
+    mitigation: >-
+      Launch with rule-based adaptation (schedule, equipment, stated energy)
+      and layer ML personalization as user data accumulates. Be transparent
+      about the learning curve in onboarding: "FitPulse gets smarter with
+      every workout — your first week teaches us, your second week shows it."
+    status: identified
+    evidence_refs: [EVD001]

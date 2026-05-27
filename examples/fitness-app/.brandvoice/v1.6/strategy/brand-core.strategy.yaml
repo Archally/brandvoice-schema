@@ -1,0 +1,93 @@
+version: "1.0.0"
+brands:
+  - id: BRD001
+    name: "FitPulse"
+    brand_role: product
+    purpose: >-
+      To make consistent fitness accessible to people whose lives
+      do not follow a predictable schedule.
+    promise: >-
+      Every workout fits your day — not the other way around.
+    values:
+      - "Adaptability — we meet people where they are, not where a program says they should be"
+      - "Honesty — we show real progress, not vanity metrics; rest days are progress too"
+      - "Simplicity — open the app, start the workout; no decision fatigue"
+    personality:
+      - encouraging
+      - pragmatic
+      - knowledgeable
+      - calm
+    archetypes: [ARC001]
+    tone_refs: [TON001]
+    narrative:
+      framework: sb7
+      hero: "A busy professional who wants to stay fit but keeps falling off track"
+      problem: "Life is unpredictable — rigid workout plans break the moment your schedule shifts"
+      guide: "FitPulse, built by trainers and engineers who understand that consistency beats intensity"
+      plan: "1. Tell us your goal and equipment. 2. We build your adaptive plan. 3. Every day, get a workout that fits."
+      call_to_action: "Start your free adaptive plan"
+      failure: "Another app abandoned after two weeks. Guilt. Starting over. Again."
+      success: "Three months of consistent training — not perfect, but unbroken. Strength you can feel."
+    evidence_refs: [EVD001]
+
+brand_scripts:
+  - id: BSC001
+    name: "FitPulse StoryBrand"
+    brand_ref: BRD001
+    is_default: true
+    narrative:
+      framework: sb7
+      hero: "A busy professional who wants to stay fit but keeps falling off track"
+      problem: "Life is unpredictable — rigid workout plans break the moment your schedule shifts"
+      guide: "FitPulse, built by trainers and engineers who understand that consistency beats intensity"
+      plan: "1. Tell us your goal and equipment. 2. We build your adaptive plan. 3. Every day, get a workout that fits."
+      call_to_action: "Start your free adaptive plan"
+      failure: "Another app abandoned after two weeks. Guilt. Starting over. Again."
+      success: "Three months of consistent training — not perfect, but unbroken. Strength you can feel."
+    evidence_refs: [EVD002]
+
+archetypes:
+  - id: ARC001
+    name: "Sage + Creator"
+    description: >-
+      FitPulse embodies the Sage's knowledge and evidence-based approach
+      combined with the Creator's adaptive problem-solving. The brand knows
+      what works (Sage) and builds personalized solutions (Creator).
+
+tone_guidelines:
+  - id: TON001
+    label: "Supportive coach"
+    do:
+      - "Use warm, direct language that respects the user's intelligence"
+      - "Lead with evidence and outcomes, not hype"
+      - "Acknowledge real-life constraints without judgment"
+      - "Celebrate consistency over intensity"
+    avoid:
+      - "Shame-based motivation ('no excuses', 'push through')"
+      - "Hyperbolic claims ('transform your body in 30 days')"
+      - "Jargon without context (periodization, progressive overload without explanation)"
+      - "Binary framing (good/bad days, on/off track)"
+    dimensions:
+      humor: 0
+      formality: -1
+      respect: 2
+      enthusiasm: 1
+
+verbal_guidelines:
+  - id: VRB001
+    name: "Inclusive fitness language"
+    rationale: >-
+      User research (EVD007) shows that specific word choices measurably affect
+      perceived app personality and user engagement. Intentional terminology
+      reduces perceived judgment and supports the brand's coaching tone.
+    preferred_terms:
+      - term: "movement"
+        use_instead_of: ["exercise"]
+        notes: "When referring to physical activity in general"
+      - term: "adapt"
+        use_instead_of: ["modify"]
+        notes: "When the app changes a plan — 'adapt' implies intelligence, 'modify' implies compromise"
+      - term: "rest day"
+        use_instead_of: ["off day"]
+        notes: "Rest is part of the program, not absence from it"
+    evidence_refs: [EVD007]

@@ -1,0 +1,62 @@
+version: "1.0.0"
+markets:
+  - id: MKT001
+    name: "Mobile fitness apps for professionals"
+    category: "Health & fitness mobile applications"
+    description: >-
+      Consumer fitness applications targeting working professionals aged 25-45
+      who seek structured workout guidance but lack time for traditional gym
+      programs. The market is maturing with high download volumes but low
+      retention — most apps see 70%+ churn within 30 days, creating opportunity
+      for solutions that solve the adherence problem rather than the content problem.
+    maturity: growing
+    growth_rate: "8.5% CAGR 2024-2028"
+    actors: [ACT001, ACT002]
+    contexts: [CTX001]
+    forces: [MFR001, MFR002, MFR003]
+    evidence_refs: [EVD001, EVD002]
+
+forces:
+  - id: MFR001
+    name: "AI personalization raising user expectations"
+    force_type: technological
+    direction: accelerating
+    impact: high
+    time_horizon: near-term
+    description: >-
+      Large language models and recommendation engines are enabling adaptive
+      workout programming that responds to user feedback, fatigue signals,
+      and schedule changes in real time. Users increasingly expect fitness
+      apps to "know them" rather than offering static plans. Apps without
+      adaptive capabilities are losing ground to AI-native alternatives.
+    affected_needs: [NED001, NED002]
+    evidence_refs: [EVD001]
+
+  - id: MFR002
+    name: "Retention crisis in fitness apps"
+    force_type: economic
+    direction: stable
+    impact: high
+    time_horizon: near-term
+    description: >-
+      Industry-wide retention rates remain poor — fewer than 25% of users
+      are active after 90 days. The primary cause is not content quality but
+      program-life fit: plans do not adapt when users travel, get sick, or
+      have schedule changes. This forces high customer acquisition costs and
+      compresses LTV, making subscription economics fragile.
+    affected_needs: [NED003]
+    evidence_refs: [EVD002]
+
+  - id: MFR003
+    name: "Wearable integration as table stakes"
+    force_type: technological
+    direction: accelerating
+    impact: medium
+    time_horizon: near-term
+    description: >-
+      Apple Watch, Garmin, and Whoop have created an ecosystem where users
+      expect fitness apps to ingest biometric data (heart rate, HRV, sleep
+      quality) and adjust recommendations accordingly. Apps without wearable
+      integration are perceived as less sophisticated regardless of content quality.
+    affected_needs: [NED002]
+    evidence_refs: [EVD003]

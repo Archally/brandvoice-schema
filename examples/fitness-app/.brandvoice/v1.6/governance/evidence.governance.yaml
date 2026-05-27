@@ -1,0 +1,96 @@
+version: "1.0.0"
+evidence:
+  - id: EVD001
+    title: "AI personalization in fitness apps — adoption and effectiveness"
+    type: secondary-research
+    date: "2025-11-15"
+    source_type: industry-report
+    publisher: "Deloitte Digital"
+    summary: >-
+      AI-driven fitness personalization increases user engagement by 35-50%
+      compared to static programming. Apps with adaptive difficulty see
+      significantly higher 30-day retention. The technology is transitioning
+      from differentiator to expectation in the premium tier.
+    confidence: moderate-evidence
+    supports: [MFR001, NED002]
+
+  - id: EVD002
+    title: "Fitness app retention benchmarks 2025"
+    type: secondary-research
+    date: "2025-09-20"
+    source_type: industry-report
+    publisher: "Adjust / Apptopia"
+    summary: >-
+      Average 30-day retention for fitness apps is 22%. Apps with schedule
+      adaptation features retain 38% at 30 days. Primary churn driver is
+      plan rigidity — 61% of churned users cite "plan did not fit my
+      schedule" as the reason for abandonment.
+    confidence: strong-evidence
+    supports: [MFR002, NED001, OPP001]
+
+  - id: EVD003
+    title: "Wearable device market penetration among professionals"
+    type: survey
+    date: "2025-08-10"
+    source_type: industry-report
+    publisher: "IDC Wearables Quarterly"
+    summary: >-
+      42% of professionals aged 25-45 own a fitness-capable wearable.
+      Among fitness app premium subscribers, wearable ownership is 67%.
+      HRV and sleep data are the most-requested integration points.
+    confidence: moderate-evidence
+    supports: [MFR003]
+
+  - id: EVD004
+    title: "Competitor pricing and feature comparison"
+    type: competitor-intelligence
+    date: "2026-01-15"
+    source_type: competitor-website
+    summary: >-
+      Fitbod at $12.99/month focuses exclusively on strength with strong
+      AI but narrow content. Nike Training Club is free with broad content
+      but no personalization. Neither solves schedule adaptation. Gap exists
+      in the premium adaptive + broad content quadrant.
+    confidence: moderate-evidence
+    supports: [CPR001, CPR002]
+
+  - id: EVD005
+    title: "Personal training market pricing and constraints"
+    type: secondary-research
+    date: "2025-10-05"
+    source_type: industry-report
+    publisher: "IHRSA"
+    summary: >-
+      Average personal training session costs $65-75 in the US. Most
+      clients train 2x/week ($520-600/month). 73% of personal training
+      clients cite scheduling conflicts as the primary frustration.
+      Price-to-value gap is the core opportunity for AI coaching.
+    confidence: moderate-evidence
+    supports: [CPR003, OPP001]
+
+  - id: EVD006
+    title: "Corporate wellness program spending trends"
+    type: secondary-research
+    date: "2025-12-01"
+    source_type: industry-report
+    publisher: "Grand View Research"
+    summary: >-
+      Corporate wellness market growing at 6.8% CAGR. 58% of employers
+      with 500+ employees offer fitness app subsidies. Average per-employee
+      spend on digital wellness tools is $45-85/year.
+    confidence: weak-signal
+    supports: [OPP002]
+
+  - id: EVD007
+    title: "Inclusive fitness language research"
+    type: interview
+    date: "2026-02-10"
+    source_type: first-party
+    summary: >-
+      User interviews (n=24) revealed strong preference for "movement"
+      over "exercise" and "adapt" over "modify." Users associated "rest
+      day" with intentional recovery vs. "off day" with guilt and failure.
+      Language choices measurably affect perceived app personality.
+    confidence: moderate-evidence
+    sample_size: 24
+    supports: [VRB001]

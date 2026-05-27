@@ -1,0 +1,67 @@
+version: "1.0.0"
+opportunities:
+  - id: OPP001
+    name: "Adaptive fitness for schedule-constrained professionals"
+    status: validating
+    thesis: >-
+      Professionals who have tried and abandoned 2+ fitness apps represent
+      a high-intent, high-willingness-to-pay segment. Their churn was caused
+      by rigidity, not lack of motivation. An adaptive solution captures them
+      at premium pricing.
+    confidence: moderate-evidence
+    estimated_size: "$8.5M (year 3, 0.5% of $680M SAM)"
+    current_gap: >-
+      No major fitness app solves the "life happens" problem well. When a
+      user's meeting runs late, they travel without gym access, or they
+      slept poorly, existing apps either force the original plan or offer
+      no guidance. An app that genuinely adapts to daily reality — not just
+      fitness data but life data — would capture the segment that churns
+      from rigid programs.
+    evidence_refs: [EVD001, EVD002, EVD005]
+
+  - id: OPP002
+    name: "Corporate wellness B2B channel"
+    status: identified
+    thesis: >-
+      Once B2C retention metrics prove the adaptive model works, a B2B
+      tier with team challenges, aggregated wellness reporting, and admin
+      dashboards unlocks enterprise distribution at 3-5x per-user pricing.
+    confidence: hypothesis
+    current_gap: >-
+      Employer-sponsored wellness programs are a growing distribution channel
+      for fitness apps. Companies purchasing bulk licenses reduce CAC to near
+      zero and increase retention through social accountability. This is a
+      Phase 2 opportunity requiring B2C product-market fit first.
+    evidence_refs: [EVD006]
+
+position_maps:
+  - id: PMP001
+    name: "Personalization vs. content breadth"
+    axes:
+      - name: "Content breadth"
+        low_label: "Strength only"
+        high_label: "Full spectrum (strength, cardio, mobility, bodyweight)"
+      - name: "Personalization depth"
+        low_label: "Generic plans"
+        high_label: "Fully adaptive AI"
+    placements:
+      - entity: CPR001
+        label: "Fitbod — deep personalization, narrow content"
+        coordinates:
+          Content breadth: 30
+          Personalization depth: 70
+      - entity: CPR002
+        label: "NTC — broad content, generic plans"
+        coordinates:
+          Content breadth: 80
+          Personalization depth: 20
+    white_spaces:
+      - id: WSP001
+        name: "Broad + adaptive — the target quadrant"
+        region:
+          Content breadth: {min: 60, max: 90}
+          Personalization depth: {min: 60, max: 90}
+        description: >-
+          No major player combines broad content coverage (strength,
+          cardio, mobility, bodyweight) with deep AI personalization.
+          This is FitPulse's target position.

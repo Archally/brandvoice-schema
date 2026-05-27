@@ -1,0 +1,52 @@
+version: "1.0.0"
+north_star_metric: KPI001
+
+metrics:
+  - id: MET001
+    name: "90-day cohort retention"
+    formula: "Active users at day 90 / Activated users in cohort"
+    cadence: monthly
+    source: "Product analytics (Amplitude)"
+
+  - id: MET002
+    name: "Free-to-Pro conversion rate"
+    formula: "Pro upgrades within 60 days / Free-tier activations"
+    cadence: monthly
+    source: "Subscription analytics"
+
+  - id: MET003
+    name: "Weekly workout completion rate"
+    formula: "Completed workouts / Generated workouts per user per week"
+    cadence: weekly
+    source: "Product analytics"
+
+outcomes:
+  - id: OUT001
+    name: "90-day user retention"
+    statement: "55% of activated users still active at day 90"
+    target: "55% of activated users still active at day 90"
+    description: >-
+      The north-star retention metric. Industry benchmark is 22% at 30 days;
+      we target 55% at 90 days through adaptive programming. This metric
+      directly validates the core thesis that schedule adaptation solves
+      the retention problem.
+    measured_by: [MET001]
+    evidence_refs: [EVD002]
+
+  - id: OUT002
+    name: "Free-to-Pro conversion rate"
+    statement: "18% of free users convert to Pro within 60 days"
+    target: "18% of free users convert to Pro within 60 days"
+    description: >-
+      Measures whether the freemium model successfully demonstrates enough
+      value to drive upgrade intent. The 3-workout/week limit should create
+      natural friction for users who have established the habit.
+    measured_by: [MET002]
+    evidence_refs: [EVD002]
+
+kpis:
+  - id: KPI001
+    name: "Weekly workout completion rate"
+    metric: MET003
+    target: ">75%"
+    stage: engagement

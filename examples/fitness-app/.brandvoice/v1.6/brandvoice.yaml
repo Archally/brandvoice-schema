@@ -1,0 +1,45 @@
+version: "1.0.0"
+schemaVersion: "1.6.1"
+name: "FitPulse"
+description: >-
+  AI-powered fitness coaching app for busy professionals who want
+  personalized workout plans that adapt to their schedule, energy level,
+  and available equipment.
+scope: fitpulse
+tags: [b2c, mobile, fitness, health-tech, ai]
+
+profiles:
+  - name: JTBD + StoryBrand
+    category: strategy
+    status: active
+    applies_to: [strategy.market_product, strategy.messaging]
+
+market:
+  landscape:
+    $ref: "market/landscape.market.yaml"
+  competition:
+    $ref: "market/competition.market.yaml"
+  opportunities:
+    $ref: "market/opportunities.market.yaml"
+
+strategy:
+  brand_core:
+    $ref: "strategy/brand-core.strategy.yaml"
+  market_product:
+    $ref: "strategy/market-product.strategy.yaml"
+  messaging:
+    $ref: "strategy/messaging.strategy.yaml"
+
+activation:
+  channels:
+    $ref: "activation/channels.activation.yaml"
+  campaigns:
+    $ref: "activation/campaigns.activation.yaml"
+
+governance:
+  evidence:
+    $ref: "governance/evidence.governance.yaml"
+  decisions:
+    $ref: "governance/decisions.governance.yaml"
+  measurement:
+    $ref: "governance/measurement.governance.yaml"

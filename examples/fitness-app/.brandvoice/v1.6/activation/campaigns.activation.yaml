@@ -1,0 +1,36 @@
+version: "1.0.0"
+programs:
+  - id: PRG001
+    name: "Adaptive Fitness Education"
+    objective: >-
+      Ongoing content program educating the audience on why adaptive
+      training outperforms rigid programming for busy professionals.
+    message_house_refs: [MHS001]
+    campaign_refs: [CMP001]
+    status: active
+
+content_pillars:
+  - id: CPL001
+    name: "Real life, real workouts"
+    angle: >-
+      Content showing FitPulse adapting to real scenarios — travel, time
+      crunches, low energy days. Demonstrates product value through
+      authentic use cases rather than aspirational imagery.
+    message_refs: [MSG002]
+    program_refs: [PRG001]
+
+campaigns:
+  - id: CMP001
+    name: "New Year Comeback"
+    objective: >-
+      Q1 campaign targeting professionals who abandoned their gym routine
+      or previous fitness app. Messaging focuses on "this time it adapts
+      to you" — positioning FitPulse as the app for people who have tried
+      and failed before.
+    start_date: "2027-01-02"
+    end_date: "2027-01-31"
+    status: draft
+    message_refs: [MSG002, MSG003]
+    channel_refs: [CHN001, CHN002]
+    outcome_refs: [OUT001]
+    opportunity_refs: [OPP001]

@@ -1,0 +1,77 @@
+version: "1.0.0"
+competitors:
+  - id: CPR001
+    name: "Fitbod"
+    type: direct
+    description: >-
+      AI-driven strength training app that generates workouts based on
+      muscle recovery, available equipment, and training history. Strong
+      in gym-based strength training but weak in bodyweight, outdoor,
+      and travel-friendly programming. Subscription at $12.99/month.
+    threat_level: high
+    pricing:
+      model: per-seat
+      currency: USD
+      tiers:
+        - name: "Monthly"
+          price: "$12.99/month"
+          price_numeric: 12.99
+          billing_period: monthly
+        - name: "Annual"
+          price: "$79.99/year"
+          price_numeric: 6.67
+          billing_period: annual
+    strengths:
+      - "Muscle group tracking with recovery-based programming"
+      - "Large exercise library with video demonstrations"
+      - "Apple Watch integration with real-time rep counting"
+    weaknesses:
+      - "Limited bodyweight and minimal-equipment options"
+      - "No schedule awareness — does not adapt to time constraints"
+      - "Purely strength-focused; no cardio, mobility, or hybrid programming"
+    evidence_refs: [EVD004]
+
+  - id: CPR002
+    name: "Nike Training Club"
+    type: direct
+    description: >-
+      Free-to-use fitness app backed by Nike's brand and content library.
+      Offers guided video workouts across strength, cardio, yoga, and
+      mobility. Strength is zero barrier to entry and brand trust.
+      Weakness is lack of personalization — programs are generic and
+      do not adapt to individual progress or schedule changes.
+    threat_level: medium
+    pricing:
+      model: free
+    strengths:
+      - "Free access with high-quality production value"
+      - "Nike brand trust and athlete endorsements"
+      - "Broad content: strength, cardio, yoga, mobility"
+    weaknesses:
+      - "No AI personalization or adaptive programming"
+      - "Generic plans with no schedule or equipment awareness"
+      - "Limited progress tracking beyond workout completion"
+    evidence_refs: [EVD004]
+
+  - id: CPR003
+    name: "Personal trainer (in-person)"
+    type: substitute
+    description: >-
+      Traditional personal training remains the gold standard for
+      personalized fitness guidance. Trainers adapt in real time to
+      client energy, form, and preferences. However, cost ($60-150/session)
+      and scheduling rigidity make it inaccessible for many professionals.
+      FitPulse positions as "personal trainer intelligence at app prices."
+    threat_level: medium
+    pricing:
+      model: non-monetary
+      non_monetary_cost: "$60-150 per session, typically $240-600/month for 2x/week"
+    strengths:
+      - "Real-time form correction and motivation"
+      - "True personalization through human judgment"
+      - "Accountability through scheduled appointments"
+    weaknesses:
+      - "Cost prohibitive for regular use ($240-600/month)"
+      - "Schedule inflexibility — must coordinate two calendars"
+      - "Quality varies dramatically by trainer"
+    evidence_refs: [EVD005]
