@@ -1,0 +1,162 @@
+version: "1.0.0"
+market_refs: [MKT001, MKT002]
+
+actors:
+  - id: ACT001
+    name: "VP Engineering / CTO"
+    role: buyer
+    description: >-
+      Senior engineering leader at a product company with 50-500 developers.
+      Responsible for team effectiveness, headcount justification, and
+      engineering culture. Needs data to make staffing decisions, push back
+      on meeting culture, and demonstrate engineering investment value to
+      the board. Budget authority for dev tools up to $50K/year.
+    priority: high
+    evidence_refs: [EVD002, EVD005]
+
+  - id: ACT002
+    name: "Engineering manager"
+    role: user
+    description: >-
+      Front-line manager of 5-12 engineers. Lives the meeting-overload
+      problem daily. Wants to protect their team's deep work but lacks
+      data to justify calendar changes to product and business stakeholders.
+      Champions tools bottom-up but needs VP Eng approval for team-wide
+      adoption.
+    priority: high
+    evidence_refs: [EVD001]
+
+  - id: ACT003
+    name: "Individual engineer"
+    role: user
+    description: >-
+      Software developer or senior engineer who wants to understand their
+      own time patterns and have data to push back on excessive meetings.
+      Most privacy-sensitive persona — will resist adoption if the tool
+      feels like surveillance. Adoption by this persona is the critical
+      trust signal for team-wide rollout.
+    priority: medium
+    evidence_refs: [EVD006]
+
+contexts:
+  - id: CTX001
+    name: "Post-layoff productivity pressure"
+    trigger: >-
+      Tech industry layoffs in 2023-2025 created sustained pressure on
+      remaining engineering teams to demonstrate productivity with fewer
+      people. CTOs need data to justify current headcount and resist
+      further reductions. This context makes time intelligence a defensive
+      tool, not just an optimization tool.
+    evidence_refs: [EVD002]
+
+  - id: CTX002
+    name: "Remote/hybrid engineering teams"
+    trigger: >-
+      Distributed teams have less visibility into how time is spent. In
+      co-located settings, managers could sense when a team was in too many
+      meetings. Remote work removed those ambient signals, creating demand
+      for data-driven alternatives.
+    evidence_refs: [EVD004]
+
+needs:
+  - id: NED001
+    statement: >-
+      My team spends too much time in meetings and I cannot quantify how
+      much deep work we are losing. I need data that shows the meeting-to-
+      making ratio across the team so I can make evidence-based arguments
+      for calendar reform.
+    actors: [ACT001, ACT002]
+    need_type: functional
+    urgency: critical
+    evidence_refs: [EVD001, EVD004]
+
+  - id: NED002
+    statement: >-
+      I need to understand time allocation patterns across sprints, projects,
+      and team members without creating a surveillance environment. The data
+      should help the team self-optimize, not enable micromanagement.
+    actors: [ACT001, ACT002]
+    need_type: functional
+    urgency: high
+    evidence_refs: [EVD002, EVD006]
+
+  - id: NED003
+    statement: >-
+      The board asks how our engineering investment translates to outcomes.
+      I need to show where time goes across initiatives, maintenance, and
+      toil — without reducing engineering to a cost center measured by
+      hours logged.
+    actors: [ACT001]
+    need_type: functional
+    urgency: high
+    evidence_refs: [EVD005]
+
+  - id: NED004
+    statement: >-
+      I will not use a tool that tracks my keystrokes or screenshots my
+      screen. I need to understand my own time patterns on my terms, with
+      control over what is shared with my manager.
+    actors: [ACT003]
+    need_type: emotional
+    urgency: critical
+    evidence_refs: [EVD006]
+
+offerings:
+  - id: OFF001
+    name: "Chronoflow Team"
+    value_statement: >-
+      Team-level time intelligence that shows meeting load, deep work ratios,
+      and workflow patterns — aggregated to protect individual privacy while
+      giving engineering leaders the data to drive cultural change.
+    capabilities:
+      - "Calendar and dev tool integration (Google Calendar, GitHub, Jira)"
+      - "Team-level deep work ratio dashboard"
+      - "Meeting load analysis with fragmentation scoring"
+      - "Weekly insight reports with actionable recommendations"
+      - "Individual view (opt-in, visible only to the individual)"
+    solves_needs: [NED001, NED002, NED004]
+    evidence_refs: [EVD001]
+
+  - id: OFF002
+    name: "Chronoflow Enterprise"
+    value_statement: >-
+      Organization-wide time intelligence with investment allocation views,
+      cross-team benchmarking, and executive reporting — enabling CTOs to
+      show the board where engineering time goes and why.
+    capabilities:
+      - "All Team features"
+      - "Investment allocation across initiatives, maintenance, and toil"
+      - "Cross-team benchmarking with anonymized comparisons"
+      - "Board-ready executive dashboards"
+      - "API access for custom analytics and data warehouse integration"
+      - "SSO, SCIM, and audit logging"
+    solves_needs: [NED001, NED002, NED003]
+    evidence_refs: [EVD002]
+
+positioning:
+  - id: POS001
+    market_category: "Engineering time intelligence"
+    differentiated_claim: >-
+      For engineering leaders who need time allocation data without
+      surveillance, Chronoflow is the time intelligence platform that
+      reveals team-level patterns while keeping individual data private
+      — so you can fix meeting culture with data, not mandates.
+    category_strategy:
+      frame_of_reference: "Engineering time intelligence"
+      category_definition: "Privacy-first team time analytics for engineering organizations"
+      category_move: create
+    competitors: [CPR001, CPR002, CPR003]
+    evidence_refs: [EVD001, EVD006]
+
+  - id: POS002
+    market_category: "Developer productivity measurement"
+    differentiated_claim: >-
+      Unlike delivery metrics tools that measure output, Chronoflow
+      measures input quality — how much uninterrupted time teams have
+      for complex work. Better inputs produce better outputs.
+    category_strategy:
+      frame_of_reference: "Developer productivity measurement"
+      category_definition: "Input-quality measurement for engineering teams"
+      category_move: redefine
+    competitors: [CPR002]
+    evidence_refs: [EVD002, EVD005]

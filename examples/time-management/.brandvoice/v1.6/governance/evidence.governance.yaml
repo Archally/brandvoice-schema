@@ -1,0 +1,141 @@
+version: "1.0.0"
+evidence:
+  - id: EVD001
+    title: "Deep work hours and engineering team effectiveness"
+    type: secondary-research
+    date: "2025-08-15"
+    source_type: industry-report
+    publisher: "Microsoft Research / IEEE Software"
+    summary: >-
+      Study of 5,000 developers across 12 organizations found that engineers
+      with 4+ hours of daily uninterrupted time completed complex tasks 2.1x
+      faster than those with fragmented schedules. Context switching between
+      meetings and coding incurred an average 23-minute recovery time per
+      interruption. Teams with explicit deep work policies reported 35%
+      higher satisfaction scores.
+    confidence: strong-evidence
+    supports: [MFR001, NED001, OPP001]
+
+  - id: EVD002
+    title: "Engineering leadership survey — productivity measurement"
+    type: survey
+    date: "2025-11-20"
+    source_type: industry-report
+    publisher: "Gartner"
+    summary: >-
+      Survey of 400 VP Eng and CTOs: 78% report difficulty quantifying
+      engineering productivity to the board. 62% feel pressure to justify
+      headcount with metrics. 45% have tried and abandoned at least one
+      productivity measurement tool. Top complaint: tools measure activity,
+      not value. Secondary complaint: engineer resistance to perceived
+      surveillance.
+    confidence: strong-evidence
+    supports: [MFR002, NED002, NED003, OPP001]
+
+  - id: EVD003
+    title: "Developer experience platform market sizing"
+    type: secondary-research
+    date: "2025-10-01"
+    source_type: industry-report
+    publisher: "Forrester"
+    summary: >-
+      Developer experience platform market estimated at $4.2B in 2025,
+      growing to $9.8B by 2028. Time intelligence and workflow analytics
+      represent approximately 15-20% of the total addressable market.
+      Fastest-growing segment is team-level analytics (28% CAGR) versus
+      individual tools (12% CAGR).
+    confidence: moderate-evidence
+    supports: [MKT002, EPL001]
+
+  - id: EVD004
+    title: "Remote work meeting frequency research"
+    type: secondary-research
+    date: "2025-06-10"
+    source_type: industry-report
+    publisher: "Harvard Business Review"
+    summary: >-
+      Analysis of 2.4M meeting records across 200 organizations showed
+      meeting frequency increased 38% between 2020-2025. Average engineer
+      spends 16.2 hours per week in meetings, up from 11.7 hours pre-pandemic.
+      Meeting length decreased (avg -11 minutes) but frequency increased
+      (+3.4 meetings/week), resulting in greater calendar fragmentation.
+    confidence: strong-evidence
+    supports: [MFR001, CTX002]
+
+  - id: EVD005
+    title: "Board-level engineering investment visibility"
+    type: interview
+    date: "2026-01-15"
+    source_type: first-party
+    sample_size: 18
+    summary: >-
+      Interviews with 18 CTOs at Series B-D companies revealed a consistent
+      pattern: boards ask for engineering ROI data quarterly, but CTOs lack
+      tools that present engineering investment in business terms. Most rely
+      on project management estimates (Jira story points) which they
+      acknowledge are unreliable. 14 of 18 expressed willingness to pay
+      $15-25/engineer/month for a tool that solved this problem.
+    confidence: moderate-evidence
+    supports: [NED003, MFR002, VRB002]
+
+  - id: EVD006
+    title: "Employee monitoring backlash in engineering teams"
+    type: secondary-research
+    date: "2025-09-05"
+    source_type: industry-report
+    publisher: "Gartner"
+    summary: >-
+      Report found that 56% of software engineers would consider leaving
+      a company that deployed screen monitoring tools. Teams where
+      surveillance-style productivity tools were deployed saw 42% increase
+      in attrition intent and 28% decrease in discretionary effort.
+      Privacy-first alternatives showed no negative adoption effects.
+    confidence: strong-evidence
+    supports: [MFR003, NED004, OPP001]
+
+  - id: EVD007
+    title: "AI adoption impact on engineering time allocation"
+    type: secondary-research
+    date: "2026-02-01"
+    source_type: industry-report
+    publisher: "GitHub / Accenture"
+    summary: >-
+      Joint study of 1,200 engineering teams post-AI adoption found that
+      coding time decreased 18% on average, but code review time increased
+      31% and prompt engineering emerged as a new 12% time category.
+      Total time savings were smaller than expected (net 4-7%) because
+      time shifted rather than disappeared. Teams lacked measurement to
+      understand the transition.
+    confidence: moderate-evidence
+    supports: [MFR004, OPP003]
+
+  - id: EVD008
+    title: "Competitor pricing and positioning comparison"
+    type: competitor-intelligence
+    date: "2026-03-01"
+    source_type: competitor-website
+    summary: >-
+      Competitive analysis of 4 direct competitors: Clockwise (free-$6.75,
+      calendar optimization), Jellyfish ($15+, delivery metrics), Toggl
+      (free-$20, manual time tracking), RescueTime (free-$12, individual
+      desktop tracking). No competitor combines team-level time intelligence
+      with a privacy-first architecture. Jellyfish is closest in insight
+      depth but faces engineer resistance. Clockwise is trusted but lacks
+      analytics.
+    confidence: moderate-evidence
+    supports: [CPR001, CPR002, CPR003, CPR004]
+
+  - id: EVD009
+    title: "Engineering leadership content consumption patterns"
+    type: survey
+    date: "2025-12-15"
+    source_type: industry-report
+    publisher: "LeadDev"
+    summary: >-
+      Survey of 600 engineering leaders: 72% discover new dev tools through
+      conference talks and peer recommendations (not ads). LinkedIn is the
+      primary professional content channel (68%), followed by engineering
+      blogs (54%) and podcast appearances (31%). Cold outbound email has
+      the lowest trust score (8%) in the engineering leadership segment.
+    confidence: moderate-evidence
+    supports: [CHN001, CHN002, CHN003, EPL002]

@@ -1,0 +1,146 @@
+version: "1.0.0"
+message_houses:
+  - id: MHS001
+    name: "Privacy-first time intelligence"
+    roof_claim: "See where your team's time goes — without watching anyone"
+    positioning_refs: [POS001]
+    pillars:
+      - id: MPL001
+        title: "Team patterns, not individual tracking"
+        summary: >-
+          Aggregated team-level insights that reveal meeting load and deep
+          work ratios without exposing individual behavior. Privacy is
+          architecture, not policy.
+        proof_refs: [PRF001]
+        message_refs: [MSG001]
+      - id: MPL002
+        title: "Actionable signals, not dashboard noise"
+        summary: >-
+          Weekly insights that tell you what to change and why, not just
+          charts that describe what happened. Every signal comes with a
+          recommended action.
+        proof_refs: [PRF002]
+        message_refs: [MSG002]
+      - id: MPL003
+        title: "Built for engineers, trusted by engineers"
+        summary: >-
+          Designed by an engineering team that lived the meeting-overload
+          problem. Individual engineers opt in to their own view; managers
+          see only aggregated patterns.
+        proof_refs: [PRF003]
+        message_refs: [MSG003]
+
+  - id: MHS002
+    name: "Investment intelligence for CTOs"
+    roof_claim: "Show the board where engineering time goes — and why it matters"
+    positioning_refs: [POS002]
+    pillars:
+      - id: MPL004
+        title: "Time allocation across initiatives"
+        summary: >-
+          See how engineering time distributes across new features,
+          maintenance, toil, and support. Make investment decisions
+          based on actual time data, not estimates.
+        message_refs: [MSG004]
+      - id: MPL005
+        title: "Input quality drives output quality"
+        summary: >-
+          Teams with 60%+ deep work time ship 2x more reliably. Measure
+          the input conditions that predict delivery success.
+        proof_refs: [PRF004]
+        message_refs: [MSG005]
+
+messages:
+  - id: MSG001
+    title: "Privacy by architecture"
+    status: active
+    core_statement: >-
+      Chronoflow aggregates calendar and tool signals at the team level.
+      Individual data is visible only to the individual — never to managers,
+      never to HR, never to anyone else. Privacy is enforced by architecture,
+      not by policy.
+    proof_points: [PRF001]
+    evidence_refs: [EVD006]
+
+  - id: MSG002
+    title: "From insight to action"
+    status: active
+    core_statement: >-
+      Every Monday, your team gets a time intelligence brief — not just charts,
+      but specific signals: which meetings could be async, where context
+      switching is highest, and how this week's deep work ratio compares to
+      your team's best weeks.
+    proof_points: [PRF002]
+    evidence_refs: [EVD001]
+
+  - id: MSG003
+    title: "Engineers trust what engineers build"
+    status: active
+    core_statement: >-
+      Chronoflow was built by a team that lost 18 hours a week to meetings.
+      We built the tool we wished we had — and designed it so your team
+      would actually want to use it.
+    proof_points: [PRF003]
+    evidence_refs: [EVD006]
+
+  - id: MSG004
+    title: "Investment allocation visibility"
+    status: active
+    core_statement: >-
+      When the board asks where engineering time goes, show them — not
+      estimates from project managers, but actual time data categorized
+      across new features, maintenance, infrastructure, and support.
+    proof_points: [PRF004]
+    evidence_refs: [EVD005]
+
+  - id: MSG005
+    title: "Deep work predicts delivery"
+    status: active
+    core_statement: >-
+      Our data shows that teams with 60%+ uninterrupted deep work time
+      hit sprint commitments 2x more consistently. Chronoflow measures the
+      leading indicator, not just the lagging one.
+    proof_points: [PRF004]
+    evidence_refs: [EVD001, EVD004]
+
+proof_points:
+  - id: PRF001
+    claim: "Privacy architecture — team-level aggregation with individual opt-in"
+    evidence: "Privacy-by-design architecture: all team dashboards show aggregated data only. Individual view requires explicit opt-in by the engineer. No keystroke logging, no screenshots, no screen time tracking."
+    evidence_refs: [EVD006]
+
+  - id: PRF002
+    claim: "Weekly actionable signals reduce meeting load by 15-25%"
+    evidence: "Beta customers who acted on weekly signals reduced team meeting load by an average of 22% within 8 weeks. Primary mechanism: identifying recurring meetings with low attendance-to-value ratios."
+    evidence_refs: [EVD001]
+
+  - id: PRF003
+    claim: "87% engineer adoption rate in beta — highest in the category"
+    evidence: "During 6-month beta with 12 teams, individual opt-in rate averaged 87%, compared to industry average of 40-55% for productivity tools. Exit surveys cited privacy architecture as the primary adoption driver."
+    evidence_refs: [EVD006]
+
+  - id: PRF004
+    claim: "60%+ deep work correlates with 2x delivery reliability"
+    evidence: "Analysis of 850 engineering weeks across beta customers showed that teams maintaining 60%+ deep work ratio hit sprint commitments 2.1x more consistently than teams below 40%."
+    evidence_refs: [EVD001, EVD004]
+
+journey_stages:
+  - id: JSG001
+    name: "Problem recognition"
+    intent: "Engineering leader realizes meeting culture is hurting delivery"
+    universal_phase: aware
+
+  - id: JSG002
+    name: "Solution evaluation"
+    intent: "Leader evaluates time intelligence tools and compares approaches"
+    universal_phase: engaged
+
+  - id: JSG003
+    name: "Team pilot"
+    intent: "Leader runs Chronoflow with one team to validate ROI"
+    universal_phase: committed
+
+  - id: JSG004
+    name: "Organization rollout"
+    intent: "Leader expands to multiple teams after pilot success"
+    universal_phase: active

@@ -1,0 +1,26 @@
+version: "1.0.0"
+experiments:
+  - id: TST001
+    hypothesis: >-
+      A limited free tier (individual view only, no team features) will
+      generate 3x more activations than a 30-day full-feature trial,
+      with comparable paid conversion rates. The free tier creates ongoing
+      product awareness and word-of-mouth that a time-limited trial cannot.
+    method: ab-test
+    status: planned
+    variants:
+      - name: "Free tier (individual view only)"
+      - name: "30-day full-feature trial"
+    success_metrics: [MET001]
+    evidence_refs: [EVD009]
+
+  - id: TST002
+    hypothesis: >-
+      A single conference talk at LeadDev generates more qualified trial
+      signups per dollar than 3 months of sponsored LinkedIn content,
+      because the engineering leadership audience trusts peer presentations
+      over branded content.
+    method: incrementality
+    status: planned
+    success_metrics: [MET005]
+    evidence_refs: [EVD009]

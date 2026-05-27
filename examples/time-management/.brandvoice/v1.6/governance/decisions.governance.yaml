@@ -1,0 +1,90 @@
+version: "1.0.0"
+decisions:
+  - id: DEC001
+    title: "Privacy-first architecture over configurable privacy"
+    status: accepted
+    date: "2025-06-15"
+    rationale:
+      problem: >-
+        Should individual-level data be available to managers with team
+        admin permissions, or should the architecture enforce team-level
+        aggregation with no manager access to individual data?
+      alternatives:
+        - "Configurable privacy: let each organization set their own policy"
+        - "Privacy-first: architecture enforces aggregation, individual view opt-in only"
+        - "Full transparency: all data visible to managers with team context"
+      selected: >-
+        Privacy-first architecture. Individual time data is stored locally
+        and visible only to the individual. Team dashboards show aggregated
+        patterns only. No admin override exists.
+      why: >-
+        Configurable privacy creates a race to the bottom — organizations
+        under pressure will choose transparency, engineers will resist, and
+        the tool becomes associated with surveillance. An architectural
+        guarantee is the only credible trust signal for the engineering
+        persona (ACT003). Beta data showed 87% adoption with privacy-first
+        versus 43% with configurable privacy.
+    evidence_refs: [EVD006]
+
+  - id: DEC002
+    title: "Product-led growth with enterprise sales assist"
+    status: accepted
+    date: "2025-09-01"
+    rationale:
+      problem: >-
+        Should Chronoflow pursue enterprise sales (top-down) or product-led
+        growth (bottom-up) as the primary go-to-market motion?
+      alternatives:
+        - "Enterprise sales-led: SDR outbound to VP Eng, demo-driven"
+        - "Product-led growth: free trial, self-serve, sales assist for expansion"
+        - "Community-led: open-source core with commercial add-ons"
+      selected: >-
+        Product-led growth with sales assist for Enterprise tier. Free 30-day
+        team trial with no sales interaction required. Sales team activates
+        for organizations expanding beyond pilot team or needing Enterprise
+        features. Conference and content marketing drive top-of-funnel.
+      why: >-
+        Engineering leaders trust peer recommendations and product experience
+        over sales pitches. LeadDev survey shows cold outbound has 8% trust
+        in this segment. PLG lets the product prove value before sales
+        enters. Sales assist captures the expansion motion where deal sizes
+        justify the cost of sales.
+    evidence_refs: [EVD009, EVD005]
+
+risks:
+  - id: RSK001
+    title: "Perception as surveillance despite privacy architecture"
+    likelihood: medium
+    impact: high
+    mitigation: >-
+      Publish the privacy architecture as an open technical document. Run
+      independent privacy audit. Make the individual-only view the default
+      onboarding experience so engineers encounter their own data before
+      any team aggregation. Include clear 'what your manager can see'
+      documentation with screenshots.
+    status: identified
+    evidence_refs: [EVD006]
+
+  - id: RSK002
+    title: "Clockwise acquisition by Atlassian blocks calendar integration"
+    likelihood: low
+    impact: medium
+    mitigation: >-
+      Build direct Google Calendar and Microsoft 365 integrations rather
+      than depending on Clockwise APIs. Maintain calendar data pipeline
+      independence from any single vendor. Monitor Atlassian API terms
+      for exclusive restrictions.
+    status: identified
+    evidence_refs: [EVD008]
+
+  - id: RSK003
+    title: "Engineering leaders see time intelligence as a nice-to-have"
+    likelihood: medium
+    impact: high
+    mitigation: >-
+      Position around the defensive use case first — headcount justification
+      during budget reviews — rather than the aspirational use case (deep
+      work optimization). The defensive buyer has budget urgency. Lead
+      messaging with CFO/board pressure, not team wellness.
+    status: mitigating
+    evidence_refs: [EVD002, EVD005]

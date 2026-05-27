@@ -1,0 +1,53 @@
+version: "1.0.0"
+channels:
+  - id: CHN001
+    name: "LinkedIn"
+    media_type: owned
+    tone_adaptation: >-
+      Professional thought leadership content targeting VP Eng and CTOs.
+      Data-driven posts sharing anonymized time intelligence insights
+      from customer base. Engineering-native vocabulary, no marketing
+      speak. Posts should feel like a peer sharing data, not a vendor
+      selling a product.
+    actor_refs: [ACT001, ACT002]
+    journey_stage_refs: [JSG001]
+    objective: awareness
+    evidence_refs: [EVD009]
+
+  - id: CHN002
+    name: "Engineering blog"
+    media_type: owned
+    tone_adaptation: >-
+      Long-form technical content on time intelligence methodology,
+      deep work research, and meeting culture analysis. SEO-optimized
+      for engineering leadership queries. Each post should provide
+      standalone value without requiring product adoption.
+    actor_refs: [ACT001, ACT002]
+    journey_stage_refs: [JSG001, JSG002]
+    objective: awareness
+    evidence_refs: [EVD009]
+
+  - id: CHN003
+    name: "Engineering leadership conferences"
+    media_type: earned
+    tone_adaptation: >-
+      Speaking slots at LeadDev, QCon, and CTO Summit. Content focuses
+      on original research findings from Chronoflow data — sharing the
+      methodology and insights, not pitching the product. Conference
+      talks are the highest-trust channel for this audience.
+    actor_refs: [ACT001]
+    journey_stage_refs: [JSG001, JSG002]
+    objective: awareness
+    evidence_refs: [EVD009]
+
+  - id: CHN004
+    name: "Product-led trial"
+    media_type: owned
+    tone_adaptation: >-
+      Free 30-day team trial with guided onboarding. The product itself
+      is the primary conversion channel — time intelligence reports
+      generated during the trial demonstrate value concretely. Requires
+      no sales interaction for teams under 50 engineers.
+    actor_refs: [ACT001, ACT002, ACT003]
+    journey_stage_refs: [JSG003]
+    objective: conversion

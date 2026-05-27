@@ -1,0 +1,44 @@
+version: "1.0.0"
+ecosystem_players:
+  - id: EPL001
+    name: "LinearB"
+    type: organization
+    relationship_type: complementary-expert
+    description: >-
+      Developer workflow analytics platform focused on DORA metrics and
+      delivery pipeline optimization. Complementary to Chronoflow — LinearB
+      measures delivery output while Chronoflow measures time input.
+    cooperation_potential: >-
+      Joint integration that correlates time allocation patterns with
+      delivery metrics. Teams could see that weeks with 60%+ deep work
+      correlate with 2x higher deployment frequency. Co-marketing to
+      the same VP Eng buyer persona.
+    collaboration_ideas:
+      - "Bi-directional data integration for time-to-delivery correlation"
+      - "Joint webinar: From time intelligence to delivery intelligence"
+      - "Co-authored research report on deep work and DORA metrics"
+    status: prospective
+    target_actors: [ACT001]
+    target_markets: [MKT002]
+    evidence_refs: [EVD003]
+
+  - id: EPL002
+    name: "Engineering leadership communities"
+    type: community
+    relationship_type: distribution-channel
+    description: >-
+      Communities like LeadDev, CTO Craft, and Engineering Managers Slack
+      groups serve as trusted peer networks where engineering leaders share
+      tool recommendations. Presence in these communities drives bottom-up
+      adoption and word-of-mouth referrals.
+    cooperation_potential: >-
+      Sponsored content, speaking slots, and community partnerships that
+      position Chronoflow as a thought leader in engineering time
+      intelligence rather than just a product vendor.
+    collaboration_ideas:
+      - "LeadDev conference talk: What 10,000 engineering weeks taught us about deep work"
+      - "CTO Craft workshop: Building a no-surveillance productivity culture"
+      - "Monthly data insight shared in Engineering Managers Slack"
+    status: active
+    target_actors: [ACT001, ACT002]
+    evidence_refs: [EVD009]

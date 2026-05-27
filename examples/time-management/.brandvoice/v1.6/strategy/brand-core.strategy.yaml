@@ -1,0 +1,103 @@
+version: "1.0.0"
+brands:
+  - id: BRD001
+    name: "Chronoflow"
+    brand_role: product
+    purpose: >-
+      To give engineering teams the time intelligence they need to protect
+      deep work, eliminate meeting waste, and make better staffing decisions
+      — without compromising individual privacy.
+    promise: >-
+      See where your team's time goes. Protect what matters.
+    values:
+      - "Privacy by design — team patterns, never individual surveillance"
+      - "Signal over noise — actionable insights, not dashboards for dashboards"
+      - "Engineers first — built for the people doing the work, not just their managers"
+    personality:
+      - analytical
+      - trustworthy
+      - direct
+      - empowering
+    archetypes: [ARC001]
+    tone_refs: [TON001]
+    narrative:
+      framework: sb7
+      hero: "An engineering leader who wants their team to do great work"
+      problem: "Meetings are eating deep work, but you cannot fix what you cannot measure"
+      guide: "Chronoflow, built by engineers who lived the meeting-overload problem"
+      plan: "1. Connect your calendar and dev tools. 2. See team time patterns in one week. 3. Act on data-driven recommendations."
+      call_to_action: "Start your team's free time audit"
+      failure: "Another quarter of 'we need to fix our meeting culture' with no data to drive change"
+      success: "Your team reclaimed 8 hours per week of deep work — and you have the data to prove it"
+    evidence_refs: [EVD001]
+
+archetypes:
+  - id: ARC001
+    name: "Sage"
+    description: >-
+      Chronoflow embodies the Sage archetype — seeking truth through data,
+      providing clarity through analysis, and empowering decisions through
+      insight. The brand never prescribes; it illuminates so teams can
+      decide for themselves.
+
+tone_guidelines:
+  - id: TON001
+    label: "Data-informed peer"
+    do:
+      - "Lead with data and evidence, not opinions"
+      - "Use engineering vocabulary naturally — we speak the same language"
+      - "Present findings as insights to act on, not judgments"
+      - "Acknowledge complexity — time optimization is not a solved problem"
+    avoid:
+      - "Surveillance language ('monitor', 'track employees', 'compliance')"
+      - "Management-speak that alienates engineers ('leverage', 'synergy', 'human capital')"
+      - "Prescriptive tone — show the data, let teams decide"
+      - "Gamification language ('productivity score', 'leaderboard')"
+    dimensions:
+      humor: 0
+      formality: 0
+      respect: 2
+      enthusiasm: 0
+
+verbal_guidelines:
+  - id: VRB001
+    name: "Privacy-first terminology"
+    rationale: >-
+      Engineers are hyper-sensitive to surveillance language after high-profile
+      backlash against employee monitoring tools. Word choice directly affects
+      adoption willingness. Using 'team patterns' instead of 'tracking' and
+      'time intelligence' instead of 'productivity monitoring' is a strategic
+      requirement, not a stylistic preference.
+    preferred_terms:
+      - term: "time intelligence"
+        use_instead_of: ["productivity monitoring", "time tracking"]
+        notes: "Core positioning term — intelligence implies insight, not surveillance"
+      - term: "team patterns"
+        use_instead_of: ["employee activity", "individual tracking"]
+        notes: "Emphasizes aggregate insight, not individual monitoring"
+      - term: "deep work blocks"
+        use_instead_of: ["focus time", "uninterrupted time"]
+        notes: "Anchors to Cal Newport's Deep Work concept, which engineering leaders know and respect"
+      - term: "meeting load"
+        use_instead_of: ["meeting overhead", "meeting waste"]
+        notes: "'Load' is neutral and engineering-native; 'waste' sounds judgmental about colleagues' meetings"
+    evidence_refs: [EVD006]
+
+  - id: VRB002
+    name: "Engineering-native vocabulary"
+    rationale: >-
+      The buyer is a VP Eng or CTO. Using their native vocabulary (systems
+      thinking, DORA, context switching, throughput) builds credibility.
+      Generic business language ('optimize resources', 'drive efficiency')
+      signals that the product was not built for engineers.
+    preferred_terms:
+      - term: "context switching cost"
+        use_instead_of: ["multitasking penalty", "distraction impact"]
+        notes: "Engineering term from operating systems — resonates with the audience"
+      - term: "throughput"
+        use_instead_of: ["productivity", "output"]
+        notes: "'Productivity' is loaded and contested; 'throughput' is neutral and measurable"
+      - term: "signal"
+        use_instead_of: ["data point", "metric"]
+        notes: "Signal implies actionability; metric implies dashboard decoration"
+    evidence_refs: [EVD005]

@@ -1,0 +1,81 @@
+version: "1.0.0"
+north_star_metric: KPI001
+
+metrics:
+  - id: MET001
+    name: "Trial-to-paid conversion rate"
+    formula: "Paid subscriptions / Trial activations within 60 days"
+    cadence: monthly
+    source: "Subscription analytics (Stripe)"
+
+  - id: MET002
+    name: "Net revenue retention"
+    formula: "(Starting MRR + expansion - contraction - churn) / Starting MRR"
+    cadence: monthly
+    source: "Subscription analytics (Stripe)"
+
+  - id: MET003
+    name: "Team expansion rate"
+    formula: "Organizations expanding to 2+ teams / Total paying organizations within 6 months"
+    cadence: quarterly
+    source: "Product analytics"
+
+  - id: MET004
+    name: "Engineer opt-in rate"
+    formula: "Engineers who enable individual view / Total engineers on team license"
+    cadence: monthly
+    source: "Product analytics"
+
+  - id: MET005
+    name: "Content-qualified leads"
+    formula: "Trial signups attributed to content (blog, conference, report download)"
+    cadence: monthly
+    source: "Marketing attribution (HubSpot)"
+
+outcomes:
+  - id: OUT001
+    name: "PLG conversion rate"
+    statement: "25% of trial teams convert to paid within 60 days"
+    target: "25%"
+    measured_by: [MET001]
+    evidence_refs: [EVD009]
+
+  - id: OUT002
+    name: "Net revenue retention above 120%"
+    statement: "Net revenue retention exceeds 120% through team expansion and tier upgrades"
+    target: "120%"
+    measured_by: [MET002]
+    evidence_refs: [EVD005]
+
+  - id: OUT003
+    name: "Team expansion as growth engine"
+    statement: "50% of paying customers expand to 2+ teams within 6 months"
+    target: "50%"
+    measured_by: [MET003]
+    evidence_refs: [EVD002]
+
+  - id: OUT004
+    name: "Engineer trust signal"
+    statement: "85%+ engineer opt-in rate validates privacy-first positioning"
+    target: "85%"
+    measured_by: [MET004]
+    evidence_refs: [EVD006]
+
+kpis:
+  - id: KPI001
+    name: "Trial-to-paid conversion"
+    metric: MET001
+    target: "25%"
+    stage: acquisition
+
+  - id: KPI002
+    name: "Net revenue retention"
+    metric: MET002
+    target: "120%"
+    stage: retention
+
+  - id: KPI003
+    name: "Content-driven pipeline"
+    metric: MET005
+    target: "60% of trials from content attribution"
+    stage: awareness

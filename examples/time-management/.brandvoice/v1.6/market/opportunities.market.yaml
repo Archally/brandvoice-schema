@@ -1,0 +1,93 @@
+version: "1.0.0"
+opportunities:
+  - id: OPP001
+    name: "Privacy-first engineering time intelligence"
+    status: validating
+    thesis: >-
+      Engineering leaders need time allocation data to make staffing and
+      process decisions, but teams reject surveillance tools. A platform
+      that aggregates team-level patterns without individual tracking
+      captures a segment that existing tools cannot serve due to their
+      surveillance DNA.
+    confidence: moderate-evidence
+    estimated_size: "$12M (year 3, 1.5% of $800M TAM)"
+    current_gap: >-
+      Jellyfish and similar platforms are perceived as management surveillance
+      by engineers. Toggl and RescueTime are individual tools that do not
+      serve team-level needs. Clockwise optimizes calendars but does not
+      provide analytics. No tool combines team-level time intelligence
+      with a privacy-first architecture.
+    evidence_refs: [EVD001, EVD002, EVD006]
+
+  - id: OPP002
+    name: "Deep work culture consulting for enterprises"
+    status: identified
+    thesis: >-
+      Large engineering organizations spending on Chronoflow data become
+      natural candidates for consulting engagements that help them act on
+      the insights — redesigning meeting cultures, establishing deep work
+      policies, and measuring the impact of workflow changes.
+    confidence: hypothesis
+    current_gap: >-
+      Management consulting firms lack engineering-specific time data.
+      Chronoflow's longitudinal dataset creates a unique advisory position
+      — data-driven recommendations that no consultant can replicate
+      without the tooling.
+    evidence_refs: [EVD002]
+
+  - id: OPP003
+    name: "AI workflow transition measurement"
+    status: identified
+    thesis: >-
+      As engineering teams adopt AI coding assistants, they need to
+      understand how their time allocation is shifting — less coding,
+      more reviewing, more prompting. Chronoflow can become the canonical
+      measurement platform for the AI-driven workflow transition.
+    confidence: weak-signal
+    current_gap: >-
+      No tool currently measures the before-and-after of AI adoption on
+      engineering time patterns. Teams adopt AI tools but cannot quantify
+      the impact on deep work, review cycles, or meeting time.
+    evidence_refs: [EVD007]
+
+position_maps:
+  - id: PMP001
+    name: "Team vs. individual focus and insight depth"
+    axes:
+      - name: "Focus level"
+        low_label: "Individual tracking"
+        high_label: "Team-level intelligence"
+      - name: "Insight depth"
+        low_label: "Raw time data"
+        high_label: "Actionable recommendations"
+    placements:
+      - entity: CPR001
+        label: "Clockwise — team calendar, light insights"
+        coordinates:
+          Focus level: 60
+          Insight depth: 40
+      - entity: CPR002
+        label: "Jellyfish — team metrics, delivery focus"
+        coordinates:
+          Focus level: 80
+          Insight depth: 70
+      - entity: CPR003
+        label: "Toggl — individual, raw data"
+        coordinates:
+          Focus level: 20
+          Insight depth: 20
+      - entity: CPR004
+        label: "RescueTime — individual, descriptive"
+        coordinates:
+          Focus level: 15
+          Insight depth: 35
+    white_spaces:
+      - id: WSP001
+        name: "Team intelligence + actionable + privacy-first"
+        region:
+          Focus level: {min: 70, max: 95}
+          Insight depth: {min: 75, max: 95}
+        description: >-
+          No player combines team-level intelligence, actionable
+          recommendations, and a privacy-first architecture. Jellyfish
+          comes closest on insight depth but is perceived as surveillance.

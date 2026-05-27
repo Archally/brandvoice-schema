@@ -1,0 +1,88 @@
+version: "1.0.0"
+markets:
+  - id: MKT001
+    name: "Engineering time intelligence"
+    category: "Developer productivity and workflow analytics"
+    description: >-
+      Software tools that help engineering teams understand time allocation
+      patterns, protect focused work, and optimize meeting-to-making ratios.
+      Distinct from project management (which tracks tasks) and time tracking
+      (which logs hours for billing). Time intelligence analyzes workflow
+      patterns to improve how teams spend their cognitive resources.
+    maturity: emerging
+    growth_rate: "22% CAGR 2024-2028"
+    actors: [ACT001, ACT002, ACT003]
+    forces: [MFR001, MFR002, MFR003, MFR004]
+    evidence_refs: [EVD001, EVD002]
+
+  - id: MKT002
+    name: "Developer experience platforms"
+    category: "Internal developer platforms and productivity"
+    description: >-
+      Broader market for tools that improve engineering team effectiveness.
+      Includes CI/CD, internal portals, and measurement platforms. Time
+      intelligence is a specialized vertical within this larger DevEx movement.
+    maturity: growing
+    growth_rate: "18% CAGR 2024-2028"
+    actors: [ACT001]
+    evidence_refs: [EVD003]
+
+forces:
+  - id: MFR001
+    name: "Meeting culture eroding deep work capacity"
+    force_type: social
+    direction: accelerating
+    impact: high
+    time_horizon: near-term
+    description: >-
+      Remote and hybrid work has increased meeting frequency by 30-40% since
+      2020. Engineering teams report an average of 16 hours per week in
+      meetings, fragmenting the focused blocks needed for complex problem
+      solving. The result is context-switching overhead that studies estimate
+      costs 20-40% of productive capacity.
+    affected_needs: [NED001, NED002]
+    evidence_refs: [EVD001, EVD004]
+
+  - id: MFR002
+    name: "Developer productivity measurement pressure"
+    force_type: economic
+    direction: accelerating
+    impact: high
+    time_horizon: near-term
+    description: >-
+      Engineering organizations face increasing pressure to demonstrate
+      productivity, especially after high-profile layoffs. CTO and VP Eng
+      need data to justify headcount and resist reductions. However, naive
+      metrics (lines of code, PRs merged) cause gaming and demoralize teams.
+      The market needs measurement that captures value, not activity.
+    affected_needs: [NED003]
+    evidence_refs: [EVD002, EVD005]
+
+  - id: MFR003
+    name: "Privacy backlash against surveillance tools"
+    force_type: social
+    direction: accelerating
+    impact: medium
+    time_horizon: near-term
+    description: >-
+      Employee monitoring tools (keystroke logging, screenshot capture, mouse
+      tracking) have triggered significant backlash. Engineers are particularly
+      resistant — teams that deployed surveillance-style productivity tools
+      saw 30-50% increases in attrition intent. Tools must demonstrate that
+      they serve the team, not surveil the individual.
+    affected_needs: [NED004]
+    evidence_refs: [EVD006]
+
+  - id: MFR004
+    name: "AI changing the nature of engineering work"
+    force_type: technological
+    direction: accelerating
+    impact: medium
+    time_horizon: medium-term
+    description: >-
+      AI coding assistants are shifting time allocation from writing code to
+      reviewing, prompting, and validating AI output. Teams need to understand
+      this new time distribution to optimize workflows. Historical time
+      patterns are becoming less predictive as AI adoption reshapes work.
+    affected_needs: [NED002]
+    evidence_refs: [EVD007]
