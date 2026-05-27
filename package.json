@@ -34,15 +34,15 @@
   ],
   "scripts": {
     "validate": "node tools/validator/src/cli.mjs",
-    "check": "node tools/semantic-checker/src/cli.mjs",
+    "check": "node tools/semantic-checker/dist/cli.js",
     "model": "node tools/model-builder/dist/cli.js",
-    "build": "tsc -p tools/model-builder/tsconfig.json",
-    "test": "vitest run --config tools/model-builder/vitest.config.ts",
+    "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
+    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts",
     "prepublishOnly": "npm run build"
   },
   "bin": {
     "brandvoice-validate": "tools/validator/src/cli.mjs",
-    "brandvoice-check": "tools/semantic-checker/src/cli.mjs",
+    "brandvoice-check": "tools/semantic-checker/dist/cli.js",
     "brandvoice-model": "tools/model-builder/dist/cli.js"
   },
   "dependencies": {
