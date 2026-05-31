@@ -1,0 +1,14 @@
+engineVersion: "0.1"
+rules:
+  - id: orphan-evidence
+    severity: warn
+    description: Evidence records (EVD) that are never referenced by any entity.
+    find:
+      entity_type: evidence
+    # Any incoming relation counts as a reference (the extractor lifts evidence_refs and every
+    # other *_ref(s) to relations), matching the legacy "referenced by any entity" check.
+    check:
+      has_relation:
+        direction: in
+        exists: true
+    message: "Evidence {id} is never referenced by any entity."

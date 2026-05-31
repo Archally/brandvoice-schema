@@ -1,0 +1,10 @@
+engineVersion: "0.1"
+rules:
+  - id: empty-planes
+    severity: warn
+    description: Declared planes that contain no entities.
+    find:
+      planes: true
+    check:
+      plane_has_entities: true
+    message: "{plane} plane is missing or empty."

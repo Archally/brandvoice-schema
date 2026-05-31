@@ -1,0 +1,13 @@
+engineVersion: "0.1"
+rules:
+  - id: positioning-evidence
+    severity: warn
+    description: Positioning claims without evidence_refs are unsubstantiated assertions.
+    find:
+      entity_type: positioning
+    check:
+      has_relation:
+        direction: out
+        type: backed-by
+        exists: true
+    message: "Positioning '{id}' has no evidence_refs — claim is unsubstantiated."

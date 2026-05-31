@@ -1,0 +1,13 @@
+engineVersion: "0.1"
+rules:
+  - id: high-threat-depth
+    severity: warn
+    description: High-threat competitors should have pricing, strengths, and weaknesses.
+    find:
+      entity_type: competitor
+    filter:
+      field_in:
+        data.threat_level: [high, critical]
+    check:
+      all_non_empty: [data.pricing, data.strengths, data.weaknesses]
+    message: "High-threat competitor '{id}' ({name|'unnamed'}) is missing: {missing}."

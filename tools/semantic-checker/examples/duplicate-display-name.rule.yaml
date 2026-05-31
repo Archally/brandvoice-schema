@@ -1,0 +1,15 @@
+engineVersion: "0.1"
+# Standalone consumer-side extension example — NOT in the default CLI rule set (preserves the
+# eight-rule byte-for-byte output). Exercised by ../duplicate-display-name.test.ts; a template for
+# your own extensions (loadRules → loadExtensions → runChecker).
+rules:
+  - id: duplicate-display-name
+    severity: warn
+    description: Two entities should not share the same display name.
+    find:
+      all: true
+    check:
+      custom:
+        module: ./duplicate-display-name.js
+        export: duplicateDisplayName
+    message: "{id} shares display name '{name}' with: {duplicates}"

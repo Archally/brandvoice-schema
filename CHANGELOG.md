@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING for tool consumers: the semantic-checker engine was extracted to [`@archally/semantic-checker`](https://github.com/archally/semantic-checker).** `tools/semantic-checker/` is now a thin layer — an adapter (`BrandvoiceModel` → the engine's `CheckableModel`) plus the eight rules as declarative YAML (`rules/*.yaml`); the engine, severity handling, JSON-Schema rule validation, and the TypeScript escape hatch come from the package (added as a dependency, installed from GitHub: `github:archally/semantic-checker#v0.1.0`). The `brandvoice-check` CLI, its arguments, exit codes, and `.brandvoice-lint.yaml` config are unchanged, and findings on the example models are identical. Anything that imported the old `tools/semantic-checker/dist` engine/rules directly must import from `@archally/semantic-checker` instead.
+- Semantic-checker output is now ordered deterministically by `(rule, entityId)` (the shared engine's diff-friendly sort) rather than model-composition order; the set of findings is unchanged.
+
+### Added
+
+- A consumer-side TypeScript extension example, `tools/semantic-checker/examples/duplicate-display-name.{ts,rule.yaml}`, demonstrating the engine's escape hatch (flags entities sharing a display name). Not part of the default rule run.
+
 ## [1.6.1] - 2026-05-27
 
 ### Summary

@@ -1,0 +1,14 @@
+engineVersion: "0.1"
+rules:
+  - id: active-message-proof
+    severity: error
+    description: Active messages must include evidence_refs and proof_points.
+    find:
+      entity_type: message
+    filter:
+      field_eq:
+        data.status: active
+    # One issue per missing field, exposing {field} — matches the legacy two-issue behavior.
+    check:
+      require_each: [data.evidence_refs, data.proof_points]
+    message: "Active message '{id}' has no {field}."

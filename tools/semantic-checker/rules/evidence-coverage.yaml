@@ -1,0 +1,35 @@
+engineVersion: "0.1"
+rules:
+  - id: evidence-coverage
+    severity: warn
+    description: Entities that should reference evidence but have no evidence/validation linkage.
+    # Semantic types (PREFIX_TO_TYPE) for the legacy EVIDENCE_EXPECTED prefix set
+    # (ACT NED OFF CPR CTX MKT MFR OPP POS MSG CHN CMP BRD PBP MHS PRG CPL WSP DEC RSK).
+    find:
+      entity_type_in:
+        - actor
+        - need
+        - offering
+        - competitor
+        - context
+        - market
+        - market_force
+        - opportunity
+        - positioning
+        - message
+        - channel
+        - campaign
+        - brand
+        - personal_brand_profile
+        - message_house
+        - program
+        - content_pillar
+        - white_space
+        - decision
+        - risk
+    check:
+      has_relation:
+        direction: out
+        type: [backed-by, validated-by]
+        exists: true
+    message: "{id} ({name|'unnamed'}) has no evidence linkage."

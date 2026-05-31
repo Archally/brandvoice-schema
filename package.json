@@ -46,6 +46,7 @@
     "brandvoice-model": "tools/model-builder/dist/cli.js"
   },
   "dependencies": {
+    "@archally/semantic-checker": "github:archally/semantic-checker#v0.1.0",
     "ajv": "^8.17.0",
     "yaml": "^2.7.0"
   },

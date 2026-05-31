@@ -1,0 +1,13 @@
+engineVersion: "0.1"
+rules:
+  - id: active-campaign-links
+    severity: error
+    description: Active campaigns must link message_refs, channel_refs, and outcome_refs.
+    find:
+      entity_type: campaign
+    filter:
+      field_eq:
+        data.status: active
+    check:
+      all_non_empty: [data.message_refs, data.channel_refs, data.outcome_refs]
+    message: "Active campaign '{id}' is missing: {missing}."

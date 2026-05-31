@@ -1,0 +1,13 @@
+engineVersion: "0.1"
+rules:
+  - id: experiment-results
+    severity: error
+    description: Completed experiments must include a result or result_summary.
+    find:
+      entity_type: experiment
+    filter:
+      field_eq:
+        data.status: completed
+    check:
+      any_non_empty: [data.result, data.result_summary]
+    message: "Completed experiment '{id}' has no result or result_summary."
