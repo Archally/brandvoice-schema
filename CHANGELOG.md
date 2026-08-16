@@ -15,6 +15,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 - A consumer-side TypeScript extension example, `tools/semantic-checker/examples/duplicate-display-name.{ts,rule.yaml}`, demonstrating the engine's escape hatch (flags entities sharing a display name). Not part of the default rule run.
 
+## [1.6.2] - 2026-08-16
+
+### Fixed
+
+- `any_entity_ref` pattern in `metamodel.schema.yaml` now includes the `BSC` prefix — `brand_script` (`BSC###`, added in v1.3.0) records can now be referenced through `any_entity_ref` typed-ref fields.
+
+### Added
+
+- `governance/evidence.schema.yaml`: `type` enum gains `research`, `primary-research`, `primary-academic`, `thought-leadership`, `analyst-report`; `source_type` enum gains `peer-reviewed`, `academic-classic`, `practitioner-credible`, `industry-analysis`, `industry-consortium`, `secondary-research`, `survey`, `internal-analysis`, `primary-data` — additional evidence-source credibility and research-method classes.
+- `metamodel.schema.yaml`: an `x-gdsm.modeling_guidance` ledger — durable, reusable brandvoice modeling guidance (plane-vs-layer semantics, entity nesting for `white_space`/`message_pillar`, multi-plane entity placement, competitor/market-force dedup-by-name), served on demand by the brandvoice MCP's `get_analysis_guidance` tool (Archally Pro).
+
 ## [1.6.1] - 2026-05-27
 
 ### Summary

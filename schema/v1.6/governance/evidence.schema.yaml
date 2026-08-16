@@ -49,11 +49,21 @@ $defs:
           - market-signal
           - competitor-intelligence
           - primary-data
+          - research
+          - primary-research
+          - primary-academic
+          - thought-leadership
+          - analyst-report
         description: >
           Evidence source class. Rationale: distinguish externally observed
           signals from internally synthesized analysis for confidence weighting.
           Extended in v1.6.1: market-data, market-signal, competitor-intelligence,
           primary-data added for multi-brand portfolio evidence migration.
+          Extended in v1.6.2: research, primary-research, primary-academic,
+          thought-leadership, analyst-report — additional evidence-source
+          credibility classes for portfolio and academic sourcing. Permissive
+          author taxonomy; a future curation pass may consolidate the
+          research/* family.
       date:
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
@@ -77,11 +87,26 @@ $defs:
           - own-website
           - self-assessment
           - third-party-validation
+          - peer-reviewed
+          - academic-classic
+          - practitioner-credible
+          - industry-analysis
+          - industry-consortium
+          - secondary-research
+          - survey
+          - internal-analysis
+          - primary-data
         description: >
           Origin or format of the evidence source. Party-based values (first-party,
           third-party, internal, external, mixed) classify who produced it.
           Format-based values (industry-report, competitor-website, etc.) classify
           what kind of publication it is. Extended in v1.6.1 with format-based values.
+          Extended in v1.6.2: peer-reviewed, academic-classic, practitioner-credible,
+          industry-analysis, industry-consortium — additional source-credibility
+          classes. Also secondary-research, survey, internal-analysis, primary-data —
+          research-method values authors use to classify a source; permissive by
+          intent, a future curation pass may split method (type) from origin
+          (source_type).
       source_url:
         type: string
         pattern: "^[a-z]+://.+$"

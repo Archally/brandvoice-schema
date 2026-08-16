@@ -288,15 +288,11 @@ $defs:
       a separate YAML file's content at that position. The referenced file is
       loaded and validated separately against its own plane schema by the
       per-file validator. Root-level schema only verifies that the wiring is a
-      well-formed single-key `$ref` object. Introduced (documented) in v1.6.0 to
-      make this convention schema-legal — previously the root validator rejected
-      `{$ref: "..."}` placeholders as "additional property" errors on the
-      referenced plane slot even though the per-file validator was already
-      handling the content correctly.
+      well-formed single-key `$ref` object.
 
   any_entity_ref:
     type: string
-    pattern: "^([a-z][a-z0-9-]*\\.)?(BRD|AUD|PER|JOB|VAL|POS|MSG|PRF|TON|VRB|AST|ARC|BMD|CHN|CMP|CNT|ACT|NED|OFF|JSG|ACN|OUT|CPR|CTX|DEC|TST|MET|KPI|RSK|MIG|PBP|MHS|MPL|PRG|CPL|EVD|MKT|OPP|MFR|PMP|WSP|PRI|RMP|EPL)\\d{3}$"
+    pattern: "^([a-z][a-z0-9-]*\\.)?(BRD|BSC|AUD|PER|JOB|VAL|POS|MSG|PRF|TON|VRB|AST|ARC|BMD|CHN|CMP|CNT|ACT|NED|OFF|JSG|ACN|OUT|CPR|CTX|DEC|TST|MET|KPI|RSK|MIG|PBP|MHS|MPL|PRG|CPL|EVD|MKT|OPP|MFR|PMP|WSP|PRI|RMP|EPL)\\d{3}$"
     description: >
       Reference to any entity in the brandvoice schema. Union of all typed
       ID prefixes. MAINTENANCE: update this pattern when adding new entity types.
@@ -666,3 +662,48 @@ $defs:
           required: [level]
         then:
           required: [countries]
+
+# ── GDSM self-description + modeling-guidance ledger ─────────────────────────
+# modeling_guidance is the schema-native home for durable modeling wisdom for
+# this suite, surfaced on-demand by the brandvoice MCP's get_analysis_guidance
+# tool (Archally Pro).
+x-gdsm:
+  version: "1.0.0"
+  methodology: "GDSM v1.0 (Goal-Driven Schema Modeling)"
+  status: draft
+  suite_name: "brandvoice"
+  purpose: >
+    Cross-cutting brandvoice metamodel — typed IDs, versioning, shared refs.
+    Also carries the suite-level modeling_guidance ledger.
+  design_notes: >
+    modeling_guidance entries are durable, reusable lessons for anyone
+    authoring a brandvoice model; served on-demand by get_analysis_guidance,
+    never auto-loaded.
+  modeling_guidance:
+    - lesson: >
+        A `plane` is a perspective (market / strategy / activation /
+        governance), not a file; a `layer` is the schema file type that
+        carries it (e.g. `*.market.yaml`). Choosing a plane is a modeling
+        decision — choosing a file/layer is an organization decision.
+      category: semantics
+      schema_version: "1.6.1"
+    - lesson: >
+        `white_space` is not a top-level entity — it nests under
+        `position_maps[].white_spaces`; likewise `message_pillar` nests under
+        `message_houses[].pillars`. Add them inside their parent, not as
+        standalone records.
+      category: structure
+      schema_version: "1.6.1"
+    - lesson: >
+        `competitor`, `action`, `outcome`, and `risk` can appear in more than
+        one plane. Pick a canonical plane deliberately and keep each instance
+        there; do not duplicate the same entity across planes.
+      category: structure
+      schema_version: "1.6.1"
+    - lesson: >
+        On upsert, competitors and market-forces dedup by `name`
+        (case-insensitive) — never create a second record for the same named
+        competitor or force.
+      category: gotcha
+      schema_version: "1.6.1"
+      enforced_by: "bv merge-market"
