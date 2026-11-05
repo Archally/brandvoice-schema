@@ -110,15 +110,11 @@ $defs:
     properties:
       total_working_days_per_year:
         type: integer
-      reserved_for_ipn_projects:
-        type: integer
       reserved_for_administration:
         type: integer
       reserved_for_marketing_content:
         type: integer
       reserved_for_preparation:
-        type: integer
-      available_for_movarte_delivery:
         type: integer
       note:
         type: string
