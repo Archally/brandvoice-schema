@@ -1,31 +1,31 @@
 # Archally Brandvoice Schema
 
-YAML-based schema for brand communication strategy modeling — market reality, brand identity, messaging architecture, activation planning, and governance in a single machine-readable format.
+YAML-based schema for brand communication strategy modeling - market reality, brand identity, messaging architecture, activation planning, and governance in a single machine-readable format.
 
 [![license](https://img.shields.io/npm/l/@archally/brandvoice-schema)](./LICENSE)
 
 ## The Problem
 
-Brand strategy fragments across slide decks, Google Docs, agency briefs, Notion boards, and tribal memory. When a team needs to make a positioning decision — launch a campaign, respond to a competitor, enter a new market — they spend days reconstructing context that should already be explicit. Messaging drifts from strategy within weeks. New team members and agency partners spend months absorbing brand knowledge that could be structured and navigable.
+Brand strategy fragments across slide decks, Google Docs, agency briefs, Notion boards, and tribal memory. When a team needs to make a positioning decision - launch a campaign, respond to a competitor, enter a new market - they spend days reconstructing context that should already be explicit. Messaging drifts from strategy within weeks. New team members and agency partners spend months absorbing brand knowledge that could be structured and navigable.
 
 The cost is not missing documentation. It is fragmented brand truth.
 
 ## The Approach: Brand Cartography
 
-Archally treats brand communication the way cartographers treat territory — by surveying it methodically, representing it at multiple scales, layering concerns into separate planes, and marking what remains unknown.
+Archally treats brand communication the way cartographers treat territory - by surveying it methodically, representing it at multiple scales, layering concerns into separate planes, and marking what remains unknown.
 
 | Cartography | Brandvoice equivalent |
 |---|---|
-| **Map layers** (topographic, political, transport) | **Four planes** — Market, Strategy, Activation, Governance — toggle layers over the same brand |
-| **Legend and symbology** | **Metamodel** — typed IDs (`BRD001`, `ACT001`, `CPR001`) make the model machine-readable |
-| **Survey and triangulation** | **Evidence chains** — claims are triangulated from research, not asserted |
-| **Terra incognita** | **Confidence levels** (`hypothesis`, `weak-signal`, `moderate`, `strong`) — honest about what is not yet proven |
-| **Scale / zoom levels** | **Abstraction levels** — from market landscape down to individual campaign assets |
-| **Nautical charts** (hazard markers) | **Governance artifacts** — risks, pending experiments, and unresolved decisions surfaced before they cause damage |
+| **Map layers** (topographic, political, transport) | **Four planes** - Market, Strategy, Activation, Governance - toggle layers over the same brand |
+| **Legend and symbology** | **Metamodel** - typed IDs (`BRD001`, `ACT001`, `CPR001`) make the model machine-readable |
+| **Survey and triangulation** | **Evidence chains** - claims are triangulated from research, not asserted |
+| **Terra incognita** | **Confidence levels** (`hypothesis`, `weak-signal`, `moderate`, `strong`) - honest about what is not yet proven |
+| **Scale / zoom levels** | **Abstraction levels** - from market landscape down to individual campaign assets |
+| **Nautical charts** (hazard markers) | **Governance artifacts** - risks, pending experiments, and unresolved decisions surfaced before they cause damage |
 
 ## What is a Brandvoice?
 
-A brandvoice is a **single formal model** of a brand's communication strategy — one source that captures what the market looks like, how the brand responds, how it activates, and how it proves what works. It replaces scattered artifacts with a structured, validated, version-controlled specification:
+A brandvoice is a **single formal model** of a brand's communication strategy - one source that captures what the market looks like, how the brand responds, how it activates, and how it proves what works. It replaces scattered artifacts with a structured, validated, version-controlled specification:
 
 - **Market Plane** (external reality): markets, forces, competitors, opportunities, ecosystem players, position maps
 - **Strategy Plane** (brand response): brand identity, actors, needs, offerings, positioning, messaging architecture, visual identity, capacity planning
@@ -34,19 +34,19 @@ A brandvoice is a **single formal model** of a brand's communication strategy �
 
 ### One model, many outputs
 
-A single brandvoice can drive multiple generated artifacts — brand strategy reports, competitive landscape maps, message house visualizations, campaign briefs, positioning matrices — all from the same source. When the model changes, every output stays consistent.
+A single brandvoice can drive multiple generated artifacts - brand strategy reports, competitive landscape maps, message house visualizations, campaign briefs, positioning matrices - all from the same source. When the model changes, every output stays consistent.
 
 ### Built for humans and AI agents
 
-Every schema field carries a machine-readable `description`. AI agents consume brandvoice models as structured domain context via MCP servers — not retrieval over documents, but deterministic graph queries against a validated formal model. The same brandvoice that onboards a new team member also grounds an AI agent's reasoning about brand strategy.
+Every schema field carries a machine-readable `description`. AI agents consume brandvoice models as structured domain context via MCP servers - not retrieval over documents, but deterministic graph queries against a validated formal model. The same brandvoice that onboards a new team member also grounds an AI agent's reasoning about brand strategy.
 
 ### Local-first, version-controlled
 
-Brandvoice models are plain YAML files in your Git repository. No cloud upload required, no vendor platform, no infrastructure. Your brand strategy — which encodes your competitive positioning, messaging decisions, and market evidence — stays under your control.
+Brandvoice models are plain YAML files in your Git repository. No cloud upload required, no vendor platform, no infrastructure. Your brand strategy - which encodes your competitive positioning, messaging decisions, and market evidence - stays under your control.
 
 ## Quick Start
 
-**1. Create a `.brandvoice/v1.8/` directory** in your project:
+**1. Inspect the model layout** (`.brandvoice/v1.8/`):
 
 ```
 my-brand/
@@ -58,10 +58,11 @@ my-brand/
       evidence.governance.yaml
 ```
 
-**2. Write a minimal brandvoice** (three files):
+**2. Write a minimal brandvoice** (three files). These named blocks are checked by `npm run doc-snippets`:
+
+### `brandvoice.yaml`
 
 ```yaml
-# brandvoice.yaml
 version: "1.0.0"
 schemaVersion: "1.8.0"
 name: "My Brand"
@@ -70,8 +71,9 @@ scope: my-brand
 tags: [saas, b2b]
 ```
 
+### `market/landscape.market.yaml`
+
 ```yaml
-# market/landscape.market.yaml
 version: "1.0.0"
 markets:
   - id: MKT001
@@ -82,8 +84,9 @@ markets:
     evidence_refs: [EVD001]
 ```
 
+### `governance/evidence.governance.yaml`
+
 ```yaml
-# governance/evidence.governance.yaml
 version: "1.0.0"
 evidence:
   - id: EVD001
@@ -95,16 +98,19 @@ evidence:
     supports: [MKT001]
 ```
 
-**3. Validate** from a clone of this repository (Node.js 20 or later):
+**3. Install and check** from a clone of this repository (Node.js 20 or later):
 
 ```bash
 git clone https://github.com/archally/brandvoice-schema.git
 cd brandvoice-schema
 npm ci
-npm run validate -- /path/to/my-brand/.brandvoice/v1.8
+npm run validate:examples
+npm run build
+npm run doc-snippets
+npm run atlas:check
 ```
 
-The validator picks `schema/v1.8/` from the `v1.8` in the model path; pass `--schemas schema/v1.8` to choose it explicitly. The minimal model passes with one gap warning, because it has no activation plane yet.
+To validate your own files, run `npm run validate -- /path/to/my-brand/.brandvoice/v1.8 --schemas schema/v1.8`. The validator defaults to the shipped schemas and can select a matching installed schema line from the model path. The minimal model passes with one gap warning, because it has no activation plane yet.
 
 **4. Explore the worked examples:**
 
@@ -115,9 +121,13 @@ npm run check:examples      # run the semantic rules on both examples
 npm run model -- examples/fitness-app/.brandvoice/v1.8 --stats
 ```
 
+## Included tools and documentation
+
+[Tool commands](tools/README.md), [file conventions](docs/file-conventions.md), [modeling guide](docs/modeling-guide.md) and the [schema atlas](docs/schema-atlas/2026-11-05-reference.md) describe the shipped release. Run `npm run atlas` to regenerate the reference, `npm run atlas:check` to detect drift and `npm run docs:check` to check the documentation boundary.
+
 ## Architecture
 
-> **METAMODEL** (cross-cutting) — typed IDs · versioning · evidence chains · geo scope · framework profiles
+> **METAMODEL** (cross-cutting) - typed IDs · versioning · evidence chains · geo scope · framework profiles
 
 ```mermaid
 block-beta
@@ -125,7 +135,7 @@ block-beta
 
   block:market
     columns 1
-    mh["MARKET PLANE — External Reality"]
+    mh["MARKET PLANE - External Reality"]
     mp["What the world looks like · evidence-driven"]
 
     block:ls
@@ -168,7 +178,7 @@ block-beta
 
   block:strategy
     columns 1
-    sh["STRATEGY PLANE — Brand Response"]
+    sh["STRATEGY PLANE - Brand Response"]
     sp["How the brand responds to market reality"]
 
     block:bcs
@@ -227,7 +237,7 @@ block-beta
 
   block:activation
     columns 1
-    ah["ACTIVATION PLANE — Execution"]
+    ah["ACTIVATION PLANE - Execution"]
     ap["How the brand reaches its audience"]
 
     block:chs
@@ -252,7 +262,7 @@ block-beta
 
   block:governance
     columns 1
-    gvh["GOVERNANCE PLANE — Proof & Learning"]
+    gvh["GOVERNANCE PLANE - Proof & Learning"]
     gvp["Evidence-driven decisions and experiments"]
 
     block:evs
@@ -315,11 +325,11 @@ block-beta
   style me_h fill:#1a5c35,color:#fff,stroke:none
 ```
 
-The Market Plane captures external reality — competitive landscape, market forces, and opportunities that exist regardless of the brand. The Strategy Plane captures the brand's deliberate response — identity, positioning, messaging, and visual system. The Activation Plane bridges strategy to execution — channels, campaigns, and content. The Governance Plane captures proof and learning — evidence, decisions, experiments, and measurable outcomes.
+The Market Plane captures external reality - competitive landscape, market forces, and opportunities that exist regardless of the brand. The Strategy Plane captures the brand's deliberate response - identity, positioning, messaging, and visual system. The Activation Plane bridges strategy to execution - channels, campaigns, and content. The Governance Plane captures proof and learning - evidence, decisions, experiments, and measurable outcomes.
 
 ## Usage Modes
 
-### Greenfield — New Brand
+### Greenfield - New Brand
 
 Start from scratch with a Minimal Viable Brandvoice (MVB):
 
@@ -331,7 +341,7 @@ Start from scratch with a Minimal Viable Brandvoice (MVB):
 
 Start small (10-25 entities), validate, then grow through phases.
 
-### Brownfield — Existing Brand
+### Brownfield - Existing Brand
 
 Model an existing brand by analyzing what's already in place:
 
@@ -373,7 +383,7 @@ graph LR
 | Market | `market/landscape.schema.yaml` | Markets (MKT), Market Forces (MFR) |
 | Market | `market/competition.schema.yaml` | Competitor Profiles (CPR) with pricing, need-fit, competitive moves |
 | Market | `market/opportunities.schema.yaml` | Opportunities (OPP), Position Maps (PM), White Spaces (WSP) |
-| Market | `market/ecosystem.schema.yaml` | Ecosystem Players (EPL) — partners, co-presenters, coopetition |
+| Market | `market/ecosystem.schema.yaml` | Ecosystem Players (EPL) - partners, co-presenters, coopetition |
 | Strategy | `strategy/brand-core.schema.yaml` | Brands (BRD), Brand Scripts (BSC), Personal Brand Profiles (PBP), Verbal Guidelines (VRB) |
 | Strategy | `strategy/market-product.schema.yaml` | Actors (ACT), Needs (NED), Offerings (OFF), Competitors, Positioning (POS), Contexts (CTX) |
 | Strategy | `strategy/messaging.schema.yaml` | Message Houses (MHS), Messages (MSG), Journey Stages (JS), Actions, Outcomes |
@@ -417,13 +427,13 @@ Scoped entity IDs prevent collisions across files: `market.CPR001`, `strategy.NE
 
 1. **Evidence-first, not assertion-first.** Every market claim, competitive comparison, and positioning statement should link to evidence records. Claims without evidence are hypotheses, not facts.
 
-2. **Multiple small files over monoliths.** Split by semantic cluster — direct competitors in one file, substitutes in another. Seven 100-line files reveal structure better than one 700-line file.
+2. **Multiple small files over monoliths.** Split by semantic cluster - direct competitors in one file, substitutes in another. Seven 100-line files reveal structure better than one 700-line file.
 
 3. **Scoped IDs for multi-file models.** Use `{semantic-group}.PREFIX###` format (e.g., `market.CPR001`) to prevent ID collisions when splitting across files.
 
 4. **Confidence levels on governance.** Tag evidence with `hypothesis`, `weak-signal`, `moderate`, `strong`, or `definitive`. Be honest about what you know vs. what you assume.
 
-5. **Defer aggressively.** Visual identity and capacity planning are Phase 3 — don't model them before market and strategy are stable.
+5. **Defer aggressively.** Visual identity and capacity planning are Phase 3 - don't model them before market and strategy are stable.
 
 ## Versioning
 
@@ -436,35 +446,35 @@ This package follows [SemVer](https://semver.org/):
 
 Brandvoice Schema is the open foundation of the [Archally](https://archally.pro) brand strategy platform.
 
-**Archally's approach:** One formal model drives everything. Instead of maintaining separate brand books, competitive analyses, campaign briefs, and agency decks — teams build one brandvoice that generators consume to produce strategy reports, competitive maps, messaging matrices, and campaign briefs. The model is the single source of truth.
+**Archally's approach:** One formal model drives everything. Instead of maintaining separate brand books, competitive analyses, campaign briefs, and agency decks - teams build one brandvoice that generators consume to produce strategy reports, competitive maps, messaging matrices, and campaign briefs. The model is the single source of truth.
 
-**For AI-augmented teams:** Archally MCP servers expose brandvoice models as structured grounding for AI agents — deterministic graph queries against a validated brand model, not retrieval over unstructured documents. Agents get typed entities, traced relationships, and evidence-backed claims at inference time.
+**For AI-augmented teams:** Archally MCP servers expose brandvoice models as structured grounding for AI agents - deterministic graph queries against a validated brand model, not retrieval over unstructured documents. Agents get typed entities, traced relationships, and evidence-backed claims at inference time.
 
 The schema itself is Apache 2.0-licensed and can be used independently of Archally tooling.
 
 ### Archally Pro
 
-Commercial tools that consume this schema — available at [archally.pro](https://archally.pro):
+The commercial viewer, generators, MCP servers and `bv` CLI are separate products; they do not ship in this repository. Available at [archally.pro](https://archally.pro):
 
 | Category | Capabilities |
 |----------|-------------|
 | **Brand Strategy Viewer** | Interactive graph with force-directed layout, plane filtering, entity search, and relationship inspector |
-| **Report Generators** | Brand strategy reports, competitive landscape maps, positioning matrices — generated from the model |
+| **Report Generators** | Brand strategy reports, competitive landscape maps, positioning matrices - generated from the model |
 | **MCP Servers** | Structured grounding for Claude, Cursor, and other AI agents. 21 MCP tools for deterministic brand model queries |
-| **Brandvoice CLI** | Query, validate, and navigate brand models from the terminal |
+| **Brandvoice CLI (`bv`)** | Query, validate and navigate brand models; edit model files with validation before writing |
 
 ## Contributing
 
-Issues and discussions are welcome. For schema change proposals, please open an issue describing the use case before submitting a PR — schema changes affect all downstream consumers.
+Issues and discussions are welcome. For schema change proposals, please open an issue describing the use case before submitting a PR - schema changes affect all downstream consumers.
 
 ## License
 
 **Dual-licensed** - [LICENSE](./LICENSE) is the authoritative map, and
 [tools/LICENSE](./tools/LICENSE) names every tool directory. The schema, the examples and
 the documentation are [Apache-2.0](./LICENSE-APACHE), and so is every tool that establishes
-conformance or protects this distribution: the validator and the port verifier. The tools
-that read a model for some other purpose - the model builder and the semantic checker with
-its rules - are [FSL-1.1-ALv2](./LICENSE-FSL), converting to Apache-2.0 two years after each
+conformance or protects this distribution: the validator, port verifier, schema atlas and documentation snippet validator. The tools
+that read a model for some other purpose - the model builder, semantic checker with
+its rules, entity query and next-id helper - are [FSL-1.1-ALv2](./LICENSE-FSL), converting to Apache-2.0 two years after each
 release.
 
 The line is between conformance and judgement. Whether a model is *valid* and whether it is

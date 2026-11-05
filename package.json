@@ -29,7 +29,12 @@
   "files": [
     "schema/",
     "tools/",
+    "docs/",
+    "examples/",
     "LICENSE",
+    "LICENSE-APACHE",
+    "LICENSE-FSL",
+    "NOTICE",
     "README.md"
   ],
   "scripts": {
@@ -39,11 +44,15 @@
     "check:examples": "node tools/semantic-checker/dist/cli.js examples/fitness-app/.brandvoice/v1.8 && node tools/semantic-checker/dist/cli.js examples/time-management/.brandvoice/v1.8",
     "model": "node tools/model-builder/dist/cli.js",
     "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
-    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts && node --test tools/validator/src/references.test.mjs tools/port/*.test.mjs",
-    "release:check": "node tools/port/release-check.mjs --expect 1.8.0",
+    "test": "node tools/port/run-test-suites.mjs",
+    "release:check": "node tools/port/release-check.mjs --expect 1.8.0 && npm run atlas:check && npm run docs:check && npm run doc-snippets",
     "prepublishOnly": "npm run build",
     "port:verify": "node tools/port/verify-ported.mjs",
-    "port:test": "node --test tools/port/*.test.mjs"
+    "port:test": "node --test tools/port/*.test.mjs",
+    "atlas": "node tools/schema-atlas/cli.mjs generate",
+    "atlas:check": "node tools/schema-atlas/cli.mjs check",
+    "doc-snippets": "node tools/doc-snippet-validate/cli.mjs README.md",
+    "docs:check": "node tools/port/docs-check.mjs"
   },
   "bin": {
     "brandvoice-validate": "tools/validator/src/cli.mjs",
@@ -62,5 +71,43 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "testSuites": [
+    {
+      "name": "model-builder",
+      "argv": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--config",
+        "tools/model-builder/vitest.config.ts"
+      ]
+    },
+    {
+      "name": "semantic-checker",
+      "argv": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--config",
+        "tools/semantic-checker/vitest.config.ts"
+      ]
+    },
+    {
+      "name": "portable-tools",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tools/doc-snippet-validate/snippets.test.mjs",
+        "tools/entity-query/query.test.mjs",
+        "tools/port/docs-check.test.mjs",
+        "tools/port/release-check.test.mjs",
+        "tools/port/run-test-suites.test.mjs",
+        "tools/port/verify-ported.test.mjs",
+        "tools/schema-atlas/atlas.test.mjs",
+        "tools/validator/src/references.test.mjs"
+      ]
+    }
+  ]
 }

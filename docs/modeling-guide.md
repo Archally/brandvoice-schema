@@ -1,4 +1,4 @@
-# Brandvoice Modeling Guide
+# Brandvoice 1.8.0 Modeling Guide
 
 How to build effective brandvoice models -- from a blank directory to a comprehensive brand strategy specification.
 
@@ -123,7 +123,7 @@ Complete the learning loop with measurement, experimentation, and capacity plann
 - [ ] At least one positioning statement with differentiated claim
 - [ ] Brand has purpose, promise, and at least 2 values
 - [ ] Message house has roof claim and at least 2 pillars
-- [ ] Model validates clean (`npx @archally/brandvoice-schema validate`)
+- [ ] Model validates clean (`npm run validate -- /path/to/my-brand/.brandvoice/v1.8 --schemas schema/v1.8`)
 
 ### Phase 2 Gate
 

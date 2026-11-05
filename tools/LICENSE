@@ -7,6 +7,8 @@ below; a tool that appears in neither list is an omission, not a permission.
 
 Apache License, Version 2.0 - see ../LICENSE-APACHE
 
+  - schema-atlas/           schema reference generated from the format
+  - doc-snippet-validate/   conformance of documented model examples
   - validator/              the reference conformance validator
   - port/                   verifies the shipped files against the manifest
                             published with them; it describes no brand and
@@ -18,6 +20,8 @@ Apache License, Version 2.0 - see ../LICENSE-APACHE
 
 Functional Source License 1.1 (ALv2 Future License) - see ../LICENSE-FSL
 
+  - entity-query/           inspect and filter a built model
+  - next-id/                suggest entity identifiers in a model
   - model-builder/          the model graph, and the relation vocabulary typing it
   - semantic-checker/       model-quality rules, and the adapter feeding them
 

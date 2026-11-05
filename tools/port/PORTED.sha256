@@ -5,6 +5,10 @@
 # job model-builder tools/model-builder
 # job semantic-checker tools/semantic-checker
 # job port tools/port
+# job schema-atlas tools/schema-atlas
+# job doc-snippet-validate tools/doc-snippet-validate
+# job entity-query tools/entity-query
+# job next-id tools/next-id
 # job docs docs
 # job examples examples
 # file package package.json
@@ -18,6 +22,7 @@
 # file tools-terms tools/LICENSE
 # file line-endings .gitattributes
 # file ignore .gitignore
+# file tools-readme tools/README.md
 # absent tools/model.config.yaml
 # absent tools/core
 # absent publication.manifest.yaml
@@ -27,9 +32,15 @@
 # covered examples
 
 21acb9c5875a44ca26468d388a46811c9dc5132deabad9fb6b575f97aefa1ebd  changelog/CHANGELOG.md
-52f020a657c0838fe5e58e5e8c16485b8ff13908cf0f1959ad63b5304bb4ac5e  docs/file-conventions.md
-56b8c3764178b1eddfaf0b402258f39a5e6673d3bab154b44641700984b1dd08  docs/modeling-guide.md
-2f3c77c992653e47a3f47cb531a48d210250ee01275fefdd35328a2ab4bc49ff  docs/schema-reference.md
+898293cafbb4084ae25c978f3cd7be453a38fdc1f81449a2a7dfe715bbc0c736  doc-snippet-validate/cli.mjs
+c92a57dd81bf1c0670aa5942d1d9d4577ea5dd8940397d5a96bbac635ad630a3  doc-snippet-validate/extract.mjs
+9cef6aabed1872a048703394f8260940677704c3f6f1c3e196647467b926fd61  doc-snippet-validate/snippets.test.mjs
+887e0f84b5660073a91af32b09ad86866b118ba8b66f0d4ace03f55ae2c54b10  docs/file-conventions.md
+d2d6498667fbe191b0440970bc9ccae9a4e3b7a9147ca9c34ad1b19d194705b8  docs/modeling-guide.md
+85f15c2fede1bb2a5e9e8d31fa0587e65acc690ad3edd76fe13ee06cd379508b  docs/schema-atlas/2026-11-05-reference.md
+47fa701ffd370fa71dd5373e35132d6de4c4e8270da5a4a22826f95660ba0d68  docs/schema-reference.md
+68293fc9f70675ae7571b375562dbbb1eadd63aef0445b27e05403ccf9967317  entity-query/cli.mjs
+a2e77b83e449cc9c998a7bbe9e01af29a2962282c173bc8736e4534cc397562d  entity-query/query.test.mjs
 355a0289faac03b515ba7583aa86ad87277f799a6dcb13eaca8eae078ed717cf  examples/fitness-app/.brandvoice/v1.8/activation/campaigns.activation.yaml
 3e07605518f73b666d6e5026b579f8a341a0fc094872f01a065e86f73ad46c77  examples/fitness-app/.brandvoice/v1.8/activation/channels.activation.yaml
 ad9c86d6b2f4c7c613063f8d7f2e271d194826b570f50dacfc03733fde4d04d7  examples/fitness-app/.brandvoice/v1.8/brandvoice.yaml
@@ -75,14 +86,21 @@ d9cfdfac4986c5b251626f840a67f3341ef439e2043012152938dabe1e272a73  model-builder/
 a7ffdce72f38efc1b1906530ba5fb3b2d511821a5d5d18ffba2e4f311f34b22a  model-builder/src/types.ts
 298c73888a1cf63099049fa58c90d8e61f1d448dfb2314dc6c438d6852211b2d  model-builder/tsconfig.json
 9414eb162c0b32b662ee3936fd5e4f2c665ef65dd8e3a34b98ffa7991e276fa8  model-builder/vitest.config.ts
+88defcc3f5944a0de6a0fd32bf619e246c559c07e77dca3932b5a6b5e5111982  next-id/cli.mjs
 1dafcc71e0813455a993d3d4de9aa8e6648021fe5cd80612fc7926e15c63e132  notice/NOTICE
-d0d969d2aaa306a17b267c3aa4dcb43bb1ae70ad63edd8cf8444f6c37f7bbfd9  package/package.json
+7ac01710db354e01caa22822bcb391fe57b810526dd68b1ff58178615a2af4f7  package/package.json
+afcb153b077242e0904813c988c75ad579f9d071a741700173e07cb0190e8f48  port/docs-check.mjs
+f606295df8cbfe42357577bd6e834c0abe2ef6a476a5aaf8a42396c42ce7a60f  port/docs-check.test.mjs
 c35209413ebfaddd743c41268f4cbde1f6487b2d39a506870867bede4095b7a4  port/integrity.mjs
 4a1d0411aafd6f1c88bf6ece7cd955189807a6cc5bb10c020ada583511816f75  port/release-check.mjs
 22b22145b691894b646f69aa8c792c44b1633c2644285276adeadb0fdf55d091  port/release-check.test.mjs
+a9f107efd94f7216c500a17a6d823ae278e8873c847816342e74f1ac275f178d  port/run-test-suites.mjs
+91cddfebc6203025606fc08dd152d48b4f840aff0bce4b0664e7c9ddd4f08089  port/run-test-suites.test.mjs
 c4e2ad981500d09d8f98fcc30efea6dd0cfc82c331af24e5d96ced5450da85df  port/verify-ported.mjs
 6261b956b96169b3b1d2d71e8d4569ec439126b2fe0e97121322dbefbe9acaf9  port/verify-ported.test.mjs
-faa61a20aedce0b85783e4ad0f7e2e3254af0d0bea8e87d685a6e2a73416bd1f  readme/README.md
+dbebd40b05c4bc76b52e5e294edbac112d6da5000b9bbcb3e708c3e18e336bb2  readme/README.md
+8e86c60d1863e19961ffc46c844acbdefafd0b696b81618992e31028cbcc3d3d  schema-atlas/atlas.test.mjs
+97184c152af48c7ea0ab9c45a05a112be278fbedd7e5214231eeec96c8f5c3de  schema-atlas/cli.mjs
 1d56c39c149c496d6ce8cd608f73e4ee5451d46bc88cd756605f207f1d2935fa  schema/activation/campaigns.schema.yaml
 e9ce59406f97dfa1eb48abfaad3a33d034a8047c74a9f420cb111e6782e8085b  schema/activation/channels.schema.yaml
 f0fc3fe7a16a553eccf0c6731d24f1c60fcbeb7b6951a3df7e4c824628942a60  schema/brandvoice.schema.yaml
@@ -122,8 +140,9 @@ ed7f6c082d69015911e18249fcf1ab932f149a15b28f056bec36b4b0ca2d1cf3  semantic-check
 074a132f1d5ae68d7f77b7088e84676d99f93e943293c0db95180c8952091a29  semantic-checker/vitest.config.ts
 82cc96bb5151ff70b6716a744f141fab3a7fa8b4430b53fb9f8f34ed51460bf5  terms-apache/LICENSE-APACHE
 4ddc617c18982535f06b579502aba3c2f5a0aebe67183e741102aa924180b6d3  terms-fsl/LICENSE-FSL
-d0b097f06fe5a80f626e4e8f2016ffeabba89823dadd5eef9c441a4918f134f4  terms/LICENSE
-152d9092de56f780b8c8b4ac84635eb80f93a062576cafb0542762ad22d20642  tools-terms/LICENSE
+8cbf3cbd1cf03805d9cfe352adf9e544246333a3b30933dceac658f6acebff41  terms/LICENSE
+221d4d710c7d56a88362e37c6745c52d71490fc212476993ace62e2d26446082  tools-readme/README.md
+d48e82b879a640daa69e48b97cfe7e324dceb803b0344ba6e6615b99e56749dd  tools-terms/LICENSE
 b342f77657153c897782b3adbba525bdc47f8c3a6ee41d8723174b19c0f45066  validator/README.md
 15b9d2299fc0d9d101aa63836f275522738713f687e68ac3e57ca680aef246ab  validator/src/cli.mjs
 ab7450e8d3b04ddc8bc2bfc6b75dc7dfaea9f3a26f7847dd99f57335ec23e7b6  validator/src/composition.mjs
