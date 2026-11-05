@@ -8,7 +8,7 @@ rules:
     filter:
       field_eq:
         data.status: active
-    # One issue per missing field, exposing {field} — matches the legacy two-issue behavior.
+    # One issue per missing field, exposing {field} - matches the legacy two-issue behavior.
     check:
       require_each: [data.evidence_refs, data.proof_points]
     message: "Active message '{id}' has no {field}."

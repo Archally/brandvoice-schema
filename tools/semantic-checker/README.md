@@ -68,14 +68,14 @@ Valid severities: `error`, `warn`, `info`, `off`.
 | Code | Meaning |
 |------|---------|
 | 0 | Passed (warnings/info may be present) |
-| 1 | Failed — at least one error-severity issue |
+| 1 | Failed - at least one error-severity issue |
 | 2 | Runner error (missing files, composition failure) |
 
 ## Layout
 
 | File | Responsibility |
 |------|----------------|
-| `cli.ts` | thin entry point — compose, adapt, run, format (compiled to `dist/cli.js`) |
+| `cli.ts` | thin entry point - compose, adapt, run, format (compiled to `dist/cli.js`) |
 | `adapter.ts` | `BrandvoiceModel` → engine `CheckableModel` |
 | `rules/*.yaml` | the eight declarative rule packs the CLI loads |
 | `examples/duplicate-display-name.{ts,rule.yaml}` | consumer-side TypeScript extension example (not in the default run; see its test) |

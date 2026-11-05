@@ -10,4 +10,4 @@ rules:
         direction: out
         type: backed-by
         exists: true
-    message: "Positioning '{id}' has no evidence_refs — claim is unsubstantiated."
+    message: "Positioning '{id}' has no evidence_refs - claim is unsubstantiated."

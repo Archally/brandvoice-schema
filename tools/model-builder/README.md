@@ -5,10 +5,10 @@ Loads brandvoice YAML files and produces a typed in-memory entity/relation graph
 ## Usage
 
 ```bash
-# CLI — produce model.json
+# CLI - produce model.json
 npm run model -- .brandvoice/v1.8 --output model.json --pretty
 
-# Stats only — entity/relation counts without JSON output
+# Stats only - entity/relation counts without JSON output
 npm run model -- .brandvoice/v1.8 --stats
 
 # Pipe to stdout
@@ -85,19 +85,19 @@ Full prefix table: 44 entity types across 4 planes.
 
 Relations are derived from `*_ref` and `*_refs` fields in entity data. The relation type is determined by a lookup table keyed on `(source_entity_type, ref_field_name)`. Common relation types:
 
-- `backed-by` — entity → evidence (via `evidence_refs`)
-- `targets-actor` — entity → actor (via `actor_refs`, `actors`)
-- `solves-need` — offering → need (via `solves_needs`)
-- `competes-with` — positioning → competitor (via `competitors`)
-- `uses-message` — campaign → message (via `message_refs`)
-- `proved-by` — message → proof_point (via `proof_points`)
-- `supports` / `contradicts` — evidence → entity (via `supports`, `contradicts`)
+- `backed-by` - entity → evidence (via `evidence_refs`)
+- `targets-actor` - entity → actor (via `actor_refs`, `actors`)
+- `solves-need` - offering → need (via `solves_needs`)
+- `competes-with` - positioning → competitor (via `competitors`)
+- `uses-message` - campaign → message (via `message_refs`)
+- `proved-by` - message → proof_point (via `proof_points`)
+- `supports` / `contradicts` - evidence → entity (via `supports`, `contradicts`)
 
 ## Module Structure
 
 | File | Responsibility |
 |------|---------------|
 | `cli.mjs` | CLI entry point, output formatting, --stats mode |
-| `build-model.mjs` | Model assembly — entities + relations + metadata |
+| `build-model.mjs` | Model assembly - entities + relations + metadata |
 | `extractor.mjs` | Entity extraction (ID walk) + relation derivation (ref fields) |
 | `entity-types.mjs` | Prefix → type mapping, type → plane mapping |

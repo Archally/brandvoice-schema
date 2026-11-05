@@ -1,5 +1,5 @@
 engineVersion: "0.1"
-# Standalone consumer-side extension example — NOT in the default CLI rule set (preserves the
+# Standalone consumer-side extension example - NOT in the default CLI rule set (preserves the
 # eight-rule byte-for-byte output). Exercised by ../duplicate-display-name.test.ts; a template for
 # your own extensions (loadRules → loadExtensions → runChecker).
 rules:

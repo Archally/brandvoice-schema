@@ -4,7 +4,7 @@ import { loadRules, loadExtensions, runChecker } from '@archally/semantic-checke
 import { buildBrandvoiceModel } from '@archally/brandvoice-schema/model';
 import { toCheckableModel } from './adapter.js';
 
-// TST074 — the consumer-side TypeScript extension example detects entities that share a display
+// TST074 - the consumer-side TypeScript extension example detects entities that share a display
 // name. Exercised explicitly here (not part of the default `rules/` set, so it never affects the
 // byte-for-byte output of the eight ported rules).
 

@@ -39,9 +39,11 @@
     "check:examples": "node tools/semantic-checker/dist/cli.js examples/fitness-app/.brandvoice/v1.8 && node tools/semantic-checker/dist/cli.js examples/time-management/.brandvoice/v1.8",
     "model": "node tools/model-builder/dist/cli.js",
     "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
-    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts && node --test tools/validator/src/references.test.mjs tools/port/release-check.test.mjs",
+    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts && node --test tools/validator/src/references.test.mjs tools/port/*.test.mjs",
     "release:check": "node tools/port/release-check.mjs --expect 1.8.0",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "port:verify": "node tools/port/verify-ported.mjs",
+    "port:test": "node --test tools/port/*.test.mjs"
   },
   "bin": {
     "brandvoice-validate": "tools/validator/src/cli.mjs",

@@ -3,7 +3,7 @@ import type { CheckableModel, CheckableEntity, ExtensionResult } from '@archally
 /**
  * Consumer-side TypeScript extension example (escape hatch, D4) for the brandvoice rule set.
  *
- * Flags any entity that shares its display name with a *different* entity — cross-entity logic the
+ * Flags any entity that shares its display name with a *different* entity - cross-entity logic the
  * declarative DSL cannot express. This is a standalone template: it lives in `examples/`, NOT in
  * the default `rules/` set the CLI loads for `npm run check`, so it never changes the byte-for-byte
  * output of the eight ported rules. It is exercised by `duplicate-display-name.test.ts`
