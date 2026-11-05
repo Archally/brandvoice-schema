@@ -472,9 +472,9 @@ Issues and discussions are welcome. For schema change proposals, please open an 
 **Dual-licensed** - [LICENSE](./LICENSE) is the authoritative map, and
 [tools/LICENSE](./tools/LICENSE) names every tool directory. The schema, the examples and
 the documentation are [Apache-2.0](./LICENSE-APACHE), and so is every tool that establishes
-conformance or protects this distribution: the validator, port verifier, schema atlas and documentation snippet validator. The tools
-that read a model for some other purpose - the model builder, semantic checker with
-its rules, entity query and next-id helper - are [FSL-1.1-ALv2](./LICENSE-FSL), converting to Apache-2.0 two years after each
+conformance or protects this distribution: the validator, port verifier and documentation snippet validator. The tools
+that read a model or the schema for some other purpose - the model builder, semantic checker with
+its rules, entity query, next-id helper and schema atlas - are [FSL-1.1-ALv2](./LICENSE-FSL), converting to Apache-2.0 two years after each
 release.
 
 The line is between conformance and judgement. Whether a model is *valid* and whether it is

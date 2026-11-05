@@ -17,7 +17,6 @@ The following are licensed under the Apache License, Version 2.0
   - schema/                        the Brandvoice schema itself (the format definition)
   - examples/                      example brandvoice models
   - docs/                          the documentation
-  - tools/schema-atlas/            schema reference generated from the format
   - tools/doc-snippet-validate/    conformance of documented model examples
   - tools/validator/               the reference conformance validator
   - tools/port/                    verifies the shipped files against the manifest
@@ -49,6 +48,7 @@ The following are licensed under the Functional Source License, Version 1.1,
 with an Apache 2.0 future grant (full text: ./LICENSE-FSL, SPDX: FSL-1.1-ALv2):
 
   - tools/entity-query/            inspect and filter a built model
+  - tools/schema-atlas/            the generated schema reference
   - tools/next-id/                 suggest entity identifiers in a model
   - tools/model-builder/           the model graph, and the relation vocabulary that
                                    says what each edge means
