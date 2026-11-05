@@ -14,23 +14,30 @@ $defs:
 
   schema_version:
     type: string
-    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1"]
+    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1", "1.6.2", "1.7.0", "1.8.0"]
     description: >
       Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy,
       SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for
       multiple StoryBrand / narrative backbones per brand and optional brand_script_ref on messages.
       v1.4.0 adds an optional `geo_scope` object (see `$defs/geo_scope`) on market-level entities
-      — evidence, markets, competitors, forces, opportunities, risks — so multi-region portfolios
+      - evidence, markets, competitors, forces, opportunities, risks - so multi-region portfolios
       can tag provenance and applicability without losing backward compatibility.
       v1.5.0 adds capacity planning entities: `priority_stream (PRI###)` for revenue stream
       prioritization and `roadmap_phase (RMP###)` for quarterly roadmap phases, both modeled
       in `strategy/capacity-priorities.yaml`.
-      v1.6.0 adds `ecosystem_player (EPL###)` in `market/ecosystem.yaml` — a first-class entity
+      v1.6.0 adds `ecosystem_player (EPL###)` in `market/ecosystem.yaml` - a first-class entity
       for referral partners, co-presenters, distribution channels, complementary experts, and
       coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat
       and need-fit, ecosystem players frame cooperation intent, relationship status, and
       collaboration ideas. Entries that are both (e.g., a direct competitor who could also
       co-present) link to the CPR side via `also_competitor_ref`.
+      v1.6.2 accepts `BSC` ids in `any_entity_ref`, widens the evidence `type` and
+      `source_type` vocabularies and adds the `x-gdsm.modeling_guidance` ledger.
+      v1.7.0 adds three optional fields: `superseded_by` on an evidence record (the
+      evidence records that replace its claims), and `status` (active, beta, deprioritized,
+      sunset) and `superseded_by` (the offerings that replace it) on an offering.
+      v1.8.0: a brand-core file requires only `version`, so a file holding only tone, verbal,
+      asset or profile entries validates on its own.
 
   tags:
     type: array
@@ -617,11 +624,11 @@ $defs:
       Geographic applicability of a market-level record (evidence, market,
       competitor, force, opportunity, risk). `level` is the coarse scope
       the viewer uses for filtering and badges. When `level = country`,
-      the `countries` array names one or more ISO 3166-1 alpha-2 codes —
+      the `countries` array names one or more ISO 3166-1 alpha-2 codes -
       this is how PL-only, DE-only, and multi-country national scopes are
       expressed. `region_label` carries informal human labels ("DACH",
       "Nordics", "Pomorze", "Benelux"). Omit the whole block when the
-      record has no meaningful geographic constraint — such records are
+      record has no meaningful geographic constraint - such records are
       treated as "untagged" by the viewer (never silently assumed to be
       any particular region). Added in schema v1.4.0.
     properties:
@@ -629,10 +636,10 @@ $defs:
         type: string
         enum: [local, country, europe, global]
         description: >
-          local   — city / voivodeship / metro (pair with `region_label`).
-          country — one or more specific countries (REQUIRES `countries`).
-          europe  — EU / EEA / UK / wider Europe.
-          global  — worldwide.
+          local   - city / voivodeship / metro (pair with `region_label`).
+          country - one or more specific countries (REQUIRES `countries`).
+          europe  - EU / EEA / UK / wider Europe.
+          global  - worldwide.
       countries:
         type: array
         items:
@@ -673,7 +680,7 @@ x-gdsm:
   status: draft
   suite_name: "brandvoice"
   purpose: >
-    Cross-cutting brandvoice metamodel — typed IDs, versioning, shared refs.
+    Cross-cutting brandvoice metamodel - typed IDs, versioning, shared refs.
     Also carries the suite-level modeling_guidance ledger.
   design_notes: >
     modeling_guidance entries are durable, reusable lessons for anyone
@@ -684,26 +691,64 @@ x-gdsm:
         A `plane` is a perspective (market / strategy / activation /
         governance), not a file; a `layer` is the schema file type that
         carries it (e.g. `*.market.yaml`). Choosing a plane is a modeling
-        decision — choosing a file/layer is an organization decision.
+        decision - choosing a file/layer is an organization decision.
       category: semantics
+      date: "2026-06-28"
+      evidence: >
+        Authoring session 2026-06-28 - plane-vs-layer mental-model
+        correction.
       schema_version: "1.6.1"
     - lesson: >
-        `white_space` is not a top-level entity — it nests under
+        `white_space` is not a top-level entity - it nests under
         `position_maps[].white_spaces`; likewise `message_pillar` nests under
         `message_houses[].pillars`. Add them inside their parent, not as
         standalone records.
       category: structure
+      date: "2026-06-28"
+      evidence: >
+        Same session - structural gotcha found while adding positioning
+        entities.
       schema_version: "1.6.1"
     - lesson: >
         `competitor`, `action`, `outcome`, and `risk` can appear in more than
         one plane. Pick a canonical plane deliberately and keep each instance
         there; do not duplicate the same entity across planes.
       category: structure
+      date: "2026-06-28"
+      evidence: "Same session - multi-plane placement ambiguity."
       schema_version: "1.6.1"
     - lesson: >
         On upsert, competitors and market-forces dedup by `name`
-        (case-insensitive) — never create a second record for the same named
+        (case-insensitive) - never create a second record for the same named
         competitor or force.
       category: gotcha
+      date: "2026-06-28"
+      evidence: "Session - encoded as a deterministic CLI verb."
       schema_version: "1.6.1"
       enforced_by: "bv merge-market"
+    - lesson: >
+        An evidence record with an excerpt and a `source_url` quotes the page the URL names.
+        Before writing one, fetch the URL and confirm the excerpt is on it; where the phrase
+        lives on a different page by the same authors, cite that page. A record whose URL does
+        not carry its excerpt is unverifiable, and it looks exactly like one that does.
+      category: workflow
+      date: "2026-09-05"
+      evidence: >
+        A record citing a method's home page for a phrase the page does not carry validated
+        cleanly and resolved cleanly; the phrase was on the authors' own article elsewhere.
+        Nothing in the model can tell the two apart, so the check has to happen before the
+        record is written.
+      schema_version: "1.6.2"
+    - lesson: >
+        A positioning that names a family of capabilities says in its own text which members
+        exist and which are planned, and carries no `reasons_to_believe` for a member that has no
+        proof asset. A brandvoice model is read on its own, so a `planned` marker held in some
+        other model beside it does not reach the reader of the positioning.
+      category: workflow
+      date: "2026-09-05"
+      evidence: >
+        A positioning named a family of four sources while the fourth was still planned in a
+        separate model. The positioning was accurate only because two things were done by hand:
+        the empty `reasons_to_believe` and the marker on the other side. Neither is a rule, so
+        neither survives the next edit.
+      schema_version: "1.6.2"

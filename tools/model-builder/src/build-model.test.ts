@@ -4,7 +4,7 @@ import { buildBrandvoiceModel } from './build-model.js';
 const SAMPLE_MODEL = {
   name: 'Acme Brand',
   version: '1.0.0',
-  schemaVersion: '1.6.1',
+  schemaVersion: '1.8.0',
   market: {
     landscape: {
       markets: [
@@ -51,7 +51,7 @@ describe('buildBrandvoiceModel', () => {
   it('populates metadata', () => {
     expect(model.metadata.name).toBe('Acme Brand');
     expect(model.metadata.version).toBe('1.0.0');
-    expect(model.metadata.schemaVersion).toBe('1.6.1');
+    expect(model.metadata.schemaVersion).toBe('1.8.0');
     expect(model.metadata.totalEntities).toBe(model.entities.length);
     expect(model.metadata.totalRelations).toBe(model.relations.length);
     expect(model.metadata.builtAt).toBeTruthy();

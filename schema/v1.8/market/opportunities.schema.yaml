@@ -245,7 +245,7 @@ $defs:
       movement:
         type: object
         additionalProperties: false
-        description: "Optional trend — where this entity is heading."
+        description: "Optional trend - where this entity is heading."
         properties:
           direction:
             type: object

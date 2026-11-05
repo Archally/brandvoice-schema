@@ -60,7 +60,7 @@ $defs:
           Extended in v1.6.1: market-data, market-signal, competitor-intelligence,
           primary-data added for multi-brand portfolio evidence migration.
           Extended in v1.6.2: research, primary-research, primary-academic,
-          thought-leadership, analyst-report — additional evidence-source
+          thought-leadership, analyst-report - additional evidence-source
           credibility classes for portfolio and academic sourcing. Permissive
           author taxonomy; a future curation pass may consolidate the
           research/* family.
@@ -102,8 +102,8 @@ $defs:
           Format-based values (industry-report, competitor-website, etc.) classify
           what kind of publication it is. Extended in v1.6.1 with format-based values.
           Extended in v1.6.2: peer-reviewed, academic-classic, practitioner-credible,
-          industry-analysis, industry-consortium — additional source-credibility
-          classes. Also secondary-research, survey, internal-analysis, primary-data —
+          industry-analysis, industry-consortium - additional source-credibility
+          classes. Also secondary-research, survey, internal-analysis, primary-data -
           research-method values authors use to classify a source; permissive by
           intent, a future curation pass may split method (type) from origin
           (source_type).
@@ -132,6 +132,21 @@ $defs:
         items:
           $ref: "../metamodel.schema.yaml#/$defs/any_entity_ref"
         description: "Entity references this evidence challenges."
+      superseded_by:
+        type: array
+        minItems: 1
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
+        description: >
+          Evidence records whose claims replace this record's claims. A record named
+          here is newer evidence on the same subject; list several when the replacement
+          is split across records. A record replaced only in part keeps its `supports`
+          and states in its `summary` which part is replaced. Evidence-freshness checks
+          classify a record with this field as superseded rather than expired or fresh.
+          Omit the field while the record is current; an empty list is not allowed.
+        examples:
+          - ["EVD042"]
+          - ["market.EVD042", "market.EVD051"]
       related_experiments:
         type: array
         items:
@@ -144,7 +159,7 @@ $defs:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
         description: >
           Optional geographic applicability of this evidence record. See
-          metamodel.geo_scope. Added in v1.4.0 — when omitted, viewers
+          metamodel.geo_scope. Added in v1.4.0 - when omitted, viewers
           treat the record as geographically untagged.
       tags:
         $ref: "../metamodel.schema.yaml#/$defs/tags"

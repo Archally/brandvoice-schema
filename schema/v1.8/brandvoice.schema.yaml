@@ -35,19 +35,18 @@ properties:
   # ── Plane slot composition pattern ──────────────────────────────────────
   # Each plane slot below accepts TWO shapes:
   #   1. Inline: the full plane schema shape (for small/mono-file projects)
-  #   2. $ref placeholder: `{$ref: "path/to/file.yaml"}` — the per-file validator
+  #   2. $ref placeholder: `{$ref: "path/to/file.yaml"}` - the per-file validator
   #      loads the target file separately and validates it against the plane schema
-  # Custom plane slot names (e.g., movarte's `cross_domain_opportunities`,
+  # Custom plane slot names (e.g., `cross_domain_opportunities`,
   # `capacity_priorities`, `research_evidence`) are allowed via `additionalProperties`
   # but must use the $ref placeholder form so the per-file validator can find them.
-  # This matches the feedback_sub_file_splitting convention: split by semantic
-  # cluster, one file per concern, wired from brandvoice.yaml root.
+  # Split by semantic cluster, one file per concern, wired from brandvoice.yaml root.
   market:
     type: object
     description: >
       External market reality the brand responds to. Sizing, forces,
       competitive landscape, opportunity mapping, and (v1.6.0+) ecosystem
-      players — the cooperation-first counterpart to competition.
+      players - the cooperation-first counterpart to competition.
     properties:
       landscape:
         oneOf:

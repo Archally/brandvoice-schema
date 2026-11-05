@@ -1,15 +1,15 @@
 version: "1.0.0"
-schemaVersion: "1.6.1"
-name: "FitPulse"
+schemaVersion: "1.8.0"
+name: "Chronoflow"
 description: >-
-  AI-powered fitness coaching app for busy professionals who want
-  personalized workout plans that adapt to their schedule, energy level,
-  and available equipment.
-scope: fitpulse
-tags: [b2c, mobile, fitness, health-tech, ai]
+  B2B SaaS time intelligence platform that helps engineering teams understand
+  where their time goes, identify workflow bottlenecks, and protect deep work
+  from meeting culture — without surveillance or micromanagement.
+scope: chronoflow
+tags: [b2b, saas, productivity, engineering, time-management]
 
 profiles:
-  - name: JTBD + StoryBrand
+  - name: JTBD + Message House
     category: strategy
     status: active
     applies_to: [strategy.market_product, strategy.messaging]
@@ -19,6 +19,8 @@ market:
     $ref: "market/landscape.market.yaml"
   competition:
     $ref: "market/competition.market.yaml"
+  ecosystem:
+    $ref: "market/ecosystem.market.yaml"
   opportunities:
     $ref: "market/opportunities.market.yaml"
 
@@ -43,3 +45,5 @@ governance:
     $ref: "governance/decisions.governance.yaml"
   measurement:
     $ref: "governance/measurement.governance.yaml"
+  experiments:
+    $ref: "governance/experiments.governance.yaml"

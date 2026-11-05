@@ -102,7 +102,7 @@ $defs:
         type: array
         description: >
           How well this competitor addresses specific needs. This is the core
-          competitive analysis structure — it answers 'for NED001, how good
+          competitive analysis structure - it answers 'for NED001, how good
           is CPR002 and where do they fall short?'
         items:
           $ref: "#/$defs/need_fit_assessment"

@@ -14,7 +14,7 @@ function printHelp() {
       'Loads brandvoice YAML files and produces a model.json.',
       '',
       'Arguments:',
-      '  <brandvoice-dir>   Path to .brandvoice/v1.6 directory',
+      '  <brandvoice-dir>   Path to .brandvoice/v1.8 directory',
       '',
       'Options:',
       '  --output, -o   Write to file instead of stdout',
@@ -49,7 +49,7 @@ function main() {
     }
   }
 
-  const resolvedDir = brandvoiceDir ?? path.resolve('.brandvoice/v1.6');
+  const resolvedDir = brandvoiceDir ?? path.resolve('.brandvoice/v1.8');
 
   console.error(`Loading: ${resolvedDir}`);
 

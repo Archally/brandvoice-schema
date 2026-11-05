@@ -6,13 +6,13 @@ Loads brandvoice YAML files and produces a typed in-memory entity/relation graph
 
 ```bash
 # CLI — produce model.json
-npx @archally/brandvoice-schema brandvoice-model .brandvoice/v1.6 --output model.json --pretty
+npm run model -- .brandvoice/v1.8 --output model.json --pretty
 
 # Stats only — entity/relation counts without JSON output
-npx @archally/brandvoice-schema brandvoice-model .brandvoice/v1.6 --stats
+npm run model -- .brandvoice/v1.8 --stats
 
 # Pipe to stdout
-npx @archally/brandvoice-schema brandvoice-model .brandvoice/v1.6 | jq '.metadata'
+npm run model -- .brandvoice/v1.8 | jq '.metadata'
 ```
 
 ## Output Shape
@@ -40,7 +40,7 @@ npx @archally/brandvoice-schema brandvoice-model .brandvoice/v1.6 | jq '.metadat
   "metadata": {
     "name": "My Brand",
     "version": "1.0.0",
-    "schemaVersion": "1.6.1",
+    "schemaVersion": "1.8.0",
     "totalEntities": 45,
     "totalRelations": 87,
     "entityTypeCounts": { "market": 2, "competitor": 5, ... },

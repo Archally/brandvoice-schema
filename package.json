@@ -1,7 +1,7 @@
 {
   "name": "@archally/brandvoice-schema",
-  "version": "1.6.2",
-  "description": "YAML-based schema for brand communication strategy modeling — market reality, brand strategy, activation, and governance",
+  "version": "1.8.0",
+  "description": "YAML-based schema for brand communication strategy modeling: market reality, brand strategy, activation, and governance",
   "license": "Apache-2.0",
   "author": "Adam Walkowski <adam.walkowski@inperceptic.com>",
   "repository": {
@@ -23,7 +23,7 @@
   ],
   "type": "module",
   "exports": {
-    "./schema/v1.6/*": "./schema/v1.6/*",
+    "./schema/v1.8/*": "./schema/v1.8/*",
     "./model": "./tools/model-builder/dist/index.js"
   },
   "files": [
@@ -34,10 +34,13 @@
   ],
   "scripts": {
     "validate": "node tools/validator/src/cli.mjs",
+    "validate:examples": "node tools/validator/src/cli.mjs examples/fitness-app/.brandvoice/v1.8 --schemas schema/v1.8 && node tools/validator/src/cli.mjs examples/time-management/.brandvoice/v1.8 --schemas schema/v1.8",
     "check": "node tools/semantic-checker/dist/cli.js",
+    "check:examples": "node tools/semantic-checker/dist/cli.js examples/fitness-app/.brandvoice/v1.8 && node tools/semantic-checker/dist/cli.js examples/time-management/.brandvoice/v1.8",
     "model": "node tools/model-builder/dist/cli.js",
     "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
-    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts",
+    "test": "vitest run --config tools/model-builder/vitest.config.ts && vitest run --config tools/semantic-checker/vitest.config.ts && node --test tools/validator/src/references.test.mjs tools/port/release-check.test.mjs",
+    "release:check": "node tools/port/release-check.mjs --expect 1.8.0",
     "prepublishOnly": "npm run build"
   },
   "bin": {

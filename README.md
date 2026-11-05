@@ -46,24 +46,24 @@ Brandvoice models are plain YAML files in your Git repository. No cloud upload r
 
 ## Quick Start
 
-**1. Create a `.brandvoice/v1.6/` directory** in your project:
+**1. Create a `.brandvoice/v1.8/` directory** in your project:
 
 ```
 my-brand/
-  .brandvoice/v1.6/
+  .brandvoice/v1.8/
     brandvoice.yaml
     market/
       landscape.market.yaml
-    strategy/
-      brand-core.strategy.yaml
+    governance/
+      evidence.governance.yaml
 ```
 
-**2. Write a minimal brandvoice** (two files):
+**2. Write a minimal brandvoice** (three files):
 
 ```yaml
 # brandvoice.yaml
 version: "1.0.0"
-schemaVersion: "1.6.1"
+schemaVersion: "1.8.0"
 name: "My Brand"
 description: "A brief summary of brand scope and market context."
 scope: my-brand
@@ -82,10 +82,37 @@ markets:
     evidence_refs: [EVD001]
 ```
 
-**3. Validate:**
+```yaml
+# governance/evidence.governance.yaml
+version: "1.0.0"
+evidence:
+  - id: EVD001
+    title: "Market sizing report"
+    type: secondary-research
+    date: "2026-01-15"
+    summary: "The market grows and buyers are switching tools."
+    confidence: moderate-evidence
+    supports: [MKT001]
+```
+
+**3. Validate** from a clone of this repository (Node.js 20 or later):
 
 ```bash
-npx @archally/brandvoice-schema validate .brandvoice/v1.6
+git clone https://github.com/archally/brandvoice-schema.git
+cd brandvoice-schema
+npm ci
+npm run validate -- /path/to/my-brand/.brandvoice/v1.8
+```
+
+The validator picks `schema/v1.8/` from the `v1.8` in the model path; pass `--schemas schema/v1.8` to choose it explicitly. The minimal model passes with one gap warning, because it has no activation plane yet.
+
+**4. Explore the worked examples:**
+
+```bash
+npm run validate:examples   # validate both examples against schema/v1.8
+npm run build               # compile the model builder and semantic checker
+npm run check:examples      # run the semantic rules on both examples
+npm run model -- examples/fitness-app/.brandvoice/v1.8 --stats
 ```
 
 ## Architecture
@@ -364,7 +391,7 @@ graph LR
 Brandvoice models use a `{semantic-stem}.{plane}.yaml` naming convention:
 
 ```
-.brandvoice/v1.6/
+.brandvoice/v1.8/
   brandvoice.yaml                        # Root metadata
   market/
     landscape.market.yaml                # Markets, forces
@@ -402,8 +429,8 @@ Scoped entity IDs prevent collisions across files: `market.CPR001`, `strategy.NE
 
 This package follows [SemVer](https://semver.org/):
 - **Major** (2.0.0): breaking schema changes
-- **Minor** (1.6.0): new optional fields or entity types
-- **Patch** (1.6.1): documentation, clarification, validator fixes
+- **Minor** (1.8.0): new optional fields, entity types or relaxed constraints
+- **Patch** (1.6.2): documentation, clarification, validator fixes
 
 ## Ecosystem
 

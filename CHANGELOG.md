@@ -6,14 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-10-28
+
+### Summary
+
+- A brand-core file requires only `version`, so a file holding only tone, verbal, asset or personal-profile entries validates on its own and a model can split its brand core into several files.
+- Compatibility: BACKWARD. No field becomes required and no constraint tightens, so every model valid under 1.7.0 stays valid and no instance change is required. A model that relies on the relaxation fails a 1.7.0 validator, so it declares `schemaVersion: "1.8.0"` in its root `brandvoice.yaml`.
+
 ### Changed
 
-- **BREAKING for tool consumers: the semantic-checker engine was extracted to [`@archally/semantic-checker`](https://github.com/archally/semantic-checker).** `tools/semantic-checker/` is now a thin layer — an adapter (`BrandvoiceModel` → the engine's `CheckableModel`) plus the eight rules as declarative YAML (`rules/*.yaml`); the engine, severity handling, JSON-Schema rule validation, and the TypeScript escape hatch come from the package (added as a dependency, installed from GitHub: `github:archally/semantic-checker#v0.1.0`). The `brandvoice-check` CLI, its arguments, exit codes, and `.brandvoice-lint.yaml` config are unchanged, and findings on the example models are identical. Anything that imported the old `tools/semantic-checker/dist` engine/rules directly must import from `@archally/semantic-checker` instead.
-- Semantic-checker output is now ordered deterministically by `(rule, entityId)` (the shared engine's diff-friendly sort) rather than model-composition order; the set of findings is unchanged.
+- `strategy/brand-core.schema.yaml`: root `required` is `[version]`; `brands` is no longer required in every brand-core file. The `brands` property and its item schema are unchanged.
+- `schemaVersion` enum value `1.8.0` in `metamodel.schema.yaml`.
+- The schema ships under `schema/v1.8/` and the package exports `./schema/v1.8/*`. Both worked examples live under `examples/<name>/.brandvoice/v1.8/` and declare `schemaVersion: "1.8.0"`. The validator, model builder and semantic checker default to `.brandvoice/v1.8`.
+- **BREAKING for tool consumers: the semantic-checker engine is the [`@archally/semantic-checker`](https://github.com/archally/semantic-checker) package.** `tools/semantic-checker/` is a thin layer: an adapter (`BrandvoiceModel` to the engine's `CheckableModel`) plus the eight rules as declarative YAML (`rules/*.yaml`). The engine, severity handling, JSON-Schema rule validation and the TypeScript escape hatch come from the package, installed from GitHub as `github:archally/semantic-checker#v0.1.0`. The `brandvoice-check` CLI, its arguments, exit codes and `.brandvoice-lint.yaml` config are unchanged, and findings on the example models are identical. Code that imported the engine or rules from `tools/semantic-checker/dist` imports them from `@archally/semantic-checker`.
+- Semantic-checker output is ordered deterministically by `(rule, entityId)`; the set of findings is unchanged.
+- Tool READMEs and the README Quick Start give the commands as `npm run validate`, `npm run model` and `npm run check` from a clone of this repository.
 
 ### Added
 
+- `npm run validate:examples` and `npm run check:examples` validate and check both worked examples.
+- `npm run release:check` (`tools/port/release-check.mjs`) checks that `package.json`, `package-lock.json`, the top CHANGELOG release, the deployed schema and its exports, the README Quick Start and every worked example declare one release version, and that nothing newer is mixed in. `npm test` runs its tests and the validator's reference tests.
 - A consumer-side TypeScript extension example, `tools/semantic-checker/examples/duplicate-display-name.{ts,rule.yaml}`, demonstrating the engine's escape hatch (flags entities sharing a display name). Not part of the default rule run.
+
+## [1.7.0] - 2026-10-21
+
+### Summary
+
+- An evidence record can name the records that replace its claims, and an offering can state where it stands in its lifecycle and which offerings replace it.
+- Compatibility: BACKWARD. Every field is optional and no field becomes required, so every model valid under 1.6.x stays valid; no instance change is required.
+
+### Added
+
+- `governance/evidence.schema.yaml`: `evidence_record.superseded_by`, an array of `evidence_ref` with `minItems: 1`. A record with this field is read as superseded rather than expired or fresh.
+- `strategy/market-product.schema.yaml`: `offering.status`, enum `active`, `beta`, `deprioritized`, `sunset`, where `sunset` means still delivered to existing buyers and no longer offered to new ones; an absent status is not stated, not `active`. `offering.superseded_by`: an array of `offering_ref`, `minItems: 1`.
+- `schemaVersion` enum values `1.6.2` and `1.7.0` in `metamodel.schema.yaml`, so a model can declare either release.
+- Relations: the validator reports a `superseded_by` target that no entity declares as a cross-reference error, and the model builder extracts each `superseded_by` entry as a `superseded-by` relation. The schema requires the target to carry the source's own prefix: `EVD` for evidence, `OFF` for an offering.
 
 ## [1.6.2] - 2026-08-16
 

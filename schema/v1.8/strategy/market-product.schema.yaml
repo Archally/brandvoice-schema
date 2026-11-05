@@ -183,11 +183,35 @@ $defs:
         type: string
       value_statement:
         type: string
+      status:
+        type: string
+        enum: [active, beta, deprioritized, sunset]
+        description: >
+          Where the offering stands in its lifecycle. `active`: offered to new buyers
+          and delivered. `beta`: offered to selected buyers while it is still being
+          shaped. `deprioritized`: still available, no longer promoted or invested in.
+          `sunset`: still delivered to existing buyers, no longer offered to new ones.
+          When the field is absent the status is not stated; it is not read as `active`.
+        examples:
+          - active
+          - deprioritized
+      superseded_by:
+        type: array
+        minItems: 1
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
+        description: >
+          Offerings that replace this one for the buyers and needs it served. Usually
+          paired with `status: deprioritized` or `status: sunset`; list several when the
+          replacement is split across offerings. Omit the field while nothing replaces
+          the offering; an empty list is not allowed.
+        examples:
+          - ["OFF012"]
       capabilities:
         type: array
         description: >
           Concrete product or service capabilities grounded in evidence.
-          Each entry describes a specific, verifiable capability — not
+          Each entry describes a specific, verifiable capability - not
           aspirational language. Used to bridge product reality into
           brand strategy and website content.
         items:

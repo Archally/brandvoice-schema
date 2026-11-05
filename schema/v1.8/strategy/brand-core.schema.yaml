@@ -6,11 +6,12 @@ description: >
   These elements keep communication coherent across channels and campaigns.
   Rationale: encode durable brand intent and verbal behavior so execution can
   scale without relying on tacit founder knowledge.
+  Each brand-core file requires only `version`; brands, tone guidelines, verbal
+  identity, distinctive assets and personal profiles may sit in separate files.
 type: object
 additionalProperties: false
 required:
   - version
-  - brands
 properties:
   version:
     $ref: "../metamodel.schema.yaml#/$defs/semver"

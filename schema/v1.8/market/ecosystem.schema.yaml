@@ -8,7 +8,7 @@ description: >
   modeled as *cooperators* rather than *competitors*.
 
   Rationale: competitor profiles (market/competition.yaml) frame players
-  through threat_level, need_fit, weaknesses, and switching barriers —
+  through threat_level, need_fit, weaknesses, and switching barriers -
   strategy artifacts that answer "how do we win against them?". This is
   the wrong frame for a training company we want to refer clients with,
   a podcast host we want as a guest, a distribution platform that reaches
@@ -18,7 +18,7 @@ description: >
   are concrete today, where are we in the relationship lifecycle.
 
   Entries that are simultaneously a competitor AND an ecosystem player
-  (coopetition — e.g., a direct competitor who could also co-present at
+  (coopetition - e.g., a direct competitor who could also co-present at
   a conference) MAY link to the CPR side via `also_competitor_ref`. No
   automatic mirror is created on the competitor side; the reference is
   informational.
@@ -27,7 +27,7 @@ description: >
   competition, opportunities).
 
   Entities:
-    EPL### — ecosystem_player
+    EPL### - ecosystem_player
 
 type: object
 additionalProperties: false
@@ -58,7 +58,7 @@ $defs:
     additionalProperties: false
     required: [id, name, type, relationship_type]
     description: >
-      A single cooperator in the brand's market. Not a competitor profile —
+      A single cooperator in the brand's market. Not a competitor profile -
       those live in competition.schema.yaml. See `also_competitor_ref` for
       the coopetition case where an entry is simultaneously a competitor.
     properties:
@@ -106,7 +106,7 @@ $defs:
         description: >
           Narrative description of why this relationship matters and what
           cooperation could look like. This is the free-text reasoning that
-          survives from hand-authored ecosystem notes — the "HIGH PARTNER VALUE"
+          survives from hand-authored ecosystem notes - the "HIGH PARTNER VALUE"
           paragraph. Rationale: a concrete enum covers the category, but the
           specific partnership hypothesis (e.g., "Bottega trains, we deliver;
           natural referral pipeline") is the strategic insight that triggers
@@ -141,13 +141,13 @@ $defs:
           type: string
         description: >
           Notable products, services, events, or content this player owns.
-          Free-text strings (not typed refs) — these are THEIR offerings, not ours.
+          Free-text strings (not typed refs) - these are THEIR offerings, not ours.
       strengths:
         type: array
         items:
           type: string
         description: >
-          Why this player is worth cooperating with — reputation, reach,
+          Why this player is worth cooperating with - reputation, reach,
           credibility, audience, expertise, or unique assets.
       collaboration_ideas:
         type: array

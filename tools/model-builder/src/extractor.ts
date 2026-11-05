@@ -58,7 +58,7 @@ const SPECIAL_REF_KEYS = new Set([
   'actors', 'solves_needs', 'competitors', 'target_actors', 'target_markets',
   'affected_needs', 'affected_actors', 'affected_markets', 'for_needs',
   'creates_opportunities', 'unmet_needs', 'enabling_forces', 'blocking_forces',
-  'measured_by',
+  'measured_by', 'superseded_by',
 ]);
 
 function isRefKey(key: string): boolean {
@@ -72,6 +72,7 @@ const RELATION_TYPE_MAP: Record<string, string> = {
   supports: 'supports',
   contradicts: 'contradicts',
   supersedes: 'supersedes',
+  superseded_by: 'superseded-by',
   validated_by: 'validated-by',
   invalidated_by: 'invalidated-by',
   actors: 'targets-actor',

@@ -6,7 +6,7 @@ const EXAMPLES_DIR = path.resolve(__dirname, '..', '..', '..', 'examples');
 
 describe('loadBrandvoice', () => {
   it('loads fitness-app example without errors', () => {
-    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.6');
+    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.8');
     const result = loadBrandvoice(fitnessPath);
     expect(result.errors).toHaveLength(0);
     expect(result.root.name).toBe('FitPulse');
@@ -17,14 +17,14 @@ describe('loadBrandvoice', () => {
   });
 
   it('loads time-management example without errors', () => {
-    const timePath = path.join(EXAMPLES_DIR, 'time-management', '.brandvoice', 'v1.6');
+    const timePath = path.join(EXAMPLES_DIR, 'time-management', '.brandvoice', 'v1.8');
     const result = loadBrandvoice(timePath);
     expect(result.errors).toHaveLength(0);
     expect(result.root.name).toBe('Chronoflow');
   });
 
   it('composes $ref files into planes', () => {
-    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.6');
+    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.8');
     const result = loadBrandvoice(fitnessPath);
     const market = result.root.market as Record<string, unknown>;
     const landscape = market.landscape as Record<string, unknown>;
@@ -33,7 +33,7 @@ describe('loadBrandvoice', () => {
   });
 
   it('tracks composed files', () => {
-    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.6');
+    const fitnessPath = path.join(EXAMPLES_DIR, 'fitness-app', '.brandvoice', 'v1.8');
     const result = loadBrandvoice(fitnessPath);
     expect(Object.keys(result.files).length).toBeGreaterThan(1);
   });

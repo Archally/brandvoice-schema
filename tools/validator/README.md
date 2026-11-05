@@ -5,17 +5,17 @@ Schema validation + cross-reference integrity + semantic checks + gap analysis f
 ## Usage
 
 ```bash
-# Validate default path (.brandvoice/v1.6/)
-npx @archally/brandvoice-schema validate
+# Validate default path (.brandvoice/v1.8/)
+npm run validate
 
 # Validate specific model directory
-npx @archally/brandvoice-schema validate path/to/.brandvoice/v1.6
+npm run validate -- path/to/.brandvoice/v1.8
 
 # Explicit schema version
-npx @archally/brandvoice-schema validate --model path/to/model --schemas schema/v1.6
+npm run validate -- --model path/to/model --schemas schema/v1.8
 
 # Compat mode (schema failures become warnings)
-npx @archally/brandvoice-schema validate --compat
+npm run validate -- --compat
 ```
 
 ## Checks Performed
@@ -28,7 +28,7 @@ npx @archally/brandvoice-schema validate --compat
 
 ## Schema Version Auto-Detection
 
-When `--schemas` is not specified, the validator detects the schema version from the model path. A model at `.brandvoice/v1.6/` automatically resolves to `schema/v1.6/`.
+When `--schemas` is not specified, the validator detects the schema version from the model path. A model at `.brandvoice/v1.8/` automatically resolves to `schema/v1.8/`.
 
 ## Exit Codes
 

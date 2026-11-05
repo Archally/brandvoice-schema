@@ -30,6 +30,7 @@ const LIKELY_REF_KEYS = new Set([
   "supports",
   "contradicts",
   "supersedes",
+  "superseded_by",
   "validated_by",
   "invalidated_by",
   "related_experiments",

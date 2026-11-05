@@ -1,7 +1,7 @@
 # Brandvoice Semantic Checker
 
 Catches modeling issues schema validation cannot detect (missing evidence linkage, incomplete
-active campaigns, orphan evidence, …). As of v1.6.2 the **engine is external** — this directory is
+active campaigns, orphan evidence, …). The **engine is external**: this directory is
 a thin brandvoice-specific layer over [`@archally/semantic-checker`](https://github.com/archally/semantic-checker):
 
 ```
@@ -17,17 +17,17 @@ migration recipe this layer follows.
 ## Usage
 
 ```bash
-# Check default path (.brandvoice/v1.6/)
-npx @archally/brandvoice-schema brandvoice-check
+# Check default path (.brandvoice/v1.8/)
+npm run check
 
 # Check a specific model
-npx @archally/brandvoice-schema brandvoice-check examples/fitness-app/.brandvoice/v1.6
+npm run check -- examples/fitness-app/.brandvoice/v1.8
 
 # List available rules
-npx @archally/brandvoice-schema brandvoice-check --list
+npm run check -- --list
 
 # Custom severity config
-npx @archally/brandvoice-schema brandvoice-check <model> --config .brandvoice-lint.yaml
+npm run check -- <model> --config .brandvoice-lint.yaml
 ```
 
 ## Rules (`rules/*.yaml`)
