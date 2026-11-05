@@ -459,4 +459,17 @@ Issues and discussions are welcome. For schema change proposals, please open an 
 
 ## License
 
-[Apache 2.0](./LICENSE) - Copyright 2026 Adam Walkowski
+**Dual-licensed** - [LICENSE](./LICENSE) is the authoritative map, and
+[tools/LICENSE](./tools/LICENSE) names every tool directory. The schema, the examples and
+the documentation are [Apache-2.0](./LICENSE-APACHE), and so is every tool that establishes
+conformance or protects this distribution: the validator and the port verifier. The tools
+that read a model for some other purpose - the model builder and the semantic checker with
+its rules - are [FSL-1.1-ALv2](./LICENSE-FSL), converting to Apache-2.0 two years after each
+release.
+
+The line is between conformance and judgement. Whether a model is *valid* and whether it is
+the model that was published are properties of the format and must be freely exercisable by
+anyone. Whether a model is *good* and what its edges mean are modeling opinions, and those
+are the product. A directory in neither list is an omission, not a permission.
+
+Copyright 2026 Adam Walkowski
