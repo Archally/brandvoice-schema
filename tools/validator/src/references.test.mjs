@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { isRefKey } from "./references.mjs";
 import { validateModel } from "./validate.mjs";
 
-const schemas = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "schema", "v1.8");
+const schemas = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "schema", "v1.9");
 
 function writeModel(offerings) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "brandvoice-refs-"));

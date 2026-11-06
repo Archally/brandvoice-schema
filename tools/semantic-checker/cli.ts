@@ -48,7 +48,7 @@ async function main(): Promise<void> {
     if (!token.startsWith('-')) modelDir = path.resolve(token);
   }
 
-  const resolvedDir = modelDir ?? path.resolve('.brandvoice/v1.8');
+  const resolvedDir = modelDir ?? path.resolve('.brandvoice/v1.9');
   const config = loadConfig(configPath);
 
   const composed = loadBrandvoice(resolvedDir);

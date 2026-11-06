@@ -23,7 +23,7 @@ try {
         mkdirSync(dirname(target), {recursive:true});
         writeFileSync(target, block.body + '\n');
       }
-      const result = spawnSync(process.execPath, [resolve('tools/validator/src/cli.mjs'), root, '--schemas', resolve('schema/v1.8')], {encoding:'utf8'});
+      const result = spawnSync(process.execPath, [resolve('tools/validator/src/cli.mjs'), root, '--schemas', resolve('schema/v1.9')], {encoding:'utf8'});
       checked += blocks.length;
       if (result.status !== 0) {
         failed++;

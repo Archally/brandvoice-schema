@@ -1,6 +1,6 @@
 {
   "name": "@archally/brandvoice-schema",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "YAML-based schema for brand communication strategy modeling: market reality, brand strategy, activation, and governance",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Adam Walkowski <adam.walkowski@inperceptic.com>",
@@ -23,7 +23,7 @@
   ],
   "type": "module",
   "exports": {
-    "./schema/v1.8/*": "./schema/v1.8/*",
+    "./schema/v1.9/*": "./schema/v1.9/*",
     "./model": "./tools/model-builder/dist/index.js"
   },
   "files": [
@@ -39,13 +39,13 @@
   ],
   "scripts": {
     "validate": "node tools/validator/src/cli.mjs",
-    "validate:examples": "node tools/validator/src/cli.mjs examples/fitness-app/.brandvoice/v1.8 --schemas schema/v1.8 && node tools/validator/src/cli.mjs examples/time-management/.brandvoice/v1.8 --schemas schema/v1.8",
+    "validate:examples": "node tools/validator/src/cli.mjs examples/fitness-app/.brandvoice/v1.9 --schemas schema/v1.9 && node tools/validator/src/cli.mjs examples/time-management/.brandvoice/v1.9 --schemas schema/v1.9",
     "check": "node tools/semantic-checker/dist/cli.js",
-    "check:examples": "node tools/semantic-checker/dist/cli.js examples/fitness-app/.brandvoice/v1.8 && node tools/semantic-checker/dist/cli.js examples/time-management/.brandvoice/v1.8",
+    "check:examples": "node tools/semantic-checker/dist/cli.js examples/fitness-app/.brandvoice/v1.9 && node tools/semantic-checker/dist/cli.js examples/time-management/.brandvoice/v1.9",
     "model": "node tools/model-builder/dist/cli.js",
     "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
     "test": "node tools/port/run-test-suites.mjs",
-    "release:check": "node tools/port/release-check.mjs --expect 1.8.0 && npm run atlas:check && npm run docs:check && npm run doc-snippets",
+    "release:check": "node tools/port/release-check.mjs --expect 1.9.0 && npm run atlas:check && npm run docs:check && npm run doc-snippets",
     "prepublishOnly": "npm run build",
     "port:verify": "node tools/port/verify-ported.mjs",
     "port:test": "node --test tools/port/*.test.mjs",

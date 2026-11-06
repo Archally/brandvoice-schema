@@ -46,11 +46,11 @@ Brandvoice models are plain YAML files in your Git repository. No cloud upload r
 
 ## Quick Start
 
-**1. Inspect the model layout** (`.brandvoice/v1.8/`):
+**1. Inspect the model layout** (`.brandvoice/v1.9/`):
 
 ```
 my-brand/
-  .brandvoice/v1.8/
+  .brandvoice/v1.9/
     brandvoice.yaml
     market/
       landscape.market.yaml
@@ -64,7 +64,7 @@ my-brand/
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.8.0"
+schemaVersion: "1.9.0"
 name: "My Brand"
 description: "A brief summary of brand scope and market context."
 scope: my-brand
@@ -110,15 +110,15 @@ npm run doc-snippets
 npm run atlas:check
 ```
 
-To validate your own files, run `npm run validate -- /path/to/my-brand/.brandvoice/v1.8 --schemas schema/v1.8`. The validator defaults to the shipped schemas and can select a matching installed schema line from the model path. The minimal model passes with one gap warning, because it has no activation plane yet.
+To validate your own files, run `npm run validate -- /path/to/my-brand/.brandvoice/v1.9 --schemas schema/v1.9`. The validator defaults to the shipped schemas and can select a matching installed schema line from the model path. The minimal model passes with one gap warning, because it has no activation plane yet.
 
 **4. Explore the worked examples:**
 
 ```bash
-npm run validate:examples   # validate both examples against schema/v1.8
+npm run validate:examples   # validate both examples against schema/v1.9
 npm run build               # compile the model builder and semantic checker
 npm run check:examples      # run the semantic rules on both examples
-npm run model -- examples/fitness-app/.brandvoice/v1.8 --stats
+npm run model -- examples/fitness-app/.brandvoice/v1.9 --stats
 ```
 
 ## Included tools and documentation
@@ -401,7 +401,7 @@ graph LR
 Brandvoice models use a `{semantic-stem}.{plane}.yaml` naming convention:
 
 ```
-.brandvoice/v1.8/
+.brandvoice/v1.9/
   brandvoice.yaml                        # Root metadata
   market/
     landscape.market.yaml                # Markets, forces
@@ -439,7 +439,7 @@ Scoped entity IDs prevent collisions across files: `market.CPR001`, `strategy.NE
 
 This package follows [SemVer](https://semver.org/):
 - **Major** (2.0.0): breaking schema changes
-- **Minor** (1.8.0): new optional fields, entity types or relaxed constraints
+- **Minor** (1.9.0): new optional fields, entity types or relaxed constraints
 - **Patch** (1.6.2): documentation, clarification, validator fixes
 
 ## Ecosystem

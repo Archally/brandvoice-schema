@@ -220,6 +220,31 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
+      target_audiences:
+        type: array
+        minItems: 1
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
+        description: >
+          Audiences this offering targets, in one list. The list does not mark a target
+          as current or potential: read that from each audience's `evidence_level`, where
+          `hypothesis` marks a segment still to be tested. Value propositions state what
+          the offering promises each audience. Omit the field while no audience is named;
+          an empty list is not allowed.
+        examples:
+          - ["AUD001", "AUD004"]
+      competitors:
+        type: array
+        minItems: 1
+        items:
+          $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
+        description: >
+          Competitors and alternatives a buyer weighs against this offering, including
+          substitutes and the status quo (a competitor of type `substitute` or
+          `status-quo`). A positioning states which of them its claim is made against.
+          Omit the field while none is named; an empty list is not allowed.
+        examples:
+          - ["CPR003", "CPR007"]
       market_refs:
         type: array
         items:
@@ -333,6 +358,13 @@ $defs:
         type: string
       need:
         type: string
+      description:
+        type: string
+        description: >
+          Free context about the audience: why it matters, what is still unknown and
+          how it will be tested. Keep the need itself in `need`.
+        examples:
+          - "Raised by two agencies in support threads; interviews will test willingness to pay."
       actor:
         $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: >
@@ -343,6 +375,13 @@ $defs:
         enum: [demographic, behavioral, psychographic, firmographic, intent]
       priority:
         $ref: "../metamodel.schema.yaml#/$defs/priority"
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+        description: >
+          How well evidence supports this audience as a real segment. `hypothesis` marks
+          a segment still to be tested. When absent, the level is not stated.
+        examples:
+          - hypothesis
       evidence_refs:
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       blueprint_links:
@@ -386,6 +425,14 @@ $defs:
         description: >
           Optional structured empathy map for this persona. Coexists with goals,
           barriers, and decision_criteria, which keep their existing semantics.
+      evidence_level:
+        $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
+        description: >
+          How well evidence supports this persona as a portrait of real buyers.
+          `hypothesis` marks a persona not yet checked against interviews or data.
+          When absent, the level is not stated.
+        examples:
+          - hypothesis
       evidence_refs:
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       brand_ref:

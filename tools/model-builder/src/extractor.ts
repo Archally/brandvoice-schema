@@ -55,7 +55,7 @@ const NON_REF_KEYS = new Set([
 
 const SPECIAL_REF_KEYS = new Set([
   'supports', 'contradicts', 'supersedes', 'validated_by', 'invalidated_by',
-  'actors', 'solves_needs', 'competitors', 'target_actors', 'target_markets',
+  'actors', 'solves_needs', 'competitors', 'target_actors', 'target_markets', 'target_audiences',
   'affected_needs', 'affected_actors', 'affected_markets', 'for_needs',
   'creates_opportunities', 'unmet_needs', 'enabling_forces', 'blocking_forces',
   'measured_by', 'superseded_by',
@@ -78,6 +78,7 @@ const RELATION_TYPE_MAP: Record<string, string> = {
   actors: 'targets-actor',
   actor_refs: 'targets-actor',
   target_actors: 'targets-actor',
+  target_audiences: 'targets-audience',
   solves_needs: 'solves-need',
   need_refs: 'solves-need',
   affected_needs: 'affects-need',

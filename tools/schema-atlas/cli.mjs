@@ -14,7 +14,7 @@ const escape = value => String(value).replaceAll('|', '&#124;').replaceAll('\n',
 function render(schemaDirectory, output) {
   const sources = files(schemaDirectory);
   if (!sources.length) throw new Error('No schema files found');
-  const lines = ['# Brandvoice 1.8.0 schema atlas', '', 'Generated from the shipped YAML schemas. The schemas define validation; this reference lists their fields, definitions and references.', '', '## Schema files', ''];
+  const lines = ['# Brandvoice 1.9.0 schema atlas', '', 'Generated from the shipped YAML schemas. The schemas define validation; this reference lists their fields, definitions and references.', '', '## Schema files', ''];
   for (const source of sources) {
     const name = relative(schemaDirectory, source);
     const link = relative(dirname(output), source).replaceAll('\\','/');
@@ -40,7 +40,7 @@ function render(schemaDirectory, output) {
 try {
   const [mode, ...argumentsList] = process.argv.slice(2);
   if (!['generate','check'].includes(mode)) throw new Error('Usage: cli.mjs generate|check [--schema directory] [--out file]');
-  let schema = resolve('schema/v1.8');
+  let schema = resolve('schema/v1.9');
   let output = resolve('docs/schema-atlas/2026-11-05-reference.md');
   for (let index=0; index<argumentsList.length; index++) {
     const argument = argumentsList[index];

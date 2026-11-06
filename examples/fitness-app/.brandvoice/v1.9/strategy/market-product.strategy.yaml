@@ -39,7 +39,7 @@ contexts:
 needs:
   - id: NED001
     statement: >-
-      I need a workout plan that adapts when my day changes — a 45-minute
+      I need a workout plan that adapts when my day changes - a 45-minute
       session that becomes 20 minutes when a meeting runs over, or switches
       to bodyweight when I am traveling without gym access. Current apps
       either give me the original plan or nothing.
@@ -50,7 +50,7 @@ needs:
 
   - id: NED002
     statement: >-
-      I want the app to learn from my feedback and biometrics — not just
+      I want the app to learn from my feedback and biometrics - not just
       my stated goals. If I slept poorly, suggest a lighter session. If I
       have been consistent for three weeks, progress the difficulty. Make
       it feel like a coach who knows me.
@@ -61,7 +61,7 @@ needs:
 
   - id: NED003
     statement: >-
-      I need to see that my efforts are working — not just calories burned
+      I need to see that my efforts are working - not just calories burned
       but strength gained, consistency streaks, and how my capacity has
       grown over time. Show me the trajectory, not just today's numbers.
     actors: [ACT001, ACT002]
@@ -73,7 +73,7 @@ offerings:
   - id: OFF001
     name: "FitPulse Pro"
     value_statement: >-
-      Reduces decision fatigue to zero — open the app and your workout is
+      Reduces decision fatigue to zero - open the app and your workout is
       ready, adapted to today's reality. Eliminates the #1 reason people
       quit fitness apps: plan rigidity.
     capabilities:
@@ -81,6 +81,8 @@ offerings:
       - "Wearable integration (Apple Watch, Garmin, Whoop)"
       - "Schedule-aware workout generation"
       - "Progress analytics and strength tracking"
+    target_audiences: [AUD001]
+    competitors: [CPR001, CPR002]
     solves_needs: [NED001, NED002, NED003]
     evidence_refs: [EVD001]
 
@@ -101,7 +103,7 @@ positioning:
     differentiated_claim: >-
       For busy professionals who have tried and abandoned fitness apps,
       FitPulse is the AI coaching app that adapts every workout to your
-      actual day — your schedule, energy, and equipment — so you never
+      actual day - your schedule, energy, and equipment - so you never
       have to choose between your plan and your life.
     category_strategy:
       frame_of_reference: "AI fitness coaching"
@@ -109,3 +111,9 @@ positioning:
       category_move: create
     competitors: [CPR001, CPR002]
     evidence_refs: [EVD001, EVD002]
+
+audiences:
+  - id: AUD001
+    name: "Busy professionals seeking consistent training"
+    need: "Keep a sustainable workout routine when schedules change."
+    evidence_level: hypothesis

@@ -1,4 +1,4 @@
-# Brandvoice 1.8.0 File Conventions
+# Brandvoice 1.9.0 File Conventions
 
 Practical rules for organizing `.brandvoice/` directories. These conventions apply to any project using the schema, regardless of size.
 
@@ -10,7 +10,7 @@ A fully populated brandvoice model:
 
 ```
 my-brand/
-  .brandvoice/v1.8/
+  .brandvoice/v1.9/
     brandvoice.yaml                        # Required: root metadata + plane composition
 
     market/
@@ -52,7 +52,7 @@ A minimal brandvoice model (Phase 1):
 
 ```
 my-brand/
-  .brandvoice/v1.8/
+  .brandvoice/v1.9/
     brandvoice.yaml
     market/
       landscape.market.yaml
@@ -117,7 +117,7 @@ The root `brandvoice.yaml` can wire plane slots to separate files using `$ref` p
 ```yaml
 # brandvoice.yaml
 version: "1.0.0"
-schemaVersion: "1.8.0"
+schemaVersion: "1.9.0"
 name: "My Brand"
 market:
   landscape:
@@ -202,7 +202,7 @@ The root file is the only required file. Minimal valid content:
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.8.0"
+schemaVersion: "1.9.0"
 name: "My Brand"
 ```
 
@@ -210,7 +210,7 @@ Full root file with all plane slots wired:
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.8.0"
+schemaVersion: "1.9.0"
 name: "My Brand"
 description: "Brief summary of brand scope and market context."
 scope: my-brand
@@ -323,7 +323,7 @@ Keep a single file when:
 Validate a brandvoice directory:
 
 ```bash
-npm run validate -- .brandvoice/v1.8
+npm run validate -- .brandvoice/v1.9
 ```
 
 The validator:
@@ -337,9 +337,9 @@ Validation runs per-file against each plane's schema. The root `brandvoice.yaml`
 ## Editor schema association
 
 Use a YAML editor that supports JSON Schema associations. Associate model files
-with the matching file in `schema/v1.8/`. For example, in VS Code with the YAML
+with the matching file in `schema/v1.9/`. For example, in VS Code with the YAML
 extension, set `yaml.schemas` to associate the local
-`./schema/v1.8/brandvoice.schema.yaml` with `**/.brandvoice/v1.8/brandvoice.yaml`.
+`./schema/v1.9/brandvoice.schema.yaml` with `**/.brandvoice/v1.9/brandvoice.yaml`.
 Plane file associations use their matching schema, such as
 `strategy/brand-core.schema.yaml` for `**/brand-core.strategy.yaml`.
 The editor checks individual files; run `npm run validate:examples` for the

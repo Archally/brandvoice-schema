@@ -10,7 +10,7 @@ try {
     if (argumentsList.length !== 2 || argumentsList[0] !== '--scope' || !/^[a-z][a-z0-9-]*$/.test(argumentsList[1])) throw new Error('Expected --scope namespace');
     scope = argumentsList[1] + '.';
   }
-  const definitions = parse(readFileSync(new URL('../../schema/v1.8/metamodel.schema.yaml', import.meta.url), 'utf8')).$defs;
+  const definitions = parse(readFileSync(new URL('../../schema/v1.9/metamodel.schema.yaml', import.meta.url), 'utf8')).$defs;
   const prefixes = new Set(Object.values(definitions).flatMap(definition => [...(definition.pattern ?? '').matchAll(/([A-Z]{2,6})\\d/g)].map(match => match[1])));
   if (!prefixes.has(prefix)) throw new Error(`Unknown Brandvoice prefix: ${prefix}`);
   const model = JSON.parse(readFileSync(file,'utf8'));

@@ -15,7 +15,7 @@ function formatAjvErrors(errors) {
 
 export function detectSchemaVersion(schemasDir) {
   const match = schemasDir.match(/v(\d+\.\d+)/);
-  return match ? `v${match[1]}` : "v1.8";
+  return match ? `v${match[1]}` : "v1.9";
 }
 
 export function validateModel(args) {

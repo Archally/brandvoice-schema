@@ -159,6 +159,29 @@ describe('extractRelations', () => {
     expect(competes!.target).toBe('CPR001');
   });
 
+  it.each([
+    ['offerings', 'OFF001'],
+    ['positioning', 'POS001'],
+  ])('derives targets-audience and preserves competes-with for %s', (collection, source) => {
+    const model = {
+      strategy: {
+        market_product: {
+          [collection]: [{ id: source, target_audiences: ['AUD001'], competitors: ['CPR001'] }],
+          audiences: [{ id: 'AUD001', name: 'Audience' }],
+        },
+      },
+      market: {
+        competition: { competitors: [{ id: 'CPR001', name: 'Rival' }] },
+      },
+    };
+    const relations = extractRelations(extractEntities(model));
+    expect(relations.map(({ source, target, type, predicate }) => ({ source, target, type, predicate })))
+      .toEqual([
+        { source, target: 'AUD001', type: 'targets-audience', predicate: 'target_audiences' },
+        { source, target: 'CPR001', type: 'competes-with', predicate: 'competitors' },
+      ]);
+  });
+
   it('ignores refs to non-existent entities', () => {
     const model = {
       governance: {

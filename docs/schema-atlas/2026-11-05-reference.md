@@ -1,27 +1,27 @@
-# Brandvoice 1.8.0 schema atlas
+# Brandvoice 1.9.0 schema atlas
 
 Generated from the shipped YAML schemas. The schemas define validation; this reference lists their fields, definitions and references.
 
 ## Schema files
 
-- [activation/campaigns.schema.yaml](../../schema/v1.8/activation/campaigns.schema.yaml)
-- [activation/channels.schema.yaml](../../schema/v1.8/activation/channels.schema.yaml)
-- [brandvoice.schema.yaml](../../schema/v1.8/brandvoice.schema.yaml)
-- [governance/decisions.schema.yaml](../../schema/v1.8/governance/decisions.schema.yaml)
-- [governance/evidence.schema.yaml](../../schema/v1.8/governance/evidence.schema.yaml)
-- [governance/experiments.schema.yaml](../../schema/v1.8/governance/experiments.schema.yaml)
-- [governance/measurement.schema.yaml](../../schema/v1.8/governance/measurement.schema.yaml)
-- [market/competition.schema.yaml](../../schema/v1.8/market/competition.schema.yaml)
-- [market/ecosystem.schema.yaml](../../schema/v1.8/market/ecosystem.schema.yaml)
-- [market/landscape.schema.yaml](../../schema/v1.8/market/landscape.schema.yaml)
-- [market/opportunities.schema.yaml](../../schema/v1.8/market/opportunities.schema.yaml)
-- [metamodel.schema.yaml](../../schema/v1.8/metamodel.schema.yaml)
-- [migration.schema.yaml](../../schema/v1.8/migration.schema.yaml)
-- [strategy/brand-core.schema.yaml](../../schema/v1.8/strategy/brand-core.schema.yaml)
-- [strategy/capacity.schema.yaml](../../schema/v1.8/strategy/capacity.schema.yaml)
-- [strategy/market-product.schema.yaml](../../schema/v1.8/strategy/market-product.schema.yaml)
-- [strategy/messaging.schema.yaml](../../schema/v1.8/strategy/messaging.schema.yaml)
-- [strategy/visual-identity.schema.yaml](../../schema/v1.8/strategy/visual-identity.schema.yaml)
+- [activation/campaigns.schema.yaml](../../schema/v1.9/activation/campaigns.schema.yaml)
+- [activation/channels.schema.yaml](../../schema/v1.9/activation/channels.schema.yaml)
+- [brandvoice.schema.yaml](../../schema/v1.9/brandvoice.schema.yaml)
+- [governance/decisions.schema.yaml](../../schema/v1.9/governance/decisions.schema.yaml)
+- [governance/evidence.schema.yaml](../../schema/v1.9/governance/evidence.schema.yaml)
+- [governance/experiments.schema.yaml](../../schema/v1.9/governance/experiments.schema.yaml)
+- [governance/measurement.schema.yaml](../../schema/v1.9/governance/measurement.schema.yaml)
+- [market/competition.schema.yaml](../../schema/v1.9/market/competition.schema.yaml)
+- [market/ecosystem.schema.yaml](../../schema/v1.9/market/ecosystem.schema.yaml)
+- [market/landscape.schema.yaml](../../schema/v1.9/market/landscape.schema.yaml)
+- [market/opportunities.schema.yaml](../../schema/v1.9/market/opportunities.schema.yaml)
+- [metamodel.schema.yaml](../../schema/v1.9/metamodel.schema.yaml)
+- [migration.schema.yaml](../../schema/v1.9/migration.schema.yaml)
+- [strategy/brand-core.schema.yaml](../../schema/v1.9/strategy/brand-core.schema.yaml)
+- [strategy/capacity.schema.yaml](../../schema/v1.9/strategy/capacity.schema.yaml)
+- [strategy/market-product.schema.yaml](../../schema/v1.9/strategy/market-product.schema.yaml)
+- [strategy/messaging.schema.yaml](../../schema/v1.9/strategy/messaging.schema.yaml)
+- [strategy/visual-identity.schema.yaml](../../schema/v1.9/strategy/visual-identity.schema.yaml)
 
 ## activation/campaigns.schema.yaml
 
@@ -854,7 +854,7 @@ Brandvoice Metamodel
 |---|---|---|
 | / | description: Cross-cutting definitions for brandvoice schemas. Provides typed IDs, versioning, shared refs, optional links to blueprint entities, and common traceability patterns for strategy, activation, and governance planes.  |  |
 | /$defs/semver | type: string; pattern: ^\d+\.\d+\.\d+$; description: Semantic version string (MAJOR.MINOR.PATCH). |  |
-| /$defs/schema_version | type: string; enum: ["1.1.0","1.3.0","1.4.0","1.5.0","1.6.0","1.6.1","1.6.2","1.7.0","1.8.0"]; description: Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy, SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for multiple StoryBrand / narrative backbones per brand and optional brand_script_ref on messages. v1.4.0 adds an optional `geo_scope` object (see `$defs/geo_scope`) on market-level entities - evidence, markets, competitors, forces, opportunities, risks - so multi-region portfolios can tag provenance and applicability without losing backward compatibility. v1.5.0 adds capacity planning entities: `priority_stream (PRI###)` for revenue stream prioritization and `roadmap_phase (RMP###)` for quarterly roadmap phases, both modeled in `strategy/capacity-priorities.yaml`. v1.6.0 adds `ecosystem_player (EPL###)` in `market/ecosystem.yaml` - a first-class entity for referral partners, co-presenters, distribution channels, complementary experts, and coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat and need-fit, ecosystem players frame cooperation intent, relationship status, and collaboration ideas. Entries that are both (e.g., a direct competitor who could also co-present) link to the CPR side via `also_competitor_ref`. v1.6.2 accepts `BSC` ids in `any_entity_ref`, widens the evidence `type` and `source_type` vocabularies and adds the `x-gdsm.modeling_guidance` ledger. v1.7.0 adds three optional fields: `superseded_by` on an evidence record (the evidence records that replace its claims), and `status` (active, beta, deprioritized, sunset) and `superseded_by` (the offerings that replace it) on an offering. v1.8.0: a brand-core file requires only `version`, so a file holding only tone, verbal, asset or profile entries validates on its own.  |  |
+| /$defs/schema_version | type: string; enum: ["1.1.0","1.3.0","1.4.0","1.5.0","1.6.0","1.6.1","1.6.2","1.7.0","1.8.0","1.9.0"]; description: Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy, SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for multiple StoryBrand / narrative backbones per brand and optional brand_script_ref on messages. v1.4.0 adds an optional `geo_scope` object (see `$defs/geo_scope`) on market-level entities - evidence, markets, competitors, forces, opportunities, risks - so multi-region portfolios can tag provenance and applicability without losing backward compatibility. v1.5.0 adds capacity planning entities: `priority_stream (PRI###)` for revenue stream prioritization and `roadmap_phase (RMP###)` for quarterly roadmap phases, both modeled in `strategy/capacity-priorities.yaml`. v1.6.0 adds `ecosystem_player (EPL###)` in `market/ecosystem.yaml` - a first-class entity for referral partners, co-presenters, distribution channels, complementary experts, and coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat and need-fit, ecosystem players frame cooperation intent, relationship status, and collaboration ideas. Entries that are both (e.g., a direct competitor who could also co-present) link to the CPR side via `also_competitor_ref`. v1.6.2 accepts `BSC` ids in `any_entity_ref`, widens the evidence `type` and `source_type` vocabularies and adds the `x-gdsm.modeling_guidance` ledger. v1.7.0 adds three optional fields: `superseded_by` on an evidence record (the evidence records that replace its claims), and `status` (active, beta, deprioritized, sunset) and `superseded_by` (the offerings that replace it) on an offering. v1.8.0: a brand-core file requires only `version`, so a file holding only tone, verbal, asset or profile entries validates on its own. v1.9.0 adds five optional fields: `target_audiences` and `competitors` on an offering, `evidence_level` and `description` on an audience, and `evidence_level` on a persona.  |  |
 | /$defs/tags | type: array; description: Free-form tags for filtering and grouping. |  |
 | /$defs/tags/items | type: string |  |
 | /$defs/context_prefix | type: string; pattern: ^[a-z][a-z0-9-]*$; description: Scope prefix in kebab-case for multi-brand or multi-market modeling. |  |
@@ -1388,6 +1388,10 @@ Brandvoice Strategy - Market and Product
 | /$defs/offering/properties/capabilities/items | type: string |  |
 | /$defs/offering/properties/solves_needs | type: array |  |
 | /$defs/offering/properties/solves_needs/items |  | ../metamodel.schema.yaml#/$defs/need_ref |
+| /$defs/offering/properties/target_audiences | type: array; description: Audiences this offering targets, in one list. The list does not mark a target as current or potential: read that from each audience's `evidence_level`, where `hypothesis` marks a segment still to be tested. Value propositions state what the offering promises each audience. Omit the field while no audience is named; an empty list is not allowed.  |  |
+| /$defs/offering/properties/target_audiences/items |  | ../metamodel.schema.yaml#/$defs/audience_ref |
+| /$defs/offering/properties/competitors | type: array; description: Competitors and alternatives a buyer weighs against this offering, including substitutes and the status quo (a competitor of type `substitute` or `status-quo`). A positioning states which of them its claim is made against. Omit the field while none is named; an empty list is not allowed.  |  |
+| /$defs/offering/properties/competitors/items |  | ../metamodel.schema.yaml#/$defs/competitor_ref |
 | /$defs/offering/properties/market_refs | type: array |  |
 | /$defs/offering/properties/market_refs/items |  | ../metamodel.schema.yaml#/$defs/market_ref |
 | /$defs/offering/properties/addresses_opportunities | type: array; description: Opportunities this offering was built to capture. |  |
@@ -1430,12 +1434,15 @@ Brandvoice Strategy - Market and Product
 | /$defs/context/properties/evidence_refs |  | ../metamodel.schema.yaml#/$defs/evidence_refs |
 | /$defs/context/properties/tags |  | ../metamodel.schema.yaml#/$defs/tags |
 | /$defs/audience | type: object; required: ["id","name","need"]; additionalProperties: false |  |
+| /$defs/audience/properties | description: {"type":"string","description":"Free context about the audience: why it matters, what is still unknown and how it will be tested. Keep the need itself in `need`.\n","examples":["Raised by two agencies in support threads; interviews will test willingness to pay."]} |  |
 | /$defs/audience/properties/id |  | ../metamodel.schema.yaml#/$defs/audience_ref |
 | /$defs/audience/properties/name | type: string |  |
 | /$defs/audience/properties/need | type: string |  |
+| /$defs/audience/properties/description | type: string; description: Free context about the audience: why it matters, what is still unknown and how it will be tested. Keep the need itself in `need`.  |  |
 | /$defs/audience/properties/actor | description: Optional bridge to the canonical Actor primitive. Rationale: keeps legacy audience views aligned with actor-centric strategy models.  | ../metamodel.schema.yaml#/$defs/actor_ref |
 | /$defs/audience/properties/segment_type | type: string; enum: ["demographic","behavioral","psychographic","firmographic","intent"] |  |
 | /$defs/audience/properties/priority |  | ../metamodel.schema.yaml#/$defs/priority |
+| /$defs/audience/properties/evidence_level | description: How well evidence supports this audience as a real segment. `hypothesis` marks a segment still to be tested. When absent, the level is not stated.  | ../metamodel.schema.yaml#/$defs/evidence_level |
 | /$defs/audience/properties/evidence_refs |  | ../metamodel.schema.yaml#/$defs/evidence_refs |
 | /$defs/audience/properties/blueprint_links |  | ../metamodel.schema.yaml#/$defs/optional_blueprint_links |
 | /$defs/audience/properties/brand_ref | description: Optional brand this audience primarily belongs to in a portfolio. When set, scoped views (e.g. SB7 persona lists) can filter to this brand; omit for shared segments.  | ../metamodel.schema.yaml#/$defs/brand_ref |
@@ -1452,6 +1459,7 @@ Brandvoice Strategy - Market and Product
 | /$defs/persona/properties/decision_criteria | type: array |  |
 | /$defs/persona/properties/decision_criteria/items | type: string |  |
 | /$defs/persona/properties/empathy_map | description: Optional structured empathy map for this persona. Coexists with goals, barriers, and decision_criteria, which keep their existing semantics.  | ../metamodel.schema.yaml#/$defs/empathy_map |
+| /$defs/persona/properties/evidence_level | description: How well evidence supports this persona as a portrait of real buyers. `hypothesis` marks a persona not yet checked against interviews or data. When absent, the level is not stated.  | ../metamodel.schema.yaml#/$defs/evidence_level |
 | /$defs/persona/properties/evidence_refs |  | ../metamodel.schema.yaml#/$defs/evidence_refs |
 | /$defs/persona/properties/brand_ref | description: Optional brand this persona primarily supports. When set, SB7 and other scoped views can list personas per brand; omit if the persona applies across the portfolio.  | ../metamodel.schema.yaml#/$defs/brand_ref |
 | /$defs/persona/properties/tags |  | ../metamodel.schema.yaml#/$defs/tags |

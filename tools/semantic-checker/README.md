@@ -17,11 +17,11 @@ migration recipe this layer follows.
 ## Usage
 
 ```bash
-# Check default path (.brandvoice/v1.8/)
+# Check default path (.brandvoice/v1.9/)
 npm run check
 
 # Check a specific model
-npm run check -- examples/fitness-app/.brandvoice/v1.8
+npm run check -- examples/fitness-app/.brandvoice/v1.9
 
 # List available rules
 npm run check -- --list

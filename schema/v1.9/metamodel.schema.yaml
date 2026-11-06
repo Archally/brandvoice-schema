@@ -14,7 +14,7 @@ $defs:
 
   schema_version:
     type: string
-    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1", "1.6.2", "1.7.0", "1.8.0"]
+    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1", "1.6.2", "1.7.0", "1.8.0", "1.9.0"]
     description: >
       Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy,
       SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for
@@ -38,6 +38,8 @@ $defs:
       sunset) and `superseded_by` (the offerings that replace it) on an offering.
       v1.8.0: a brand-core file requires only `version`, so a file holding only tone, verbal,
       asset or profile entries validates on its own.
+      v1.9.0 adds five optional fields: `target_audiences` and `competitors` on an offering,
+      `evidence_level` and `description` on an audience, and `evidence_level` on a persona.
 
   tags:
     type: array

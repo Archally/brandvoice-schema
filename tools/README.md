@@ -5,7 +5,7 @@ Run these commands from the repository root after `npm ci` and `npm run build`.
 | Tool | Command | Purpose | License |
 |---|---|---|---|
 | validator | `npm run validate:examples` | Schema and reference conformance for both examples | Apache-2.0 |
-| model-builder | `npm run model -- examples/fitness-app/.brandvoice/v1.8 --output fitness-model.json` | Build the entity graph | FSL-1.1-ALv2 |
+| model-builder | `npm run model -- examples/fitness-app/.brandvoice/v1.9 --output fitness-model.json` | Build the entity graph | FSL-1.1-ALv2 |
 | semantic-checker | `npm run check:examples` | Model quality findings | FSL-1.1-ALv2 |
 | schema-atlas | `npm run atlas` / `npm run atlas:check` | Generate/check the [schema reference](../docs/schema-atlas/2026-11-05-reference.md) | Apache-2.0 |
 | doc-snippet-validate | `npm run doc-snippets` | Validate named YAML models in README | Apache-2.0 |
@@ -19,7 +19,7 @@ names each directory. Dependencies retain their own licenses.
 For the second worked model:
 
 ```bash
-npm run model -- examples/time-management/.brandvoice/v1.8 --output time-model.json
+npm run model -- examples/time-management/.brandvoice/v1.9 --output time-model.json
 node tools/entity-query/cli.mjs time-model.json --type brand
 node tools/next-id/cli.mjs time-model.json BRD
 ```

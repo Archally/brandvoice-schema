@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename);
 
 function parseArgs(argv) {
   const args = {
-    model: path.resolve(".brandvoice/v1.8"),
-    schemas: path.resolve(__dirname, "..", "..", "..", "schema", "v1.8"),
+    model: path.resolve(".brandvoice/v1.9"),
+    schemas: path.resolve(__dirname, "..", "..", "..", "schema", "v1.9"),
     compat: false,
   };
   for (let i = 2; i < argv.length; i += 1) {
@@ -52,7 +52,7 @@ function printHelp() {
       "Validates brandvoice YAML files against schemas and checks cross-references.",
       "",
       "Options:",
-      "  --model, -m    Brandvoice directory to validate (default: .brandvoice/v1.8)",
+      "  --model, -m    Brandvoice directory to validate (default: .brandvoice/v1.9)",
       "  --schemas, -s  Schema version root directory (default: auto-detected from model path)",
       "  --compat, -c   Relax schema failures to warnings",
       "  --help, -h     Show this help",

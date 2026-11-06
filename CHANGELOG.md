@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-11-06
+
+### Summary
+
+- An offering names the audiences it targets and the competitors a buyer weighs against it, and an audience or a persona states how well evidence supports it.
+- Compatibility: BACKWARD. Every field is optional, so every model valid under 1.8.0 stays valid and no instance change is required. A model that uses the new fields declares `schemaVersion: "1.9.0"` in its root `brandvoice.yaml`.
+
+### Added
+
+- **`schema/strategy/market-product.schema.yaml`** - `offering.target_audiences` (an array of `audience_ref`) and `offering.competitors` (an array of `competitor_ref`), each `minItems: 1`; `audience.evidence_level` and `persona.evidence_level` (the shared `evidence_level` vocabulary: `hypothesis`, `weak-signal`, `moderate-evidence`, `strong-evidence`), absent meaning not stated; `audience.description` for free context.
+- **`schemaVersion` enum value** `1.9.0` in `schema/metamodel.schema.yaml`.
+- **Relations** - the model builder emits `targets-audience` for `target_audiences` on offerings and positioning, and `competes-with` for `competitors`, when targets exist. The validator rejects wrongly prefixed IDs through schema validation; it does not report dangling IDs in either field.
+
 ## [1.8.0] - 2026-10-28
 
 ### Summary

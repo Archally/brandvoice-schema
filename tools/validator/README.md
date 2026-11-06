@@ -5,14 +5,14 @@ Schema validation + cross-reference integrity + semantic checks + gap analysis f
 ## Usage
 
 ```bash
-# Validate default path (.brandvoice/v1.8/)
+# Validate default path (.brandvoice/v1.9/)
 npm run validate
 
 # Validate specific model directory
-npm run validate -- path/to/.brandvoice/v1.8
+npm run validate -- path/to/.brandvoice/v1.9
 
 # Explicit schema version
-npm run validate -- --model path/to/model --schemas schema/v1.8
+npm run validate -- --model path/to/model --schemas schema/v1.9
 
 # Compat mode (schema failures become warnings)
 npm run validate -- --compat
@@ -28,7 +28,7 @@ npm run validate -- --compat
 
 ## Schema Version Auto-Detection
 
-When `--schemas` is not specified, the validator detects the schema version from the model path. A model at `.brandvoice/v1.8/` automatically resolves to `schema/v1.8/`.
+When `--schemas` is not specified, the validator detects the schema version from the model path. A model at `.brandvoice/v1.9/` automatically resolves to `schema/v1.9/`.
 
 ## Exit Codes
 
