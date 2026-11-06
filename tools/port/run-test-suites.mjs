@@ -4,8 +4,14 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export function validateSuites(suites) {
+export function validateSuites(suites, requiredSuites = []) {
   if (!Array.isArray(suites) || suites.length === 0) throw new Error('testSuites must be a nonempty array');
+  if (!Array.isArray(requiredSuites) || requiredSuites.some(name => typeof name !== 'string' || !name.trim())) {
+    throw new Error('requiredTestSuites must be a string array');
+  }
+  for (const name of requiredSuites) {
+    if (!suites.some(suite => suite?.name === name)) throw new Error(`Missing required suite: ${name}`);
+  }
   const names = new Set();
   for (const suite of suites) {
     if (!suite || typeof suite.name !== 'string' || !suite.name.trim() || names.has(suite.name)) {
@@ -66,8 +72,8 @@ function runSuite(suite, root) {
   });
 }
 
-export async function runSuites(suites, root) {
-  validateSuites(suites);
+export async function runSuites(suites, root, requiredSuites = []) {
+  validateSuites(suites, requiredSuites);
   const results = [];
   for (const suite of suites) {
     console.log(`\nStarting suite: ${suite.name}`);
@@ -84,7 +90,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try {
     const packagePath = resolve(process.argv[2] ?? 'package.json');
     const configuration = JSON.parse(readFileSync(packagePath, 'utf8'));
-    process.exitCode = await runSuites(configuration.testSuites, dirname(packagePath));
+    process.exitCode = await runSuites(configuration.testSuites, dirname(packagePath), configuration.requiredTestSuites);
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;

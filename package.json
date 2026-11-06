@@ -109,5 +109,10 @@
         "tools/validator/src/references.test.mjs"
       ]
     }
+  ],
+  "requiredTestSuites": [
+    "model-builder",
+    "semantic-checker",
+    "portable-tools"
   ]
 }

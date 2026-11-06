@@ -10,8 +10,8 @@ const runner = fileURLToPath(new URL('./run-test-suites.mjs', import.meta.url));
 function fixture(context) {
   const root = mkdtempSync(join(tmpdir(), 'suite-runner-'));
   context.after(() => rmSync(root, { recursive: true, force: true }));
-  return suites => {
-    writeFileSync(join(root, 'package.json'), JSON.stringify({ testSuites: suites }));
+  return (suites, requiredTestSuites = []) => {
+    writeFileSync(join(root, 'package.json'), JSON.stringify({ testSuites: suites, requiredTestSuites }));
     return spawnSync(process.execPath, [runner, join(root, 'package.json')], { encoding: 'utf8', timeout: 15000 });
   };
 }
@@ -58,3 +58,14 @@ test('empty, malformed, duplicate or invalid timeout configuration fails before 
     assert.doesNotMatch(child.stdout, /MARKER:/);
   }
 });
+
+for (const name of ['model-builder', 'semantic-checker', 'portable-tools']) {
+  test(`missing required suite ${name} fails before launching`, context => {
+    const run = fixture(context);
+    const required = ['model-builder', 'semantic-checker', 'portable-tools'];
+    const child = run(required.filter(value => value !== name).map(value => group(value)), required);
+    assert.equal(child.status, 1, child.stdout + child.stderr);
+    assert.match(child.stderr, /Missing required suite/);
+    assert.doesNotMatch(child.stdout, /MARKER:/);
+  });
+}
