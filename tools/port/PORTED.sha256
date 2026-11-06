@@ -31,7 +31,7 @@
 # covered docs
 # covered examples
 
-21acb9c5875a44ca26468d388a46811c9dc5132deabad9fb6b575f97aefa1ebd  changelog/CHANGELOG.md
+650be551435be649f8adc01c9cd431be343f933b12e5b9b89f5854d3a3d4366e  changelog/CHANGELOG.md
 898293cafbb4084ae25c978f3cd7be453a38fdc1f81449a2a7dfe715bbc0c736  doc-snippet-validate/cli.mjs
 c92a57dd81bf1c0670aa5942d1d9d4577ea5dd8940397d5a96bbac635ad630a3  doc-snippet-validate/extract.mjs
 9cef6aabed1872a048703394f8260940677704c3f6f1c3e196647467b926fd61  doc-snippet-validate/snippets.test.mjs

@@ -21,11 +21,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 - **BREAKING for tool consumers: the semantic-checker engine is the [`@archally/semantic-checker`](https://github.com/archally/semantic-checker) package.** `tools/semantic-checker/` is a thin layer: an adapter (`BrandvoiceModel` to the engine's `CheckableModel`) plus the eight rules as declarative YAML (`rules/*.yaml`). The engine, severity handling, JSON-Schema rule validation and the TypeScript escape hatch come from the package, installed from GitHub as `github:archally/semantic-checker#v0.1.0`. The `brandvoice-check` CLI, its arguments, exit codes and `.brandvoice-lint.yaml` config are unchanged, and findings on the example models are identical. Code that imported the engine or rules from `tools/semantic-checker/dist` imports them from `@archally/semantic-checker`.
 - Semantic-checker output is ordered deterministically by `(rule, entityId)`; the set of findings is unchanged.
 - Tool READMEs and the README Quick Start give the commands as `npm run validate`, `npm run model` and `npm run check` from a clone of this repository.
+- **Licensing is split.** The schema, the examples, the documentation, the validator, the schema atlas, the port verifier and the documentation snippet validator are Apache-2.0. The model builder, the semantic checker's rules and adapter, entity query and the next-id helper are FSL-1.1-ALv2, and each version becomes Apache-2.0 two years after its release. `LICENSE` is the map, and `tools/LICENSE` names every tool directory.
+- **Node.js 22.18 or later** (`engines.node: ">=22.18.0"`), because the semantic checker loads a TypeScript rule extension natively.
+- `strategy/capacity.schema.yaml`: `capacity_model` declares only general allocations, and two engagement-specific allocation properties are removed. The block still accepts additional properties, so a model that sets them stays valid.
 
 ### Added
 
 - `npm run validate:examples` and `npm run check:examples` validate and check both worked examples.
 - `npm run release:check` (`tools/port/release-check.mjs`) checks that `package.json`, `package-lock.json`, the top CHANGELOG release, the deployed schema and its exports, the README Quick Start and every worked example declare one release version, and that nothing newer is mixed in. `npm test` runs its tests and the validator's reference tests.
+- `tools/schema-atlas/` generates the schema reference in `docs/schema-atlas/` from the schema. `npm run atlas` regenerates it and `npm run atlas:check` fails when it is stale.
+- `tools/entity-query/` filters a built model's entities by type, plane or text, and `tools/next-id/` suggests the next free identifier for a prefix without reserving it.
+- `npm run port:verify` checks that the shipped files are the published ones.
+- `npm run doc-snippets` validates the named YAML blocks in the README, and `npm run docs:check` checks the documentation.
+- `.github/workflows/validate.yml` runs on every push and pull request: install from the lockfile on Node 22, build, validate and check both examples, all test suites, the documentation and atlas checks, the release check and the shipped-file verification.
 - A consumer-side TypeScript extension example, `tools/semantic-checker/examples/duplicate-display-name.{ts,rule.yaml}`, demonstrating the engine's escape hatch (flags entities sharing a display name). Not part of the default rule run.
 
 ## [1.7.0] - 2026-10-21
