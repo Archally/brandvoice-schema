@@ -18,6 +18,8 @@ The following are licensed under the Apache License, Version 2.0
   - examples/                      example brandvoice models
   - docs/                          the documentation
   - tools/doc-snippet-validate/    conformance of documented model examples
+  - tools/schema-atlas/            generates the schema reference in docs/ from the
+                                   schema; it reads no model
   - tools/validator/               the reference conformance validator
   - tools/port/                    verifies the shipped files against the manifest
                                    published with them; it describes no brand and
@@ -34,8 +36,8 @@ as the schema it answers for. The same reasoning puts the port verifier here: it
 is what a RECIPIENT runs to confirm they received what was published.
 
 Where the line falls, for a tool added later: Apache-2.0 covers the format and
-what is needed to establish conformance with it, plus the integrity of this
-distribution. FSL covers everything that reads a model for a purpose other than
+what is needed to establish conformance with it, the documentation and the tool
+that generates it from the schema, plus the integrity of this distribution. FSL covers everything that reads a model for a purpose other than
 validating it - building its graph, naming what its edges mean, judging whether
 it says enough, turning it into documents. Those are positions about what a good
 model is, not properties of the format.
@@ -48,7 +50,6 @@ The following are licensed under the Functional Source License, Version 1.1,
 with an Apache 2.0 future grant (full text: ./LICENSE-FSL, SPDX: FSL-1.1-ALv2):
 
   - tools/entity-query/            inspect and filter a built model
-  - tools/schema-atlas/            the generated schema reference
   - tools/next-id/                 suggest entity identifiers in a model
   - tools/model-builder/           the model graph, and the relation vocabulary that
                                    says what each edge means
