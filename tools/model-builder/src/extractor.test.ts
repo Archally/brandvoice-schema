@@ -139,8 +139,8 @@ describe('extractRelations', () => {
     expect(affects!.target).toBe('NED001');
   });
 
-  it('derives targets-actor from actors[]', () => {
-    const targets = relations.find(r => r.type === 'targets-actor' && r.source === 'NED001');
+  it('derives experienced-by from need actors[]', () => {
+    const targets = relations.find(r => r.type === 'experienced-by' && r.source === 'NED001');
     expect(targets).toBeDefined();
     expect(targets!.target).toBe('ACT001');
   });
@@ -152,8 +152,8 @@ describe('extractRelations', () => {
     expect(solves!.target).toBe('NED001');
   });
 
-  it('derives competes-with from competitors[]', () => {
-    const competes = relations.find(r => r.type === 'competes-with');
+  it('derives competes-against from competitors[]', () => {
+    const competes = relations.find(r => r.type === 'competes-against');
     expect(competes).toBeDefined();
     expect(competes!.source).toBe('POS001');
     expect(competes!.target).toBe('CPR001');
@@ -162,7 +162,7 @@ describe('extractRelations', () => {
   it.each([
     ['offerings', 'OFF001'],
     ['positioning', 'POS001'],
-  ])('derives targets-audience and preserves competes-with for %s', (collection, source) => {
+  ])('derives targets-audience and preserves competes-against for %s', (collection, source) => {
     const model = {
       strategy: {
         market_product: {
@@ -177,12 +177,12 @@ describe('extractRelations', () => {
     const relations = extractRelations(extractEntities(model));
     expect(relations.map(({ source, target, type, predicate }) => ({ source, target, type, predicate })))
       .toEqual([
+        { source, target: 'CPR001', type: 'competes-against', predicate: 'competitors' },
         { source, target: 'AUD001', type: 'targets-audience', predicate: 'target_audiences' },
-        { source, target: 'CPR001', type: 'competes-with', predicate: 'competitors' },
       ]);
   });
 
-  it('ignores refs to non-existent entities', () => {
+  it('retains refs to non-existent entities', () => {
     const model = {
       governance: {
         evidence: {
@@ -194,7 +194,8 @@ describe('extractRelations', () => {
     };
     const entities = extractEntities(model);
     const relations = extractRelations(entities);
-    expect(relations).toHaveLength(0);
+    expect(relations).toHaveLength(1);
+    expect(relations[0].target).toBe('MISSING001');
   });
 
   it('generates unique relation IDs', () => {
@@ -239,7 +240,7 @@ describe('scoped IDs', () => {
     };
     const entities = extractEntities(model);
     const relations = extractRelations(entities);
-    const competes = relations.find(r => r.type === 'competes-with');
+    const competes = relations.find(r => r.type === 'competes-against');
     expect(competes).toBeDefined();
     expect(competes!.source).toBe('strategy.POS001');
     expect(competes!.target).toBe('market.CPR001');

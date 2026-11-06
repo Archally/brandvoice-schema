@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: active-offering-audience
+    severity: warn
+    description: "Active/beta offering '{id}' has no resolved target or attached audience."
+    find:
+      entity_type: offering
+    check:
+      custom:
+        module: ./active-offering-audience.mjs
+    message: "Active/beta offering '{id}' has no resolved target or attached audience."

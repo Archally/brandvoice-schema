@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { fileURLToPath } from 'node:url';
-import { loadRules, runChecker } from '@archally/semantic-checker';
+import { loadRules, loadExtensions, runChecker } from '@archally/semantic-checker';
 import type { RuleDefinition } from '@archally/semantic-checker';
 import { buildBrandvoiceModel } from '@archally/brandvoice-schema/model';
 import { toCheckableModel } from './adapter.js';
@@ -9,10 +9,12 @@ import { toCheckableModel } from './adapter.js';
 // the adapter produces a well-formed CheckableModel (identity, structure, lifted relations).
 
 let evidenceCoverage: RuleDefinition;
+let extensions: Awaited<ReturnType<typeof loadExtensions>>;
 
 beforeAll(async () => {
   const rules = await loadRules(fileURLToPath(new URL('./rules', import.meta.url)));
   evidenceCoverage = rules.find(rule => rule.id === 'evidence-coverage')!;
+  extensions = await loadExtensions(rules);
 });
 
 const FLAGGED = { market: { landscape: { markets: [{ id: 'MKT001', name: 'Test' }] } } };
@@ -23,23 +25,23 @@ function model(raw: Record<string, unknown>) {
 
 describe('shared-engine routing', () => {
   it('runs a loaded rule and emits a well-formed issue', () => {
-    const issues = runChecker(model(FLAGGED), [evidenceCoverage]);
+    const issues = runChecker(model(FLAGGED), [evidenceCoverage], {}, extensions);
     expect(issues).toEqual([
       { ruleId: 'evidence-coverage', severity: 'warn', message: 'MKT001 (Test) has no evidence linkage.', entityId: 'MKT001' },
     ]);
   });
 
   it('applies config severity override (warn → error)', () => {
-    const issues = runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': 'error' } });
+    const issues = runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': 'error' } }, extensions);
     expect(issues[0].severity).toBe('error');
   });
 
   it('skips rules set to off', () => {
-    expect(runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': 'off' } })).toHaveLength(0);
+    expect(runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': 'off' } }, extensions)).toHaveLength(0);
   });
 
   it('supports object-style config', () => {
-    const issues = runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': { severity: 'info' } } });
+    const issues = runChecker(model(FLAGGED), [evidenceCoverage], { rules: { 'evidence-coverage': { severity: 'info' } } }, extensions);
     expect(issues[0].severity).toBe('info');
   });
 });

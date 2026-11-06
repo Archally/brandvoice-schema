@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: persona-evidence-within-audience
+    severity: warn
+    description: "Persona '{id}' evidence level exceeds its audience: {audiences}."
+    find:
+      entity_type: persona
+    check:
+      custom:
+        module: ./persona-evidence-within-audience.mjs
+    message: "Persona '{id}' evidence level exceeds its audience: {audiences}."

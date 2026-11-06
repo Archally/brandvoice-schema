@@ -28,8 +28,6 @@ rules:
         - decision
         - risk
     check:
-      has_relation:
-        direction: out
-        type: [backed-by, validated-by]
-        exists: true
+      custom:
+        module: ./evidence-coverage.mjs
     message: "{id} ({name|'unnamed'}) has no evidence linkage."

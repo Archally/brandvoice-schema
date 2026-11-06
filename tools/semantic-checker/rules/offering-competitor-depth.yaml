@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: offering-competitor-depth
+    severity: warn
+    description: "Offering '{id}' names competitors without evidence, strengths, weaknesses or pricing: {competitors}."
+    find:
+      entity_type: offering
+    check:
+      custom:
+        module: ./offering-competitor-depth.mjs
+    message: "Offering '{id}' names competitors without evidence, strengths, weaknesses or pricing: {competitors}."

@@ -6,8 +6,6 @@ rules:
     find:
       entity_type: positioning
     check:
-      has_relation:
-        direction: out
-        type: backed-by
-        exists: true
+      custom:
+        module: ./positioning-evidence.mjs
     message: "Positioning '{id}' has no evidence_refs - claim is unsubstantiated."

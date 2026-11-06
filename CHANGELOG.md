@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+## [1.9.2] - 2026-11-06
+
+### Summary
+
+- Model building preserves authored entities and their relationships across composed files, including nested message pillars and governance outcomes.
+- Nine semantic checks cover offering audiences, competitor depth, evidence levels, replacement lifecycles and cycles, and messages promoting retired offerings.
+- Compatibility: FULL for schema validation. Existing models remain valid; semantic checking can report additional findings, including errors for replacement cycles.
+
+### Added
+
+- **Semantic checker** - `active-offering-audience`, `offering-audiences-untested`, `offering-competitor-depth`, `evidence-level-backed`, `persona-evidence-within-audience`, `superseded-offering-lifecycle`, `superseded-by-cycle`, `offering-audience-consistency` and `active-message-retired-offering`.
+- **Schema version** - accepts `1.9.2` alongside earlier supported releases.
+
+### Fixed
+
+- **Model builder** - retains evidence from mixed flat and nested documents, extracts governance outcomes, assigns nested message pillars their collection type, and preserves resolved relationship identities and containment.
+- **Evidence checks** - require a reference to resolve to an authored entity; dangling references and placeholders do not supply evidence coverage.
+
 ## [1.9.1] - 2026-11-06
 
 ### Summary
@@ -89,23 +107,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 
-- `any_entity_ref` pattern in `metamodel.schema.yaml` now includes the `BSC` prefix — `brand_script` (`BSC###`, added in v1.3.0) records can now be referenced through `any_entity_ref` typed-ref fields.
+- `any_entity_ref` pattern in `metamodel.schema.yaml` now includes the `BSC` prefix - `brand_script` (`BSC###`, added in v1.3.0) records can now be referenced through `any_entity_ref` typed-ref fields.
 
 ### Added
 
-- `governance/evidence.schema.yaml`: `type` enum gains `research`, `primary-research`, `primary-academic`, `thought-leadership`, `analyst-report`; `source_type` enum gains `peer-reviewed`, `academic-classic`, `practitioner-credible`, `industry-analysis`, `industry-consortium`, `secondary-research`, `survey`, `internal-analysis`, `primary-data` — additional evidence-source credibility and research-method classes.
-- `metamodel.schema.yaml`: an `x-gdsm.modeling_guidance` ledger — durable, reusable brandvoice modeling guidance (plane-vs-layer semantics, entity nesting for `white_space`/`message_pillar`, multi-plane entity placement, competitor/market-force dedup-by-name), served on demand by the brandvoice MCP's `get_analysis_guidance` tool (Archally Pro).
+- `governance/evidence.schema.yaml`: `type` enum gains `research`, `primary-research`, `primary-academic`, `thought-leadership`, `analyst-report`; `source_type` enum gains `peer-reviewed`, `academic-classic`, `practitioner-credible`, `industry-analysis`, `industry-consortium`, `secondary-research`, `survey`, `internal-analysis`, `primary-data` - additional evidence-source credibility and research-method classes.
+- `metamodel.schema.yaml`: an `x-gdsm.modeling_guidance` ledger - durable, reusable brandvoice modeling guidance (plane-vs-layer semantics, entity nesting for `white_space`/`message_pillar`, multi-plane entity placement, competitor/market-force dedup-by-name), served on demand by the brandvoice MCP's `get_analysis_guidance` tool (Archally Pro).
 
 ## [1.6.1] - 2026-05-27
 
 ### Summary
 
-- **Ecosystem modeling** (v1.6.0): Added `ecosystem_player (EPL###)` in `market/ecosystem.schema.yaml` — a first-class entity for referral partners, co-presenters, distribution channels, complementary experts, and coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat; ecosystem players frame cooperative value.
+- **Ecosystem modeling** (v1.6.0): Added `ecosystem_player (EPL###)` in `market/ecosystem.schema.yaml` - a first-class entity for referral partners, co-presenters, distribution channels, complementary experts, and coopetition peers. Distinct from competitor (CPR): competitors frame competitive threat; ecosystem players frame cooperative value.
 - **Bug fixes** (v1.6.1): Schema refinements and validation improvements.
 
 ### Added
 
-- **`market/ecosystem.schema.yaml`** — new schema file for ecosystem modeling.
+- **`market/ecosystem.schema.yaml`** - new schema file for ecosystem modeling.
 - **`ecosystem_player_ref (EPL###)`** in `metamodel.schema.yaml`.
 - **`schemaVersion` enum values:** `1.6.0` and `1.6.1` in `metamodel.schema.yaml`.
 - **`any_entity_ref` pattern** extended to include `EPL` prefix.
@@ -120,10 +138,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
-- **`strategy/capacity.schema.yaml`** — new schema file covering:
-  - `$defs/priority_stream` — PRI### entities with `name`, `priority`, `rationale`, `time_investment`, `revenue_estimate`, `strategic_value`, `timing`, `dependencies[]`, `offering_ref`, `opportunity_ref`, `evidence_refs`.
-  - `$defs/roadmap_phase` — RMP### entities with `name`, `period`, `goals[]`, `budget`, `kpi`, `evidence_refs`.
-  - `$defs/capacity_model` — non-entity scalar config block (working-day allocation); not extracted as a graph entity.
+- **`strategy/capacity.schema.yaml`** - new schema file covering:
+  - `$defs/priority_stream` - PRI### entities with `name`, `priority`, `rationale`, `time_investment`, `revenue_estimate`, `strategic_value`, `timing`, `dependencies[]`, `offering_ref`, `opportunity_ref`, `evidence_refs`.
+  - `$defs/roadmap_phase` - RMP### entities with `name`, `period`, `goals[]`, `budget`, `kpi`, `evidence_refs`.
+  - `$defs/capacity_model` - non-entity scalar config block (working-day allocation); not extracted as a graph entity.
   - Top-level arrays: `priority_streams[]`, `roadmap[]`, `operational_risks[]`.
 - **`$defs/priority_stream_ref (PRI###)`** in `metamodel.schema.yaml`.
 - **`$defs/roadmap_phase_ref (RMP###)`** in `metamodel.schema.yaml`.
@@ -144,11 +162,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
-- **`$defs/geo_scope`** in `metamodel.schema.yaml` — reusable object with:
+- **`$defs/geo_scope`** in `metamodel.schema.yaml` - reusable object with:
   - `level` enum: `local | country | europe | global` (required).
-  - `countries[]` — ISO 3166-1 alpha-2 codes; `minItems: 1` and `uniqueItems: true` when present; **required** when `level = country` (enforced via `if/then`).
-  - `region_label` — free-text label like `DACH`, `Nordics`, `Benelux`.
-  - `notes` — rationale / caveats.
+  - `countries[]` - ISO 3166-1 alpha-2 codes; `minItems: 1` and `uniqueItems: true` when present; **required** when `level = country` (enforced via `if/then`).
+  - `region_label` - free-text label like `DACH`, `Nordics`, `Benelux`.
+  - `notes` - rationale / caveats.
 - Optional **`geo_scope`** property on seven market-level entity types:
   `evidence_record`, `market_definition`, `market_force`, `competitor_profile`, `competitor`, `opportunity`, `risk`.
 - **`schemaVersion` enum value:** `1.4.0` in `metamodel.schema.yaml`.
@@ -168,8 +186,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 - **`brand_script_ref (BSC###)`** in `metamodel.schema.yaml`.
 - **`strategy.brand_core.brand_scripts[]`** with `id`, `name`, `brand_ref`, `narrative`.
-- **`$defs/narrative_backbone`** — shared object for framework-specific story fields.
-- **`strategy.messaging.message.brand_script_ref`** — ties a message to a specific script.
+- **`$defs/narrative_backbone`** - shared object for framework-specific story fields.
+- **`strategy.messaging.message.brand_script_ref`** - ties a message to a specific script.
 
 ## [1.1.0] - 2026-03-25
 

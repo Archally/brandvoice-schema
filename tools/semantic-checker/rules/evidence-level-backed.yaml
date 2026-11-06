@@ -1,0 +1,14 @@
+engineVersion: "0.1"
+rules:
+  - id: evidence-level-backed
+    severity: warn
+    description: Stated audience and persona evidence levels above hypothesis require evidence linkage.
+    find:
+      entity_type_in: [audience, persona]
+    filter:
+      field_in:
+        data.evidence_level: [weak-signal, moderate-evidence, strong-evidence]
+    check:
+      custom:
+        module: ./evidence-level-backed.mjs
+    message: "Entity '{id}' states an evidence level above hypothesis without resolved evidence linkage."

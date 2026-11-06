@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: offering-audiences-untested
+    severity: info
+    description: "Offering '{id}' targets only hypothesis audiences: {audiences}."
+    find:
+      entity_type: offering
+    check:
+      custom:
+        module: ./offering-audiences-untested.mjs
+    message: "Offering '{id}' targets only hypothesis audiences: {audiences}."

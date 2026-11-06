@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: superseded-by-cycle
+    severity: error
+    description: "Entity '{id}' belongs to a superseded_by cycle: {participants}."
+    find:
+      entity_type_in: [offering, evidence]
+    check:
+      custom:
+        module: ./superseded-by-cycle.mjs
+    message: "Entity '{id}' belongs to a superseded_by cycle: {participants}."

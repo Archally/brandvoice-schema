@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { fileURLToPath } from 'node:url';
-import { loadRules, runChecker } from '@archally/semantic-checker';
+import { loadRules, loadExtensions, runChecker } from '@archally/semantic-checker';
 import type { RuleDefinition, SemanticIssue } from '@archally/semantic-checker';
 import { buildBrandvoiceModel } from '@archally/brandvoice-schema/model';
 import { toCheckableModel } from './adapter.js';
@@ -15,25 +15,31 @@ import { toCheckableModel } from './adapter.js';
 //     entities in the planes that must pass.
 
 let byId: Map<string, RuleDefinition>;
+let extensions: Awaited<ReturnType<typeof loadExtensions>>;
 
 beforeAll(async () => {
   const rules = await loadRules(fileURLToPath(new URL('./rules', import.meta.url)));
   byId = new Map(rules.map(rule => [rule.id, rule]));
+  extensions = await loadExtensions(rules);
 });
 
 function run(ruleId: string, raw: Record<string, unknown>): SemanticIssue[] {
   const rule = byId.get(ruleId);
-  if (!rule) throw new Error(`rule '${ruleId}' not loaded`);
-  return runChecker(toCheckableModel(buildBrandvoiceModel(raw)), [rule]);
+  if (!rule) {
+    throw new Error(`rule '${ruleId}' not loaded`);
+  }
+  return runChecker(toCheckableModel(buildBrandvoiceModel(raw)), [rule], {}, extensions);
 }
 
 describe('evidence-coverage', () => {
-  it('warns on entities without evidence linkage', () => {
-    const issues = run('evidence-coverage', {
-      market: { landscape: { markets: [{ id: 'MKT001', name: 'Test' }] } },
-    });
-    expect(issues).toHaveLength(1);
-    expect(issues[0].entityId).toBe('MKT001');
+  it('warns on entities without resolved evidence linkage', () => {
+    for (const evidenceReferences of [undefined, ['EVD999']]) {
+      const issues = run('evidence-coverage', {
+        market: { landscape: { markets: [{ id: 'MKT001', name: 'Test', evidence_refs: evidenceReferences }] } },
+      });
+      expect(issues).toHaveLength(1);
+      expect(issues[0].entityId).toBe('MKT001');
+    }
   });
 
   it('passes when entity has evidence_refs to a real EVD', () => {
@@ -43,11 +49,18 @@ describe('evidence-coverage', () => {
     })).toHaveLength(0);
   });
 
-  it('passes when entity has validated_by to a real experiment', () => {
-    expect(run('evidence-coverage', {
+  it('recognizes validated_by on opportunities and ignores it on markets, matching core', () => {
+    const marketIssues = run('evidence-coverage', {
       market: { landscape: { markets: [{ id: 'MKT001', name: 'Test', validated_by: ['TST001'] }] } },
       governance: { experiments: { experiments: [{ id: 'TST001', hypothesis: 'h' }] } },
-    })).toHaveLength(0);
+    });
+    expect(marketIssues.map(issue => issue.entityId)).toEqual(['MKT001']);
+    for (const experimentExists of [false, true]) {
+      expect(run('evidence-coverage', {
+        market: { opportunities: { opportunities: [{ id: 'OPP001', validated_by: ['TST001'] }] } },
+        governance: { experiments: { experiments: experimentExists ? [{ id: 'TST001', hypothesis: 'h' }] : [] } },
+      })).toHaveLength(experimentExists ? 0 : 1);
+    }
   });
 
   it('ignores entities with non-evidence-expected types', () => {
@@ -195,10 +208,12 @@ describe('empty-planes', () => {
 });
 
 describe('positioning-evidence', () => {
-  it('warns on positioning without evidence', () => {
-    expect(run('positioning-evidence', {
-      strategy: { market_product: { positioning: [{ id: 'POS001', market_category: 'x', differentiated_claim: 'y' }] } },
-    })).toHaveLength(1);
+  it('warns on positioning without resolved evidence', () => {
+    for (const evidenceReferences of [undefined, ['EVD999']]) {
+      expect(run('positioning-evidence', {
+        strategy: { market_product: { positioning: [{ id: 'POS001', market_category: 'x', differentiated_claim: 'y', evidence_refs: evidenceReferences }] } },
+      })).toHaveLength(1);
+    }
   });
 
   it('passes with evidence_refs to a real EVD', () => {

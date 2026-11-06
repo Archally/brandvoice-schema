@@ -1,9 +1,9 @@
-import { extractEntities, extractRelations } from './extractor.js';
+import { extractEntities, deriveBuilderRelations } from './extractor.js';
 import type { BrandvoiceModel } from './types.js';
 
 export function buildBrandvoiceModel(composedRoot: Record<string, unknown>): BrandvoiceModel {
   const entities = extractEntities(composedRoot);
-  const relations = extractRelations(entities);
+  const { relations } = deriveBuilderRelations(entities);
 
   const entityTypeCounts: Record<string, number> = {};
   for (const entity of entities) {

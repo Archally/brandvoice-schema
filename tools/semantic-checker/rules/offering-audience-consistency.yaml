@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: offering-audience-consistency
+    severity: warn
+    description: "Offering '{id}' has attached value propositions/messages for audiences outside its target list: {audiences}."
+    find:
+      entity_type: offering
+    check:
+      custom:
+        module: ./offering-audience-consistency.mjs
+    message: "Offering '{id}' has attached value propositions/messages for audiences outside its target list: {audiences}."

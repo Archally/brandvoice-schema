@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: superseded-offering-lifecycle
+    severity: warn
+    description: "Offering '{id}' has inconsistent replacement lifecycle: {reasons}."
+    find:
+      entity_type: offering
+    check:
+      custom:
+        module: ./superseded-offering-lifecycle.mjs
+    message: "Offering '{id}' has inconsistent replacement lifecycle: {reasons}."

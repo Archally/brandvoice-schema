@@ -1,6 +1,6 @@
 {
   "name": "@archally/brandvoice-schema",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "YAML-based schema for brand communication strategy modeling: market reality, brand strategy, activation, and governance",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Adam Walkowski <adam.walkowski@inperceptic.com>",
@@ -45,7 +45,7 @@
     "model": "node tools/model-builder/dist/cli.js",
     "build": "tsc -p tools/model-builder/tsconfig.json && tsc -p tools/semantic-checker/tsconfig.json",
     "test": "node tools/port/run-test-suites.mjs",
-    "release:check": "node tools/port/release-check.mjs --expect 1.9.1 && npm run atlas:check && npm run docs:check && npm run doc-snippets",
+    "release:check": "node tools/port/release-check.mjs --expect 1.9.2 && npm run atlas:check && npm run docs:check && npm run doc-snippets",
     "prepublishOnly": "npm run build",
     "port:verify": "node tools/port/verify-ported.mjs",
     "port:test": "node --test tools/port/*.test.mjs",

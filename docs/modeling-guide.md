@@ -1,4 +1,4 @@
-# Brandvoice 1.9.1 Modeling Guide
+# Brandvoice 1.9.2 Modeling Guide
 
 How to build effective brandvoice models -- from a blank directory to a comprehensive brand strategy specification.
 

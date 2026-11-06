@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: active-message-retired-offering
+    severity: warn
+    description: "Active message '{id}' promotes retired offerings: {offerings}."
+    find:
+      entity_type: message
+    check:
+      custom:
+        module: ./active-message-retired-offering.mjs
+    message: "Active message '{id}' promotes retired offerings: {offerings}."

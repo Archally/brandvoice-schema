@@ -1,4 +1,4 @@
-# Brandvoice 1.9.1 schema reference
+# Brandvoice 1.9.2 schema reference
 
 The [schema atlas](schema-atlas/2026-11-05-reference.md) lists every shipped schema,
 JSON Pointer, field constraint, definition and reference. It is generated from
@@ -10,5 +10,5 @@ npm run atlas:check
 ```
 
 Use [file conventions](file-conventions.md) to select file names and
-[the modeling guide](modeling-guide.md) to develop a model. Package version 1.9.1
+[the modeling guide](modeling-guide.md) to develop a model. Package version 1.9.2
 supports the schemaVersion values listed in `metamodel.schema.yaml`.

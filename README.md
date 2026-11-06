@@ -64,7 +64,7 @@ my-brand/
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.9.1"
+schemaVersion: "1.9.2"
 name: "My Brand"
 description: "A brief summary of brand scope and market context."
 scope: my-brand
@@ -489,3 +489,14 @@ anyone. Whether a model is *good* and what its edges mean are modeling opinions,
 are the product. A directory in neither list is an omission, not a permission.
 
 Copyright 2026 Adam Walkowski
+
+## Semantic checks in 1.9.2
+
+The checker includes nine rules for offering audiences, competitor depth, evidence
+levels, replacement lifecycles and cycles, and active messages promoting retired
+offerings. Replacement cycles are errors by default; other new findings are warnings
+or informational. Use `npm run check -- <model-dir> --config <path>` to set individual
+rules to `error`, `warn`, `info` or `off`.
+
+Model building preserves authored entities and relationships across composed files,
+including supplementary evidence, governance outcomes and nested message pillars.
