@@ -98,7 +98,7 @@ evidence:
     supports: [MKT001]
 ```
 
-**3. Install and check** from a clone of this repository (Node.js 20 or later):
+**3. Install and check** from a clone of this repository (Node.js 22 or later):
 
 ```bash
 git clone https://github.com/archally/brandvoice-schema.git
