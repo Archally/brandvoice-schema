@@ -1,4 +1,4 @@
-# Brandvoice 1.9.0 File Conventions
+# Brandvoice 1.9.1 File Conventions
 
 Practical rules for organizing `.brandvoice/` directories. These conventions apply to any project using the schema, regardless of size.
 
@@ -117,7 +117,7 @@ The root `brandvoice.yaml` can wire plane slots to separate files using `$ref` p
 ```yaml
 # brandvoice.yaml
 version: "1.0.0"
-schemaVersion: "1.9.0"
+schemaVersion: "1.9.1"
 name: "My Brand"
 market:
   landscape:
@@ -202,7 +202,7 @@ The root file is the only required file. Minimal valid content:
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.9.0"
+schemaVersion: "1.9.1"
 name: "My Brand"
 ```
 
@@ -210,7 +210,7 @@ Full root file with all plane slots wired:
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.9.0"
+schemaVersion: "1.9.1"
 name: "My Brand"
 description: "Brief summary of brand scope and market context."
 scope: my-brand

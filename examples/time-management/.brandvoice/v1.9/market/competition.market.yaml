@@ -6,7 +6,7 @@ competitors:
     description: >-
       AI calendar optimization tool that automatically reschedules meetings
       to create Focus Time blocks. Strong in calendar management but limited
-      in analytics — shows what happened but not why or what to change.
+      in analytics - shows what happened but not why or what to change.
       Acquired by Atlassian in 2024, creating integration advantages but
       also dependency on the Atlassian ecosystem.
     threat_level: high
@@ -26,11 +26,11 @@ competitors:
           price: "Custom"
           billing_period: annual
     strengths:
-      - "AI-powered Focus Time scheduling — automatic block creation"
+      - "AI-powered Focus Time scheduling - automatic block creation"
       - "Atlassian ecosystem integration (Jira, Confluence)"
-      - "Low friction — works with existing Google Calendar"
+      - "Low friction - works with existing Google Calendar"
     weaknesses:
-      - "Calendar optimization only — no workflow analytics or insights"
+      - "Calendar optimization only - no workflow analytics or insights"
       - "Atlassian acquisition creates vendor lock-in concerns"
       - "No team-level pattern analysis or bottleneck detection"
     evidence_refs: [EVD008]
@@ -61,7 +61,7 @@ competitors:
       - "Investment allocation tracking across initiatives"
       - "Integrations with Jira, GitHub, and CI/CD systems"
     weaknesses:
-      - "Top-down view — engineers see it as surveillance, not enablement"
+      - "Top-down view - engineers see it as surveillance, not enablement"
       - "Expensive for mid-size teams ($15+/user/month)"
       - "Focused on output metrics, not time quality or deep work"
     evidence_refs: [EVD008, EVD006]
@@ -72,7 +72,7 @@ competitors:
     description: >-
       Established time tracking tool with a broad user base across
       freelancers, agencies, and enterprise. Strong in manual time entry
-      and reporting but fundamentally passive — requires user action to
+      and reporting but fundamentally passive - requires user action to
       log time, producing compliance burden rather than insight.
     threat_level: medium
     pricing:
@@ -122,13 +122,13 @@ competitors:
           price_numeric: 12
           billing_period: monthly
     strengths:
-      - "Fully automatic — no manual time entry"
+      - "Fully automatic - no manual time entry"
       - "Detailed app and website categorization"
       - "Focus session mode with distraction blocking"
     weaknesses:
-      - "Individual-focused — no team analytics"
+      - "Individual-focused - no team analytics"
       - "Privacy concerns with screen monitoring approach"
-      - "Descriptive only — shows what happened but no actionable insights"
+      - "Descriptive only - shows what happened but no actionable insights"
     evidence_refs: [EVD008]
 
   - id: CPR005
@@ -145,9 +145,9 @@ competitors:
     strengths:
       - "Zero cost and zero procurement friction"
       - "Fully customizable to team context"
-      - "No privacy concerns — data stays internal"
+      - "No privacy concerns - data stays internal"
     weaknesses:
       - "Manual data collection is inaccurate and biased"
-      - "Time-consuming to maintain — ironic for a time management solution"
+      - "Time-consuming to maintain - ironic for a time management solution"
       - "No pattern detection, prediction, or automated insights"
     evidence_refs: [EVD005]

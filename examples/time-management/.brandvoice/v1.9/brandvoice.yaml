@@ -1,10 +1,10 @@
 version: "1.0.0"
-schemaVersion: "1.9.0"
+schemaVersion: "1.9.1"
 name: "Chronoflow"
 description: >-
   B2B SaaS time intelligence platform that helps engineering teams understand
   where their time goes, identify workflow bottlenecks, and protect deep work
-  from meeting culture — without surveillance or micromanagement.
+  from meeting culture - without surveillance or micromanagement.
 scope: chronoflow
 tags: [b2b, saas, productivity, engineering, time-management]
 

@@ -1,0 +1,11 @@
+engineVersion: "0.1"
+rules:
+  - id: recommended-story-framework
+    severity: warn
+    description: Brand scripts may use custom story frameworks; recommended names keep interpretation consistent.
+    find:
+      entity_type: brand_script
+    check:
+      custom:
+        module: ./recommended-story-framework.mjs
+    message: "Brand script '{id}' narrative.framework '{value}' is not a recommended framework (sb7, freytag, pixar, hero_journey, three_act); a custom framework is valid."

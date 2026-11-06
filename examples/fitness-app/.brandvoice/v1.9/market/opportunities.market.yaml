@@ -14,8 +14,8 @@ opportunities:
       No major fitness app solves the "life happens" problem well. When a
       user's meeting runs late, they travel without gym access, or they
       slept poorly, existing apps either force the original plan or offer
-      no guidance. An app that genuinely adapts to daily reality — not just
-      fitness data but life data — would capture the segment that churns
+      no guidance. An app that genuinely adapts to daily reality - not just
+      fitness data but life data - would capture the segment that churns
       from rigid programs.
     evidence_refs: [EVD001, EVD002, EVD005]
 
@@ -46,18 +46,18 @@ position_maps:
         high_label: "Fully adaptive AI"
     placements:
       - entity: CPR001
-        label: "Fitbod — deep personalization, narrow content"
+        label: "Fitbod - deep personalization, narrow content"
         coordinates:
           Content breadth: 30
           Personalization depth: 70
       - entity: CPR002
-        label: "NTC — broad content, generic plans"
+        label: "NTC - broad content, generic plans"
         coordinates:
           Content breadth: 80
           Personalization depth: 20
     white_spaces:
       - id: WSP001
-        name: "Broad + adaptive — the target quadrant"
+        name: "Broad + adaptive - the target quadrant"
         region:
           Content breadth: {min: 60, max: 90}
           Personalization depth: {min: 60, max: 90}

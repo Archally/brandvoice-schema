@@ -32,7 +32,7 @@ channels:
     media_type: earned
     tone_adaptation: >-
       Speaking slots at LeadDev, QCon, and CTO Summit. Content focuses
-      on original research findings from Chronoflow data — sharing the
+      on original research findings from Chronoflow data - sharing the
       methodology and insights, not pitching the product. Conference
       talks are the highest-trust channel for this audience.
     actor_refs: [ACT001]
@@ -45,7 +45,7 @@ channels:
     media_type: owned
     tone_adaptation: >-
       Free 30-day team trial with guided onboarding. The product itself
-      is the primary conversion channel — time intelligence reports
+      is the primary conversion channel - time intelligence reports
       generated during the trial demonstrate value concretely. Requires
       no sales interaction for teams under 50 engineers.
     actor_refs: [ACT001, ACT002, ACT003]

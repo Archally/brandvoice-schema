@@ -13,7 +13,7 @@ content_pillars:
   - id: CPL001
     name: "Real life, real workouts"
     angle: >-
-      Content showing FitPulse adapting to real scenarios — travel, time
+      Content showing FitPulse adapting to real scenarios - travel, time
       crunches, low energy days. Demonstrates product value through
       authentic use cases rather than aspirational imagery.
     message_refs: [MSG002]
@@ -25,7 +25,7 @@ campaigns:
     objective: >-
       Q1 campaign targeting professionals who abandoned their gym routine
       or previous fitness app. Messaging focuses on "this time it adapts
-      to you" — positioning FitPulse as the app for people who have tried
+      to you" - positioning FitPulse as the app for people who have tried
       and failed before.
     start_date: "2027-01-02"
     end_date: "2027-01-31"

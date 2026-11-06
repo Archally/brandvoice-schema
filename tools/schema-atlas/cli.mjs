@@ -14,7 +14,7 @@ const escape = value => String(value).replaceAll('|', '&#124;').replaceAll('\n',
 function render(schemaDirectory, output) {
   const sources = files(schemaDirectory);
   if (!sources.length) throw new Error('No schema files found');
-  const lines = ['# Brandvoice 1.9.0 schema atlas', '', 'Generated from the shipped YAML schemas. The schemas define validation; this reference lists their fields, definitions and references.', '', '## Schema files', ''];
+  const lines = ['# Brandvoice 1.9 schema atlas', '', 'Generated from the shipped YAML schemas. The schemas define validation; this reference lists their fields, definitions and references.', '', '## Schema files', ''];
   for (const source of sources) {
     const name = relative(schemaDirectory, source);
     const link = relative(dirname(output), source).replaceAll('\\','/');

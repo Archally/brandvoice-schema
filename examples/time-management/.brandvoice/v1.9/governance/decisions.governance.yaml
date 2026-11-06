@@ -18,7 +18,7 @@ decisions:
         and visible only to the individual. Team dashboards show aggregated
         patterns only. No admin override exists.
       why: >-
-        Configurable privacy creates a race to the bottom — organizations
+        Configurable privacy creates a race to the bottom - organizations
         under pressure will choose transparency, engineers will resist, and
         the tool becomes associated with surveillance. An architectural
         guarantee is the only credible trust signal for the engineering
@@ -82,8 +82,8 @@ risks:
     likelihood: medium
     impact: high
     mitigation: >-
-      Position around the defensive use case first — headcount justification
-      during budget reviews — rather than the aspirational use case (deep
+      Position around the defensive use case first - headcount justification
+      during budget reviews - rather than the aspirational use case (deep
       work optimization). The defensive buyer has budget urgency. Lead
       messaging with CFO/board pressure, not team wellness.
     status: mitigating

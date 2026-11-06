@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+## [1.9.1] - 2026-11-06
+
+### Summary
+
+- A brand script's story framework has five recommended names, and the semantic checker warns on any other name without making the model invalid.
+- Compatibility: FULL. Only a description, a `schemaVersion` enum value and an advisory warning change, so every model valid under 1.9.0 stays valid and no instance change is required.
+
+### Added
+
+- **`schemaVersion` enum value** `1.9.1` in `schema/metamodel.schema.yaml`.
+- **Semantic checker** - rule `recommended-story-framework` warns when a brand script names a framework outside the recommendations; the model stays valid.
+
+### Changed
+
+- **`schema/strategy/brand-core.schema.yaml`** - `narrative_backbone.framework`, used by `brand_scripts[].narrative` and `brands[].narrative`, recommends `sb7`, `freytag`, `pixar`, `hero_journey` and `three_act`. The field stays a free string, so every existing value stays valid.
+- **README** - a Story Frameworks section names the recommendations and says the checker only warns on another name.
+- **Examples** - the prose in both worked examples uses a plain hyphen where it used an em dash; no field value changes meaning.
+
+### Fixed
+
+- **Port integrity** - `tools/port` reports an undeclared file placed beside a declared unit inside a covered root, such as a file next to an example's model directory.
+
 ## [1.9.0] - 2026-11-06
 
 ### Summary

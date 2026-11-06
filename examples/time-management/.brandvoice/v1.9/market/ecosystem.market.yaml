@@ -6,7 +6,7 @@ ecosystem_players:
     relationship_type: complementary-expert
     description: >-
       Developer workflow analytics platform focused on DORA metrics and
-      delivery pipeline optimization. Complementary to Chronoflow — LinearB
+      delivery pipeline optimization. Complementary to Chronoflow - LinearB
       measures delivery output while Chronoflow measures time input.
     cooperation_potential: >-
       Joint integration that correlates time allocation patterns with

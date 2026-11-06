@@ -67,7 +67,7 @@ forces:
     description: >-
       Employee monitoring tools (keystroke logging, screenshot capture, mouse
       tracking) have triggered significant backlash. Engineers are particularly
-      resistant — teams that deployed surveillance-style productivity tools
+      resistant - teams that deployed surveillance-style productivity tools
       saw 30-50% increases in attrition intent. Tools must demonstrate that
       they serve the team, not surveil the individual.
     affected_needs: [NED004]

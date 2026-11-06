@@ -6,7 +6,7 @@ programs:
     objective: >-
       Ongoing research publication program that positions Chronoflow as
       the authority on engineering time allocation. Publishes quarterly
-      reports using anonymized customer data — establishing thought
+      reports using anonymized customer data - establishing thought
       leadership and creating SEO-optimized content that drives inbound.
     message_house_refs: [MHS001]
     campaign_refs: [CMP001]
@@ -25,7 +25,7 @@ content_pillars:
     name: "Meeting culture data"
     angle: >-
       Original research findings on how engineering teams spend time in
-      meetings — frequency trends, fragmentation patterns, and what
+      meetings - frequency trends, fragmentation patterns, and what
       high-performing teams do differently. Data-heavy, opinion-light.
     message_refs: [MSG002, MSG005]
     program_refs: [PRG001]
@@ -34,7 +34,7 @@ content_pillars:
     name: "Deep work methodology"
     angle: >-
       Practical frameworks for protecting deep work in engineering teams.
-      Not just theory (Cal Newport) but operational guidance — async
+      Not just theory (Cal Newport) but operational guidance - async
       meeting formats, no-meeting-day implementations, and measured results.
     message_refs: [MSG001, MSG003]
     program_refs: [PRG002]
@@ -42,7 +42,7 @@ content_pillars:
   - id: CPL003
     name: "Privacy-first engineering"
     angle: >-
-      How to measure team effectiveness without surveillance — technical
+      How to measure team effectiveness without surveillance - technical
       architecture decisions, cultural implications, and why privacy is
       a product feature, not a compliance checkbox.
     message_refs: [MSG001, MSG003]

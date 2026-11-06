@@ -7,11 +7,11 @@ brands:
       To make consistent fitness accessible to people whose lives
       do not follow a predictable schedule.
     promise: >-
-      Every workout fits your day — not the other way around.
+      Every workout fits your day - not the other way around.
     values:
-      - "Adaptability — we meet people where they are, not where a program says they should be"
-      - "Honesty — we show real progress, not vanity metrics; rest days are progress too"
-      - "Simplicity — open the app, start the workout; no decision fatigue"
+      - "Adaptability - we meet people where they are, not where a program says they should be"
+      - "Honesty - we show real progress, not vanity metrics; rest days are progress too"
+      - "Simplicity - open the app, start the workout; no decision fatigue"
     personality:
       - encouraging
       - pragmatic
@@ -22,12 +22,12 @@ brands:
     narrative:
       framework: sb7
       hero: "A busy professional who wants to stay fit but keeps falling off track"
-      problem: "Life is unpredictable — rigid workout plans break the moment your schedule shifts"
+      problem: "Life is unpredictable - rigid workout plans break the moment your schedule shifts"
       guide: "FitPulse, built by trainers and engineers who understand that consistency beats intensity"
       plan: "1. Tell us your goal and equipment. 2. We build your adaptive plan. 3. Every day, get a workout that fits."
       call_to_action: "Start your free adaptive plan"
       failure: "Another app abandoned after two weeks. Guilt. Starting over. Again."
-      success: "Three months of consistent training — not perfect, but unbroken. Strength you can feel."
+      success: "Three months of consistent training - not perfect, but unbroken. Strength you can feel."
     evidence_refs: [EVD001]
 
 brand_scripts:
@@ -38,12 +38,12 @@ brand_scripts:
     narrative:
       framework: sb7
       hero: "A busy professional who wants to stay fit but keeps falling off track"
-      problem: "Life is unpredictable — rigid workout plans break the moment your schedule shifts"
+      problem: "Life is unpredictable - rigid workout plans break the moment your schedule shifts"
       guide: "FitPulse, built by trainers and engineers who understand that consistency beats intensity"
       plan: "1. Tell us your goal and equipment. 2. We build your adaptive plan. 3. Every day, get a workout that fits."
       call_to_action: "Start your free adaptive plan"
       failure: "Another app abandoned after two weeks. Guilt. Starting over. Again."
-      success: "Three months of consistent training — not perfect, but unbroken. Strength you can feel."
+      success: "Three months of consistent training - not perfect, but unbroken. Strength you can feel."
     evidence_refs: [EVD002]
 
 archetypes:
@@ -86,7 +86,7 @@ verbal_guidelines:
         notes: "When referring to physical activity in general"
       - term: "adapt"
         use_instead_of: ["modify"]
-        notes: "When the app changes a plan — 'adapt' implies intelligence, 'modify' implies compromise"
+        notes: "When the app changes a plan - 'adapt' implies intelligence, 'modify' implies compromise"
       - term: "rest day"
         use_instead_of: ["off day"]
         notes: "Rest is part of the program, not absence from it"

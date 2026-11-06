@@ -12,7 +12,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@archally/brandvoice-schema/model": [
+        "../model-builder/dist/index.d.ts"
+      ]
+    }
   },
   "include": ["*.ts", "examples/**/*.ts"],
   "exclude": ["**/*.test.ts", "vitest.config.ts", "dist", "node_modules"]

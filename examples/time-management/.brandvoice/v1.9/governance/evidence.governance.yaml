@@ -17,7 +17,7 @@ evidence:
     supports: [MFR001, NED001, OPP001]
 
   - id: EVD002
-    title: "Engineering leadership survey — productivity measurement"
+    title: "Engineering leadership survey - productivity measurement"
     type: survey
     date: "2025-11-20"
     source_type: industry-report

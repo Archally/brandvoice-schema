@@ -7,7 +7,7 @@ markets:
       Consumer fitness applications targeting working professionals aged 25-45
       who seek structured workout guidance but lack time for traditional gym
       programs. The market is maturing with high download volumes but low
-      retention — most apps see 70%+ churn within 30 days, creating opportunity
+      retention - most apps see 70%+ churn within 30 days, creating opportunity
       for solutions that solve the adherence problem rather than the content problem.
     maturity: growing
     growth_rate: "8.5% CAGR 2024-2028"
@@ -39,7 +39,7 @@ forces:
     impact: high
     time_horizon: near-term
     description: >-
-      Industry-wide retention rates remain poor — fewer than 25% of users
+      Industry-wide retention rates remain poor - fewer than 25% of users
       are active after 90 days. The primary cause is not content quality but
       program-life fit: plans do not adapt when users travel, get sick, or
       have schedule changes. This forces high customer acquisition costs and

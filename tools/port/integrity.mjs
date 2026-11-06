@@ -92,11 +92,24 @@ export function verifyIntegrity(root, integrity) {
       problems.push(`Missing covered root: ${path}`);
       continue;
     }
-    for (const child of readdirSync(directory)) {
-      const local = `${path}/${child}`;
-      const claimed = integrity.jobs.some(job => job.path === local || job.path.startsWith(`${local}/`) || local.startsWith(`${job.path}/`));
-      if (!claimed) problems.push(`Undeclared path: ${local}`);
-    }
+    findUndeclared(root, path, integrity.jobs, problems);
   }
   return { ok: problems.length === 0, checked: actual.size, problems };
+}
+
+// A path inside a declared unit is covered. A path that only leads to a declared unit is an
+// ancestor: it is walked, so a file beside the unit is reported rather than accepted.
+function findUndeclared(root, path, jobs, problems) {
+  for (const child of readdirSync(safePath(root, path)).sort()) {
+    const local = `${path}/${child}`;
+    const inside = jobs.some(job => job.path === local || local.startsWith(`${job.path}/`));
+    if (inside) continue;
+    const ancestor = jobs.some(job => job.path.startsWith(`${local}/`));
+    const isDirectory = lstatSync(safePath(root, local)).isDirectory();
+    if (ancestor && isDirectory) {
+      findUndeclared(root, local, jobs, problems);
+      continue;
+    }
+    problems.push(`Undeclared path: ${local}`);
+  }
 }

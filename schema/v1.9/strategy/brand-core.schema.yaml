@@ -71,9 +71,11 @@ $defs:
       framework:
         type: string
         description: >
-          Name of the narrative framework used (for example `sb7`, `pixar`,
-          `freytag`, or a house style). Rationale: makes interpretation and
-          review deterministic even when teams use different story structures.
+          Name of the story framework this narrative follows. Recommended values:
+          `sb7`, `freytag`, `pixar`, `hero_journey` and `three_act`. Any other
+          name, such as a house framework, is valid. Rationale: a shared name
+          makes interpretation and review deterministic even when teams use
+          different story structures.
       hero:
         type: string
         description: "Who the story centers on (usually customer)."

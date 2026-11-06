@@ -27,7 +27,7 @@ competitors:
       - "Apple Watch integration with real-time rep counting"
     weaknesses:
       - "Limited bodyweight and minimal-equipment options"
-      - "No schedule awareness — does not adapt to time constraints"
+      - "No schedule awareness - does not adapt to time constraints"
       - "Purely strength-focused; no cardio, mobility, or hybrid programming"
     evidence_refs: [EVD004]
 
@@ -38,7 +38,7 @@ competitors:
       Free-to-use fitness app backed by Nike's brand and content library.
       Offers guided video workouts across strength, cardio, yoga, and
       mobility. Strength is zero barrier to entry and brand trust.
-      Weakness is lack of personalization — programs are generic and
+      Weakness is lack of personalization - programs are generic and
       do not adapt to individual progress or schedule changes.
     threat_level: medium
     pricing:
@@ -72,6 +72,6 @@ competitors:
       - "Accountability through scheduled appointments"
     weaknesses:
       - "Cost prohibitive for regular use ($240-600/month)"
-      - "Schedule inflexibility — must coordinate two calendars"
+      - "Schedule inflexibility - must coordinate two calendars"
       - "Quality varies dramatically by trainer"
     evidence_refs: [EVD005]

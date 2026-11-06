@@ -5,7 +5,7 @@ channels:
     media_type: owned
     tone_adaptation: >-
       Primary awareness channel. Short-form video content showing adaptive
-      workouts in real scenarios — hotel rooms, parks, home with kids nearby.
+      workouts in real scenarios - hotel rooms, parks, home with kids nearby.
       Demonstrates the "fits your life" positioning through visual proof.
     actor_refs: [ACT001, ACT002]
     journey_stage_refs: [JSG001]

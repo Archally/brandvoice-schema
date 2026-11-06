@@ -64,7 +64,7 @@ my-brand/
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.9.0"
+schemaVersion: "1.9.1"
 name: "My Brand"
 description: "A brief summary of brand scope and market context."
 scope: my-brand
@@ -434,6 +434,12 @@ Scoped entity IDs prevent collisions across files: `market.CPR001`, `strategy.NE
 4. **Confidence levels on governance.** Tag evidence with `hypothesis`, `weak-signal`, `moderate`, `strong`, or `definitive`. Be honest about what you know vs. what you assume.
 
 5. **Defer aggressively.** Visual identity and capacity planning are Phase 3 - don't model them before market and strategy are stable.
+
+## Story Frameworks
+
+A brand script names its story framework in `narrative.framework`. The recommended values are
+`sb7`, `freytag`, `pixar`, `hero_journey` and `three_act`; any other name, such as a house
+framework, is valid. The semantic checker reports any other value as a warning, never as an error.
 
 ## Versioning
 

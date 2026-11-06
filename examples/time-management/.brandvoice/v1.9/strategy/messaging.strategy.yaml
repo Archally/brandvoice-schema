@@ -2,7 +2,7 @@ version: "1.0.0"
 message_houses:
   - id: MHS001
     name: "Privacy-first time intelligence"
-    roof_claim: "See where your team's time goes — without watching anyone"
+    roof_claim: "See where your team's time goes - without watching anyone"
     positioning_refs: [POS001]
     pillars:
       - id: MPL001
@@ -32,7 +32,7 @@ message_houses:
 
   - id: MHS002
     name: "Investment intelligence for CTOs"
-    roof_claim: "Show the board where engineering time goes — and why it matters"
+    roof_claim: "Show the board where engineering time goes - and why it matters"
     positioning_refs: [POS002]
     pillars:
       - id: MPL004
@@ -56,7 +56,7 @@ messages:
     status: active
     core_statement: >-
       Chronoflow aggregates calendar and tool signals at the team level.
-      Individual data is visible only to the individual — never to managers,
+      Individual data is visible only to the individual - never to managers,
       never to HR, never to anyone else. Privacy is enforced by architecture,
       not by policy.
     proof_points: [PRF001]
@@ -66,7 +66,7 @@ messages:
     title: "From insight to action"
     status: active
     core_statement: >-
-      Every Monday, your team gets a time intelligence brief — not just charts,
+      Every Monday, your team gets a time intelligence brief - not just charts,
       but specific signals: which meetings could be async, where context
       switching is highest, and how this week's deep work ratio compares to
       your team's best weeks.
@@ -78,7 +78,7 @@ messages:
     status: active
     core_statement: >-
       Chronoflow was built by a team that lost 18 hours a week to meetings.
-      We built the tool we wished we had — and designed it so your team
+      We built the tool we wished we had - and designed it so your team
       would actually want to use it.
     proof_points: [PRF003]
     evidence_refs: [EVD006]
@@ -87,7 +87,7 @@ messages:
     title: "Investment allocation visibility"
     status: active
     core_statement: >-
-      When the board asks where engineering time goes, show them — not
+      When the board asks where engineering time goes, show them - not
       estimates from project managers, but actual time data categorized
       across new features, maintenance, infrastructure, and support.
     proof_points: [PRF004]
@@ -105,7 +105,7 @@ messages:
 
 proof_points:
   - id: PRF001
-    claim: "Privacy architecture — team-level aggregation with individual opt-in"
+    claim: "Privacy architecture - team-level aggregation with individual opt-in"
     evidence: "Privacy-by-design architecture: all team dashboards show aggregated data only. Individual view requires explicit opt-in by the engineer. No keystroke logging, no screenshots, no screen time tracking."
     evidence_refs: [EVD006]
 
@@ -115,7 +115,7 @@ proof_points:
     evidence_refs: [EVD001]
 
   - id: PRF003
-    claim: "87% engineer adoption rate in beta — highest in the category"
+    claim: "87% engineer adoption rate in beta - highest in the category"
     evidence: "During 6-month beta with 12 teams, individual opt-in rate averaged 87%, compared to industry average of 40-55% for productivity tools. Exit surveys cited privacy architecture as the primary adoption driver."
     evidence_refs: [EVD006]
 

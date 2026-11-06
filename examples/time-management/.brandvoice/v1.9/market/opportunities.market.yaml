@@ -25,13 +25,13 @@ opportunities:
     thesis: >-
       Large engineering organizations spending on Chronoflow data become
       natural candidates for consulting engagements that help them act on
-      the insights — redesigning meeting cultures, establishing deep work
+      the insights - redesigning meeting cultures, establishing deep work
       policies, and measuring the impact of workflow changes.
     confidence: hypothesis
     current_gap: >-
       Management consulting firms lack engineering-specific time data.
       Chronoflow's longitudinal dataset creates a unique advisory position
-      — data-driven recommendations that no consultant can replicate
+      - data-driven recommendations that no consultant can replicate
       without the tooling.
     evidence_refs: [EVD002]
 
@@ -40,7 +40,7 @@ opportunities:
     status: identified
     thesis: >-
       As engineering teams adopt AI coding assistants, they need to
-      understand how their time allocation is shifting — less coding,
+      understand how their time allocation is shifting - less coding,
       more reviewing, more prompting. Chronoflow can become the canonical
       measurement platform for the AI-driven workflow transition.
     confidence: weak-signal
@@ -62,22 +62,22 @@ position_maps:
         high_label: "Actionable recommendations"
     placements:
       - entity: CPR001
-        label: "Clockwise — team calendar, light insights"
+        label: "Clockwise - team calendar, light insights"
         coordinates:
           Focus level: 60
           Insight depth: 40
       - entity: CPR002
-        label: "Jellyfish — team metrics, delivery focus"
+        label: "Jellyfish - team metrics, delivery focus"
         coordinates:
           Focus level: 80
           Insight depth: 70
       - entity: CPR003
-        label: "Toggl — individual, raw data"
+        label: "Toggl - individual, raw data"
         coordinates:
           Focus level: 20
           Insight depth: 20
       - entity: CPR004
-        label: "RescueTime — individual, descriptive"
+        label: "RescueTime - individual, descriptive"
         coordinates:
           Focus level: 15
           Insight depth: 35

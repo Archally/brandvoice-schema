@@ -32,7 +32,7 @@ actors:
     description: >-
       Software developer or senior engineer who wants to understand their
       own time patterns and have data to push back on excessive meetings.
-      Most privacy-sensitive persona — will resist adoption if the tool
+      Most privacy-sensitive persona - will resist adoption if the tool
       feels like surveillance. Adoption by this persona is the critical
       trust signal for team-wide rollout.
     priority: medium
@@ -84,7 +84,7 @@ needs:
     statement: >-
       The board asks how our engineering investment translates to outcomes.
       I need to show where time goes across initiatives, maintenance, and
-      toil — without reducing engineering to a cost center measured by
+      toil - without reducing engineering to a cost center measured by
       hours logged.
     actors: [ACT001]
     need_type: functional
@@ -106,7 +106,7 @@ offerings:
     name: "Chronoflow Team"
     value_statement: >-
       Team-level time intelligence that shows meeting load, deep work ratios,
-      and workflow patterns — aggregated to protect individual privacy while
+      and workflow patterns - aggregated to protect individual privacy while
       giving engineering leaders the data to drive cultural change.
     capabilities:
       - "Calendar and dev tool integration (Google Calendar, GitHub, Jira)"
@@ -121,7 +121,7 @@ offerings:
     name: "Chronoflow Enterprise"
     value_statement: >-
       Organization-wide time intelligence with investment allocation views,
-      cross-team benchmarking, and executive reporting — enabling CTOs to
+      cross-team benchmarking, and executive reporting - enabling CTOs to
       show the board where engineering time goes and why.
     capabilities:
       - "All Team features"
@@ -140,7 +140,7 @@ positioning:
       For engineering leaders who need time allocation data without
       surveillance, Chronoflow is the time intelligence platform that
       reveals team-level patterns while keeping individual data private
-      — so you can fix meeting culture with data, not mandates.
+      - so you can fix meeting culture with data, not mandates.
     category_strategy:
       frame_of_reference: "Engineering time intelligence"
       category_definition: "Privacy-first team time analytics for engineering organizations"
@@ -152,7 +152,7 @@ positioning:
     market_category: "Developer productivity measurement"
     differentiated_claim: >-
       Unlike delivery metrics tools that measure output, Chronoflow
-      measures input quality — how much uninterrupted time teams have
+      measures input quality - how much uninterrupted time teams have
       for complex work. Better inputs produce better outputs.
     category_strategy:
       frame_of_reference: "Developer productivity measurement"

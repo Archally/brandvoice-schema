@@ -1,7 +1,7 @@
 version: "1.0.0"
 evidence:
   - id: EVD001
-    title: "AI personalization in fitness apps — adoption and effectiveness"
+    title: "AI personalization in fitness apps - adoption and effectiveness"
     type: secondary-research
     date: "2025-11-15"
     source_type: industry-report
@@ -23,7 +23,7 @@ evidence:
     summary: >-
       Average 30-day retention for fitness apps is 22%. Apps with schedule
       adaptation features retain 38% at 30 days. Primary churn driver is
-      plan rigidity — 61% of churned users cite "plan did not fit my
+      plan rigidity - 61% of churned users cite "plan did not fit my
       schedule" as the reason for abandonment.
     confidence: strong-evidence
     supports: [MFR002, NED001, OPP001]

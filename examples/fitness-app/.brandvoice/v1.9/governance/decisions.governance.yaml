@@ -14,7 +14,7 @@ decisions:
       selected: >-
         Adopt freemium with 3 adaptive workouts/week on free tier. This gives
         users enough time to build the habit and experience adaptation before
-        hitting the limit — conversion happens from demonstrated value, not
+        hitting the limit - conversion happens from demonstrated value, not
         deadline pressure.
       why: >-
         Free trial models in fitness apps show high download-to-trial rates
@@ -32,6 +32,6 @@ risks:
       Launch with rule-based adaptation (schedule, equipment, stated energy)
       and layer ML personalization as user data accumulates. Be transparent
       about the learning curve in onboarding: "FitPulse gets smarter with
-      every workout — your first week teaches us, your second week shows it."
+      every workout - your first week teaches us, your second week shows it."
     status: identified
     evidence_refs: [EVD001]

@@ -2,7 +2,7 @@ version: "1.0.0"
 message_houses:
   - id: MHS001
     name: "Adaptive fitness message house"
-    roof_claim: "Your workout adapts to your life — not the other way around"
+    roof_claim: "Your workout adapts to your life - not the other way around"
     positioning_refs: [POS001]
     pillars:
       - id: MPL001
@@ -25,8 +25,8 @@ messages:
   - id: MSG001
     title: "AI learns you"
     core_statement: >-
-      FitPulse learns from every workout — your energy, your feedback,
-      your biometrics — and gets smarter about what works for you.
+      FitPulse learns from every workout - your energy, your feedback,
+      your biometrics - and gets smarter about what works for you.
     proof_points: [PRF001]
     journey_stages: [JSG001]
     evidence_refs: [EVD001]
