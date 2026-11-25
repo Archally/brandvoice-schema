@@ -1,0 +1,10 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+actors:
+  - id: ACT001
+    name: Platform architect
+positioning:
+  - id: POS001
+    market_category: Validation tooling
+    differentiated_claim: Schema-aware checking
+    target_audiences: [ACT001]

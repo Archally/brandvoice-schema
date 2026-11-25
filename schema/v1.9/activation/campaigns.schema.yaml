@@ -10,14 +10,19 @@ required:
   - version
 properties:
   version:
+    description: "Track changes to the content of this model file using semantic versioning."
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: "Declare which Brandvoice schema release this file targets."
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: "Set the local namespace used to distinguish identifiers across model scopes."
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: "Add reusable labels that help readers find related records."
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   campaigns:
+    description: "Collect the time-bound initiatives that turn strategy into audience activity."
     type: array
     items:
       $ref: "#/$defs/campaign"
@@ -40,6 +45,7 @@ properties:
     items:
       $ref: "../strategy/messaging.schema.yaml#/$defs/outcome"
   content_assets:
+    description: "List the deliverables used to communicate the planned messages."
     type: array
     items:
       $ref: "#/$defs/content_asset"
@@ -54,17 +60,22 @@ properties:
 
 $defs:
   program:
+    description: "Coordinate related campaigns and editorial work around a sustained objective."
     type: object
     additionalProperties: false
     required: [id, name, objective]
     properties:
       id:
+        description: "Keep the identifier stable while its campaigns or content change."
         $ref: "../metamodel.schema.yaml#/$defs/program_ref"
       name:
+        description: "Choose a name that will still fit across several campaign cycles."
         type: string
       objective:
+        examples:
+          - "Help new members complete their first tool reservation."
         type: string
-        description: "Strategic reason this program exists."
+        description: "Strategic reason this program exists. State the sustained result coordinated campaigns and content should advance."
       primary_idea:
         type: string
         description: "Unifying narrative or organizing idea across campaigns in this program."
@@ -74,43 +85,61 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
         description: "Opportunities this program is designed to capture or educate."
       market_refs:
+        description: "Link the markets in which the program is intended to operate."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
       message_house_refs:
+        description: "Link the message systems that keep the program's communication consistent."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
       campaign_refs:
+        description: "Link campaigns that contribute to this sustained objective."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
       content_pillar_refs:
+        description: "Link recurring themes that support the program across campaigns."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
       owner:
+        description: "Name the person or role accountable for coordinating the program."
         type: string
       status:
+        description: "Record whether the program is in preparation, operation, suspension, or retirement."
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   campaign:
+    description: "Define a time-bound effort with a measurable objective and coordinated communication activity."
     type: object
     additionalProperties: false
     required: [id, name, objective, start_date]
     properties:
       id:
+        description: "Keep this identifier stable when execution details or dates change."
+        examples:
+          - "CMP012"
         $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
       name:
+        description: "Give the campaign a recognizable name for reporting and coordination."
+        examples:
+          - "First Weekend Loan"
         type: string
       program_ref:
         $ref: "../metamodel.schema.yaml#/$defs/program_ref"
         description: "Optional parent program coordinating this campaign."
       objective:
+        description: "State the observable result the campaign is intended to produce."
+        examples:
+          - "Get 50 new members to reserve their first tool by the end of May."
         type: string
       primary_idea:
         type: string
@@ -118,9 +147,14 @@ $defs:
           Central creative or communication idea for the campaign. Rationale:
           integrated campaigns work best when channels orbit one memorable idea.
       stage:
+        description: "Choose the audience stage that best frames the campaign objective."
+        examples:
+          - "activation"
         type: string
         enum: [see, think, do, care, awareness, activation, retention, referral, revenue]
       universal_phases:
+        examples:
+          - ["engaged","committed"]
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
@@ -128,22 +162,27 @@ $defs:
           Normalized journey phases for this campaign. Prefer this over
           the legacy stage enum for cross-schema queries.
       journey_stages:
+        description: "Link the journey stages the campaign is intended to influence."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
       target_audiences:
+        description: "Link the audience segments selected to receive campaign communication."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       target_actors:
+        description: "Link the roles whose behavior the campaign aims to influence."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       context_refs:
+        description: "Link the situations in which the campaign should reach those actors."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/context_ref"
       competitor_refs:
+        description: "Link the alternatives the audience is likely to weigh during this campaign."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
@@ -158,6 +197,7 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
         description: "Opportunities this campaign is intended to activate."
       message_refs:
+        description: "Link the individual messages the team plans to use in campaign materials."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_ref"
@@ -167,20 +207,29 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
         description: "Message houses guiding this campaign."
       channel_refs:
+        description: "Link the touchpoints selected to carry the campaign messages."
+        examples:
+          - ["CHN002"]
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
       action_refs:
+        description: "Link the audience behaviors the campaign asks people to take."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/action_ref"
       outcome_refs:
+        description: "Link the results expected when the targeted audience acts."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
       north_star:
+        description: "Choose the single KPI that best reflects campaign success."
+        examples:
+          - "KPI003"
         $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
       guardrail_metrics:
+        description: "Link measures that would reveal an unacceptable side effect of campaign success."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
@@ -188,7 +237,7 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
-        description: "Content pillars this campaign activates."
+        description: "Content pillars this campaign activates. Link the recurring content themes this campaign uses."
       creative_brief:
         type: object
         additionalProperties: false
@@ -197,6 +246,8 @@ $defs:
           strategic campaign intent should be explicit, not reconstructed from refs.
         properties:
           problem:
+            examples:
+              - "New members often leave without placing a reservation."
             type: string
             description: "Market or buyer problem the campaign responds to."
           audience_insight:
@@ -209,38 +260,50 @@ $defs:
             type: string
             description: "Most important reason the promise is believable."
           call_to_action:
+            examples:
+              - "Reserve a tool for this weekend."
             type: string
             description: "Primary call to action across the campaign."
           constraints:
             type: array
             items:
               type: string
-            description: "Operational, regulatory, or brand constraints."
+            description: "Operational, regulatory, or brand constraints. State limits the creative team should respect when producing assets."
       budget:
         type: object
         additionalProperties: false
         description: "Budget envelope and allocation hints for campaign planning."
         properties:
           currency:
+            examples:
+              - "USD"
             type: string
-            description: "ISO 4217 currency code."
+            description: "ISO 4217 currency code. Use the currency in which the campaign's planned spend is stated."
           total:
+            examples:
+              - 1200
             type: number
             description: "Total planned spend in the stated currency."
           split_hint:
             type: object
             additionalProperties: false
-            description: "Optional channel-bucket allocation guidance."
+            description: "Optional channel-bucket allocation guidance. Describe how planned spend is divided among the media categories."
             properties:
               paid:
+                description: "Record the planned share or amount allocated to paid media."
                 type: number
               owned:
+                description: "Record the planned share or amount allocated to owned media."
                 type: number
               earned:
+                description: "Record the planned share or amount allocated to earned media."
                 type: number
               shared:
+                description: "Record the planned share or amount allocated to shared media."
                 type: number
       milestones:
+        examples:
+          - [{"date":"2026-05-01","name":"Send first reservation email"}]
         type: array
         description: "Key delivery checkpoints for integrated campaign execution."
         items:
@@ -249,35 +312,51 @@ $defs:
           required: [date, name]
           properties:
             date:
+              description: "Set the date on which the team expects to reach this checkpoint."
               type: string
               pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             name:
+              description: "Name the checkpoint by the work or result expected at that point."
               type: string
             description:
+              description: "Explain what the milestone represents in the campaign schedule."
               type: string
       start_date:
+        description: "Record the date planned for the beginning of campaign activity."
+        examples:
+          - "2026-05-01"
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       end_date:
+        description: "Record the date planned for campaign activity to end."
+        examples:
+          - "2026-05-31"
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       status:
+        description: "Record the campaign's current lifecycle state so teams can coordinate execution."
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       blueprint_links:
+        description: "Link Blueprint elements that explain what enables or depends on campaign execution."
         $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   content_asset:
+    description: "Describe an individual deliverable and the communication job it performs."
     type: object
     additionalProperties: false
     required: [id, name, format]
     properties:
       id:
+        description: "Keep this identifier stable when the deliverable is revised or reused."
         $ref: "../metamodel.schema.yaml#/$defs/content_ref"
       name:
+        description: "Name the deliverable so editors can distinguish it from related assets."
         type: string
       program_ref:
         $ref: "../metamodel.schema.yaml#/$defs/program_ref"
@@ -288,17 +367,29 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
         description: "Campaigns this content asset supports. Rationale: content-to-campaign pointer avoids duplicating CNT IDs across campaign entities and naturally handles many-to-many."
       format:
+        description: "Choose the medium that determines how the asset is produced and consumed."
+        examples:
+          - "email"
         type: string
         enum: [post, article, video, email, ad, landing-page, deck, webinar, case-study, tutorial, talk, other]
       channel:
+        description: "Link the touchpoint where the audience is expected to encounter this asset."
         $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
       primary_message:
+        description: "Link the main message the asset is intended to communicate."
+        examples:
+          - "MSG014"
         $ref: "../metamodel.schema.yaml#/$defs/message_ref"
       journey_stage:
+        description: "Link the journey stage for which this deliverable is designed."
         $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
       action:
+        description: "Link the modeled behavior the content invites the audience to perform."
         $ref: "../metamodel.schema.yaml#/$defs/action_ref"
       expected_outcomes:
+        examples:
+          - ["OUT003"]
+        description: "Link the results the asset is expected to help produce."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
@@ -306,8 +397,9 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
-        description: "Target actors for this content."
+        description: "Target actors for this content. Link the roles whose needs and situation shape this asset."
       market_refs:
+        description: "Link the markets for which the asset is intended."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
@@ -315,33 +407,48 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
-        description: "Editorial pillars this asset supports."
+        description: "Editorial pillars this asset supports. Link the recurring editorial themes this asset develops."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tone:
+        description: "Link the tone guidance that applies when writing or recording this asset."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
       cta:
+        description: "Write the instruction the audience will see or hear in the deliverable."
+        examples:
+          - "Check weekend availability"
         type: string
       published_at:
+        description: "Record the date on which the asset became available to its audience."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       status:
+        description: "Record the asset's current lifecycle state so teams know its editorial availability."
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   content_pillar:
+    description: "Frame a recurring editorial theme that can guide multiple deliverables."
     type: object
     additionalProperties: false
     required: [id, name, angle]
     properties:
       id:
+        description: "Keep the identifier stable across the programs and assets that use this theme."
         $ref: "../metamodel.schema.yaml#/$defs/content_pillar_ref"
       name:
+        description: "Name the theme in words editors can recognize when planning content."
+        examples:
+          - "Repair skills for beginners"
         type: string
       angle:
+        examples:
+          - "Show one repair that can be finished with a borrowed tool."
         type: string
         description: >
           Strategic lens or recurring point of view for this pillar. Rationale:
@@ -351,28 +458,36 @@ $defs:
         enum: [awareness, consideration, demand, retention, advocacy, learning, community, partnership, other]
         description: "Strategic intent for this pillar: what outcome is it designed to drive."
       audience_refs:
+        description: "Link the defined audience segments this theme is intended to serve."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       actor_refs:
+        description: "Link the roles whose needs make this theme relevant."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       message_refs:
+        description: "Link the individual messages the theme can develop over time."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_ref"
       message_house_refs:
+        description: "Link the message systems within which the theme should stay coherent."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
       program_refs:
+        description: "Link the ongoing programs that use this theme in their editorial plans."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/program_ref"
       status:
+        description: "Record whether the theme is proposed, in use, paused, or retired."
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"

@@ -1,0 +1,6 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+messages:
+  - id: MSG001
+    title: Core promise
+    core_statement: Validate every shard cleanly

@@ -14,7 +14,7 @@ $defs:
 
   schema_version:
     type: string
-    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1", "1.6.2", "1.7.0", "1.8.0", "1.9.0", "1.9.1", "1.9.2"]
+    enum: ["1.1.0", "1.3.0", "1.4.0", "1.5.0", "1.6.0", "1.6.1", "1.6.2", "1.7.0", "1.8.0", "1.9.0", "1.9.1", "1.9.2", "1.9.3"]
     description: >
       Brandvoice schema version constant for the v1 suite. v1.3.0 includes viewer-oriented empathy,
       SWOT, and VPC enrichments (formerly described under v1.2.0), plus brand_scripts (BSC) for
@@ -58,7 +58,7 @@ $defs:
   brand_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?BRD\\d{3}$"
-    description: "Brand identity reference."
+    description: "Brand identity reference. Identify the brand that owns the strategy or assets being modeled."
 
   brand_script_ref:
     type: string
@@ -70,202 +70,202 @@ $defs:
   audience_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?AUD\\d{3}$"
-    description: "Audience segment reference."
+    description: "Audience segment reference. Identify the audience segment chosen for a communication decision."
 
   persona_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?PER\\d{3}$"
-    description: "Persona reference."
+    description: "Persona reference. Identify the research-based profile used to represent a recurring audience pattern."
 
   job_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?JOB\\d{3}$"
-    description: "Jobs-to-be-done reference."
+    description: "Jobs-to-be-done reference. Identify the progress someone seeks in a particular situation."
 
   value_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?VAL\\d{3}$"
-    description: "Value proposition reference."
+    description: "Value proposition reference. Identify the promise of value that addresses the linked audience needs."
 
   position_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?POS\\d{3}$"
-    description: "Positioning reference."
+    description: "Positioning reference. Identify the strategic positioning used to frame the brand against alternatives."
 
   message_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MSG\\d{3}$"
-    description: "Message reference."
+    description: "Message reference. Identify the individual message selected to convey a claim."
 
   proof_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?PRF\\d{3}$"
-    description: "Proof point reference."
+    description: "Proof point reference. Identify the proof point readers can consult to substantiate a claim."
 
   tone_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?TON\\d{3}$"
-    description: "Tone guideline reference."
+    description: "Tone guideline reference. Identify the guidance used to adapt expression to the audience or situation."
 
   verbal_guideline_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?VRB\\d{3}$"
-    description: "Verbal guideline reference."
+    description: "Verbal guideline reference. Identify the reusable writing rule relevant to this expression."
 
   asset_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?AST\\d{3}$"
-    description: "Distinctive brand asset reference."
+    description: "Distinctive brand asset reference. Identify the distinctive element used to make the brand recognizable."
 
   archetype_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?ARC\\d{3}$"
-    description: "Brand archetype reference."
+    description: "Brand archetype reference. Identify the archetype guiding recognizable brand behavior and expression."
 
   model_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?BMD\\d{3}$"
-    description: "Business model strategy element reference."
+    description: "Business model strategy element reference. Identify the business model element that explains how value is created or captured."
 
   channel_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CHN\\d{3}$"
-    description: "Channel reference."
+    description: "Channel reference. Identify the touchpoint through which an audience encounters the brand."
 
   campaign_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CMP\\d{3}$"
-    description: "Campaign reference."
+    description: "Campaign reference. Identify the campaign coordinating activity around a defined objective."
 
   content_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CNT\\d{3}$"
-    description: "Content asset reference."
+    description: "Content asset reference. Identify the deliverable that carries a message in a specified format."
 
   actor_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?ACT\\d{3}$"
-    description: "Actor reference."
+    description: "Actor reference. Identify the role whose behavior or needs matter to the record."
 
   need_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?NED\\d{3}$"
-    description: "Need reference."
+    description: "Need reference. Identify the problem or desired outcome that motivates the actor."
 
   offering_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?OFF\\d{3}$"
-    description: "Offering reference."
+    description: "Offering reference. Identify the product or service intended to meet a need."
 
   journey_stage_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?JSG\\d{3}$"
-    description: "Journey stage reference."
+    description: "Journey stage reference. Identify the step in the audience experience where the activity belongs."
 
   action_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?ACN\\d{3}$"
-    description: "Action reference."
+    description: "Action reference. Identify the behavior an audience member is invited or expected to take."
 
   outcome_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?OUT\\d{3}$"
-    description: "Outcome reference."
+    description: "Outcome reference. Identify the intended result associated with an action or activity."
 
   competitor_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CPR\\d{3}$"
-    description: "Competitor reference."
+    description: "Competitor reference. Identify the alternative buyers might choose in the decision being modeled."
 
   context_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CTX\\d{3}$"
-    description: "Context reference."
+    description: "Context reference. Identify the situation that shapes an actor's needs or choices."
 
   decision_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?DEC\\d{3}$"
-    description: "Governance decision reference."
+    description: "Governance decision reference. Identify the decision record containing the rationale for a choice."
 
   evidence_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?EVD\\d{3}$"
-    description: "Evidence record reference."
+    description: "Evidence record reference. Identify the observation or source record that supports or challenges a claim."
 
   test_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?TST\\d{3}$"
-    description: "Experiment or test reference."
+    description: "Experiment or test reference. Identify the experiment used to check an assumption about the strategy."
 
   metric_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MET\\d{3}$"
-    description: "Metric reference."
+    description: "Metric reference. Identify the measure used to track a specific observable quantity."
 
   kpi_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?KPI\\d{3}$"
-    description: "KPI reference."
+    description: "KPI reference. Identify the indicator used to judge progress toward a stated objective."
 
   risk_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?RSK\\d{3}$"
-    description: "Risk reference."
+    description: "Risk reference. Identify the uncertain event or condition that could affect the strategy."
 
   migration_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MIG\\d{3}$"
-    description: "Migration reference."
+    description: "Migration reference. Identify the change record that explains how the model evolved."
 
   personal_brand_profile_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?PBP\\d{3}$"
-    description: "Personal brand profile reference."
+    description: "Personal brand profile reference. Identify the profile that guides how an individual presents their brand."
 
   message_house_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MHS\\d{3}$"
-    description: "Message house reference."
+    description: "Message house reference. Identify the framework that organizes a central message and its supporting pillars."
 
   message_pillar_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MPL\\d{3}$"
-    description: "Message pillar reference."
+    description: "Message pillar reference. Identify a supporting argument within its parent message house."
 
   program_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?PRG\\d{3}$"
-    description: "Activation program reference."
+    description: "Activation program reference. Identify the sustained initiative that coordinates related campaigns and content."
 
   content_pillar_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?CPL\\d{3}$"
-    description: "Content pillar reference."
+    description: "Content pillar reference. Identify the recurring editorial theme to which a content asset contributes."
 
   market_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MKT\\d{3}$"
-    description: "Market reference."
+    description: "Market reference. Identify the defined market whose buyers and boundaries frame the analysis."
 
   market_force_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?MFR\\d{3}$"
-    description: "Market force reference."
+    description: "Market force reference. Identify the external change shaping demand, competition, or market conditions."
 
   opportunity_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?OPP\\d{3}$"
-    description: "Opportunity reference."
+    description: "Opportunity reference. Identify the candidate opening whose demand and strategic fit are being assessed."
 
   position_map_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?PMP\\d{3}$"
-    description: "Position map reference."
+    description: "Position map reference. Identify the comparison map that defines the axes used to place alternatives."
 
   white_space_ref:
     type: string
     pattern: "^([a-z][a-z0-9-]*\\.)?WSP\\d{3}$"
-    description: "Position-map white space reference."
+    description: "Position-map white space reference. Identify the region within a position map where demand may be underserved."
 
   priority_stream_ref:
     type: string
@@ -292,6 +292,8 @@ $defs:
     required: [$ref]
     properties:
       $ref:
+        examples:
+          - "market/landscape.yaml"
         type: string
         description: "Relative path to the plane content file (e.g., 'market/landscape.yaml')."
     description: >
@@ -320,6 +322,9 @@ $defs:
     description: "Optional links to blueprint entities for integration."
     properties:
       entities:
+        description: "List the Blueprint identifiers tied to this Brandvoice element."
+        examples:
+          - ["tool-library.CAP004"]
         type: array
         items:
           $ref: "#/$defs/blueprint_ref"
@@ -343,13 +348,20 @@ $defs:
       persona. Intensity is optional and supports viewer prioritization.
     properties:
       statement:
+        examples:
+          - "I worry that the tool will be unavailable when I need it."
         type: string
-        description: "Empathy observation or quote."
+        description: "Empathy observation or quote. Capture one concrete observation in the relevant quadrant."
       intensity:
+        examples:
+          - "high"
         type: string
         enum: [low, medium, high, critical]
         description: "Optional signal strength for visualization or prioritization."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
+        examples:
+          - ["EVD014"]
         $ref: "#/$defs/evidence_refs"
 
   empathy_map:
@@ -362,30 +374,39 @@ $defs:
       pains capture current frustrations in the persona's world.
     properties:
       thinks:
+        description: "Record the questions or assumptions that occupy the persona during the experience."
+        examples:
+          - [{"statement":"Will the drill be available on Saturday morning?"}]
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       feels:
+        description: "Capture emotions the persona experiences in the relevant situation."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       sees:
+        description: "Record the options, signals, or surroundings the persona notices."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       hears:
+        description: "Capture what other people or channels tell the persona."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       says_and_does:
+        description: "Record what the persona expresses or does in observable behavior."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       pains:
+        description: "Capture current frustrations that make the experience harder for the persona."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
       gains:
+        description: "Capture the value the persona receives when the solution works for them."
         type: array
         items:
           $ref: "#/$defs/empathy_map_item"
@@ -397,8 +418,10 @@ $defs:
     description: "Single SWOT statement for strengths or weaknesses."
     properties:
       statement:
+        description: "Describe one internal condition that affects the brand strategy."
         type: string
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "#/$defs/evidence_refs"
 
   swot_opportunity_item:
@@ -408,10 +431,13 @@ $defs:
     description: "SWOT opportunity statement with optional canonical opportunity linkage."
     properties:
       statement:
+        description: "Describe an external development that the brand could act on."
         type: string
       opportunity_ref:
+        description: "Link the detailed opportunity record if the model already tracks it."
         $ref: "#/$defs/opportunity_ref"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "#/$defs/evidence_refs"
 
   swot_threat_item:
@@ -421,10 +447,13 @@ $defs:
     description: "SWOT threat statement with optional canonical risk linkage."
     properties:
       statement:
+        description: "Describe an external development that could harm the brand strategy."
         type: string
       risk_ref:
+        description: "Link the risk record that tracks the exposure described here."
         $ref: "#/$defs/risk_ref"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "#/$defs/evidence_refs"
 
   swot:
@@ -435,18 +464,22 @@ $defs:
       factors; opportunities and threats describe external factors.
     properties:
       strengths:
+        description: "Record capabilities or resources the brand can draw on."
         type: array
         items:
           $ref: "#/$defs/swot_item"
       weaknesses:
+        description: "Record internal limitations that make strategic work harder."
         type: array
         items:
           $ref: "#/$defs/swot_item"
       opportunities:
+        description: "Record favorable external conditions that could support a strategic move."
         type: array
         items:
           $ref: "#/$defs/swot_opportunity_item"
       threats:
+        description: "Record external conditions that could undermine the current strategy."
         type: array
         items:
           $ref: "#/$defs/swot_threat_item"
@@ -460,10 +493,15 @@ $defs:
       with an explanation of how the pain is reduced.
     properties:
       need_ref:
+        description: "Identify the need behind the frustration this mechanism reduces."
         $ref: "#/$defs/need_ref"
       mechanism:
+        description: "Explain which step becomes easier and how the offering makes that happen."
+        examples:
+          - "Showing availability before checkout avoids trips for tools already on loan."
         type: string
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "#/$defs/evidence_refs"
 
   vpc_gain_creator:
@@ -475,10 +513,15 @@ $defs:
       with an explanation of how the gain is created.
     properties:
       need_ref:
+        description: "Identify the need addressed by the added value this mechanism creates."
         $ref: "#/$defs/need_ref"
       mechanism:
+        description: "Explain what useful result the offering makes possible for the actor."
+        examples:
+          - "A saved project list lets borrowers plan supplies for their next visit."
         type: string
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "#/$defs/evidence_refs"
 
   impact_links:
@@ -487,78 +530,97 @@ $defs:
     description: "Cross-entity impact references for traceability."
     properties:
       actors:
+        description: "List the roles whose behavior or responsibilities may change."
         type: array
         items:
           $ref: "#/$defs/actor_ref"
       needs:
+        description: "List the needs whose importance or fulfillment may change."
         type: array
         items:
           $ref: "#/$defs/need_ref"
       offerings:
+        description: "List the products or services whose fit or delivery may change."
         type: array
         items:
           $ref: "#/$defs/offering_ref"
       channels:
+        description: "List the touchpoints where the audience experience may change."
         type: array
         items:
           $ref: "#/$defs/channel_ref"
       journey_stages:
+        description: "List the points in the audience journey affected by the change."
         type: array
         items:
           $ref: "#/$defs/journey_stage_ref"
       actions:
+        description: "List the audience behaviors encouraged or affected by the change."
         type: array
         items:
           $ref: "#/$defs/action_ref"
       outcomes:
+        description: "List the expected results that may need to be reassessed."
         type: array
         items:
           $ref: "#/$defs/outcome_ref"
       competitors:
+        description: "List the alternatives whose relevance to buyer decisions may change."
         type: array
         items:
           $ref: "#/$defs/competitor_ref"
       contexts:
+        description: "List the situations that should be revisited when assessing the change."
         type: array
         items:
           $ref: "#/$defs/context_ref"
       markets:
+        description: "List the markets where assumptions or responses may need revision."
         type: array
         items:
           $ref: "#/$defs/market_ref"
       audiences:
+        description: "List the audience segments affected by the change in strategy."
         type: array
         items:
           $ref: "#/$defs/audience_ref"
       values:
+        description: "List the value propositions whose relevance or credibility may change."
         type: array
         items:
           $ref: "#/$defs/value_ref"
       positioning:
+        description: "List the strategic positions that may need re-evaluation."
         type: array
         items:
           $ref: "#/$defs/position_ref"
       messages:
+        description: "List the individual messages that may need to be revised."
         type: array
         items:
           $ref: "#/$defs/message_ref"
       campaigns:
+        description: "List the campaigns that may need an execution adjustment."
         type: array
         items:
           $ref: "#/$defs/campaign_ref"
       kpis:
+        description: "List the indicators whose interpretation or targets may need review."
         type: array
         items:
           $ref: "#/$defs/kpi_ref"
       evidence:
+        description: "List the evidence records relevant to reviewing the claimed impact."
         type: array
         items:
           $ref: "#/$defs/evidence_ref"
       verbal_guidelines:
+        description: "List the writing conventions that may need an update."
         type: array
         items:
           $ref: "#/$defs/verbal_guideline_ref"
       ecosystem_players:
+        description: "List the partners or peers whose relationship may be affected."
         type: array
         items:
           $ref: "#/$defs/ecosystem_player_ref"
@@ -572,7 +634,7 @@ $defs:
   lifecycle_status:
     type: string
     enum: [draft, active, paused, deprecated, archived]
-    description: "Lifecycle status of an entity."
+    description: "Lifecycle status of an entity. Indicate whether the record is in preparation, use, suspension, or retirement."
 
   evidence_level:
     type: string
@@ -637,6 +699,8 @@ $defs:
       any particular region). Added in schema v1.4.0.
     properties:
       level:
+        examples:
+          - "country"
         type: string
         enum: [local, country, europe, global]
         description: >
@@ -645,6 +709,8 @@ $defs:
           europe  - EU / EEA / UK / wider Europe.
           global  - worldwide.
       countries:
+        examples:
+          - ["DE","NL"]
         type: array
         items:
           type: string
@@ -657,12 +723,16 @@ $defs:
           narrow a `europe`-level record to the 2-3 countries it really
           covers).
       region_label:
+        examples:
+          - "Northern Europe"
         type: string
         description: >
           Informal human label for the scope: "DACH", "Nordics",
           "Pomorze", "Benelux", etc. Pairs well with `local` and
           `europe` to give a human-readable chip in the viewer.
       notes:
+        examples:
+          - "The survey covered members in the two countries listed."
         type: string
         description: "Rationale or caveats for the geographic tag."
     allOf:

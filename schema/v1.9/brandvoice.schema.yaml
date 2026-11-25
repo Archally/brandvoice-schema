@@ -15,12 +15,18 @@ required:
   - name
 properties:
   version:
+    examples:
+      - "2.1.0"
     $ref: "metamodel.schema.yaml#/$defs/semver"
-    description: "Brandvoice model content version."
+    description: "Brandvoice model content version. Increment this when the modeled content changes."
   schemaVersion:
+    examples:
+      - "1.9.3"
     $ref: "metamodel.schema.yaml#/$defs/schema_version"
     description: "Brandvoice schema version. Omit to assume latest."
   name:
+    examples:
+      - "Community Tool Library"
     type: string
     description: "Name of the modeled brand/system."
   description:
@@ -30,6 +36,9 @@ properties:
     $ref: "metamodel.schema.yaml#/$defs/context_prefix"
     description: "Optional modeling scope for portfolios or regional variants."
   tags:
+    description: "Add reusable labels that help readers find related records."
+    examples:
+      - ["tool-sharing","member-onboarding"]
     $ref: "metamodel.schema.yaml#/$defs/tags"
 
   # ── Plane slot composition pattern ──────────────────────────────────────
@@ -49,18 +58,24 @@ properties:
       players - the cooperation-first counterpart to competition.
     properties:
       landscape:
+        description: "Choose this slot for market boundaries, sizing assumptions, segments, and forces."
+        examples:
+          - {"$ref":"market/landscape.yaml"}
         oneOf:
           - $ref: "market/landscape.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       competition:
+        description: "Use this layer for alternatives buyers weigh, including workarounds and the status quo."
         oneOf:
           - $ref: "market/competition.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       opportunities:
+        description: "Use this layer for opportunities to test and for the maps that frame them."
         oneOf:
           - $ref: "market/opportunities.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       ecosystem:
+        description: "Place prospective partners and routes to cooperation in this layer."
         oneOf:
           - $ref: "market/ecosystem.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
@@ -82,18 +97,22 @@ properties:
       message systems.
     properties:
       brand_core:
+        description: "Use this layer for the brand identity and the principles governing its expression."
         oneOf:
           - $ref: "strategy/brand-core.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       market_product:
+        description: "Use this layer for audience needs, offerings, and their strategic fit."
         oneOf:
           - $ref: "strategy/market-product.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       messaging:
+        description: "Use this layer for the claims and messages that express the positioning."
         oneOf:
           - $ref: "strategy/messaging.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       visual_identity:
+        description: "Use this layer for the assets and rules that maintain consistent visual expression."
         oneOf:
           - $ref: "strategy/visual-identity.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
@@ -108,10 +127,14 @@ properties:
       communication systems to stay aligned with strategy.
     properties:
       channels:
+        description: "Use this layer to define where audiences encounter the brand and why."
+        examples:
+          - {"$ref":"activation/channels.yaml"}
         oneOf:
           - $ref: "activation/channels.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       campaigns:
+        description: "Use this layer for programs, time-bound campaigns, and the assets that support them."
         oneOf:
           - $ref: "activation/campaigns.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
@@ -123,18 +146,22 @@ properties:
     description: "Evidence, experimentation, and decision traceability for continuous evolution."
     properties:
       measurement:
+        description: "Use this layer for success indicators and the measures used to track them."
         oneOf:
           - $ref: "governance/measurement.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       decisions:
+        description: "Use this layer for choices whose rationale future reviewers should be able to recover."
         oneOf:
           - $ref: "governance/decisions.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       evidence:
+        description: "Use this layer for observations and sources that other model records can cite."
         oneOf:
           - $ref: "governance/evidence.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
       experiments:
+        description: "Use this layer for planned and completed tests of strategic assumptions."
         oneOf:
           - $ref: "governance/experiments.schema.yaml"
           - $ref: "metamodel.schema.yaml#/$defs/file_ref_placeholder"
@@ -154,10 +181,18 @@ properties:
           additionalProperties: false
           properties:
             file:
+              examples:
+                - "migrations/2026-04-15-member-onboarding.yaml"
               type: string
-              description: "Relative path to migration file."
+              description: "Relative path to migration file. Resolve this path from the directory of the root model file."
 
   profiles:
+    examples:
+      - - name: Jobs to be Done
+          category: research
+          status: active
+          applies_to:
+            - strategy.market_product
     type: array
     description: >
       Optional framework overlays/patterns (for example SB7, JTBD, STP, AARRR,
@@ -167,14 +202,16 @@ properties:
 
 $defs:
   profile:
+    description: "Describe a framework overlay that authors can adopt for selected parts of the model."
     type: object
     additionalProperties: false
     required: [name]
     properties:
       name:
         type: string
-        description: "Profile name."
+        description: "Profile name. Use the framework label the authoring team will recognize."
       category:
+        description: "Choose the main authoring activity this framework helps the team carry out."
         type: string
         enum:
           - messaging
@@ -184,9 +221,11 @@ $defs:
           - planning
           - measurement
       status:
+        description: "Show whether authors are evaluating, using, or retiring this overlay."
         type: string
         enum: [draft, active, deprecated]
       description:
+        description: "Explain what decisions the framework guides and how the team applies it."
         type: string
       applies_to:
         type: array

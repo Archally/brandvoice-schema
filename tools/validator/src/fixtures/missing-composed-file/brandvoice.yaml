@@ -1,0 +1,9 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: missing composed file fixture
+strategy:
+  brand_core:
+    $ref: "strategy/brand-core.yaml"
+governance:
+  evidence:
+    $ref: "governance/evidence.yaml"

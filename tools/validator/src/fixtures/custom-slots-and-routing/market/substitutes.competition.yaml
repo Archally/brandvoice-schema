@@ -1,0 +1,7 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+competitors:
+  - id: CPR001
+    name: Spreadsheet workaround
+    type: indirect
+    growth_trajectory: flat

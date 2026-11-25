@@ -1,0 +1,16 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: schema-aware typed refs fixture
+strategy:
+  market_product:
+    $ref: "strategy/market-product.yaml"
+  messaging:
+    $ref: "strategy/messaging.yaml"
+activation:
+  channels:
+    $ref: "activation/channels.yaml"
+  campaigns:
+    $ref: "activation/campaigns.yaml"
+governance:
+  measurement:
+    $ref: "governance/measurement.yaml"

@@ -1,0 +1,6 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+personas:
+  - id: PER001
+    name: Systems lead
+    buying_psychology: Risk-averse buyer

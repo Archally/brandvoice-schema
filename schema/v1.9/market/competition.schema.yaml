@@ -12,14 +12,20 @@ required:
   - version
 properties:
   version:
+    description: "Track changes to the content of this model file using semantic versioning."
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: "Declare which Brandvoice schema release this file targets."
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: "Set the local namespace used to distinguish identifiers across model scopes."
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: "Add reusable labels that help readers find related records."
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   competitors:
+    examples:
+      - [{"id":"CPR001","name":"Borrowing from neighbors","type":"substitute"}]
     type: array
     description: >
       Extended competitor profiles. Uses the same CPR### IDs as
@@ -30,11 +36,13 @@ properties:
 
 $defs:
   competitor_profile:
+    description: "Record an alternative buyers weigh and why it wins or loses in their situation."
     type: object
     additionalProperties: false
     required: [id, name, type]
     properties:
       id:
+        description: "Keep this identifier stable when the alternative changes its name or positioning."
         $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
       name:
         type: string
@@ -43,6 +51,8 @@ $defs:
           'Manual spreadsheet tracking', 'Hiring a freelance designer',
           'Internal team (status quo)'.
       type:
+        examples:
+          - "substitute"
         type: string
         enum: [direct, indirect, substitute, status-quo, potential-entrant]
         description: >
@@ -53,10 +63,14 @@ $defs:
 
       description:
         type: string
-        description: "Brief profile summary."
+        description: "Brief profile summary. Explain when buyers consider this alternative and what it helps them accomplish."
       website:
+        description: "Link the public page a reviewer can use to identify the offering."
+        examples:
+          - "https://tool-hire.example/weekly-rentals"
         type: string
       founded:
+        description: "Record the founding year when it is known and relevant to the profile."
         type: string
         pattern: "^\\d{4}$"
       funding:
@@ -72,6 +86,9 @@ $defs:
         type: string
         description: "User base estimate (e.g., '50K+ teams', '2M registered users')."
       growth_trajectory:
+        description: "Classify the direction and pace of growth using the signals available to you."
+        examples:
+          - "growing"
         type: string
         enum: [declining, flat, growing, fast-growing, hyper-growth, unknown]
 
@@ -79,13 +96,21 @@ $defs:
         type: array
         items:
           type: string
-        description: "Core feature capabilities."
+        description: "Core feature capabilities. List capabilities buyers are likely to evaluate when comparing their options."
       differentiators:
         type: array
         items:
           type: string
         description: "What makes them stand out vs. other competitors."
       pricing:
+        description: "Summarize what buyers give up or pay and how the competitor charges."
+        examples:
+          - model: usage-based
+            currency: USD
+            tiers:
+              - name: Weekend rental
+                price: 24 USD per weekend
+                price_numeric: 24
         $ref: "#/$defs/competitor_pricing"
 
       target_actors:
@@ -94,11 +119,16 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: "Actor types this competitor primarily targets."
       target_markets:
+        description: "Link the defined markets in which this alternative competes for demand."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
 
       need_fit:
+        examples:
+          - - need: NED004
+              fulfillment: poorly-met
+              how: Daytime pickup serves buyers who can leave work during opening hours.
         type: array
         description: >
           How well this competitor addresses specific needs. This is the core
@@ -108,12 +138,13 @@ $defs:
           $ref: "#/$defs/need_fit_assessment"
 
       strengths:
+        description: "Describe advantages buyers can experience or observe when using this alternative."
         type: array
         items:
           type: string
       weaknesses:
         type: array
-        description: "Competitor weaknesses and exploitable gaps."
+        description: "Competitor weaknesses and exploitable gaps. Capture where buyers experience tradeoffs, friction, or missing capabilities."
         items:
           oneOf:
             - type: string
@@ -142,6 +173,8 @@ $defs:
           'organic habit', 'word of mouth', 'necessity', 'employer mandated'.
           For products: 'freemium', 'sales-led', 'PLG'.
       switching_cost:
+        examples:
+          - "low"
         type: string
         enum: [none, low, moderate, high, prohibitive]
         description: "Cost (time, money, effort) to switch away from this competitor."
@@ -185,6 +218,7 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
         description: "Needs this competitor addresses (backward compat with lightweight version)."
       position_map_refs:
+        description: "Link maps where readers can compare this alternative against others on shared axes."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
@@ -206,6 +240,7 @@ $defs:
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
         description: "When this profile was last validated."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       geo_scope:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
@@ -214,14 +249,17 @@ $defs:
           distinguish a global marketplace from a country-specific
           substitute. See metamodel.geo_scope. Added in v1.4.0.
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   competitor_pricing:
     type: object
     additionalProperties: false
-    description: "Competitor pricing model and tiers."
+    description: "Competitor pricing model and tiers. Document the charging basis and the date on which the terms were observed."
     properties:
       model:
+        examples:
+          - "usage-based"
         type: string
         enum:
           - free
@@ -242,24 +280,32 @@ $defs:
           'enterprise' when pricing is negotiated portfolio-wide and not
           represented by public SKU tiers.
       currency:
+        examples:
+          - "USD"
         type: string
         description: "ISO 4217 code (e.g., 'USD'). Omit for non-monetary."
       tiers:
+        description: "List the packages or rate bands buyers can actually choose among."
         type: array
         items:
           $ref: "#/$defs/pricing_tier"
       non_monetary_cost:
+        examples:
+          - "Borrowers coordinate pickup and return directly with the lender."
         type: string
         description: >
           For substitutes: the real cost in non-monetary terms.
           E.g., 'Avg. 8 hours/week of manual work', 'Full-time hire at $65K/yr'.
       observed_at:
+        description: "Date the pricing observation so reviewers can assess how current the terms are."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
 
   pricing_tier:
+    description: "Describe a purchasable plan and the conditions attached to its price."
     type: object
     additionalProperties: false
     required: [name]
@@ -274,6 +320,9 @@ $defs:
         type: number
         description: "Machine-readable monthly price per unit."
       billing_period:
+        description: "Choose the interval or arrangement that governs when buyers pay."
+        examples:
+          - "monthly"
         type: string
         enum: [monthly, annual, one-time, custom]
       includes:
@@ -291,14 +340,19 @@ $defs:
         description: "Notable restrictions (e.g., '5 projects max', 'no API access')."
 
   need_fit_assessment:
+    description: "Assess how well this alternative serves a specific need for the relevant actors."
     type: object
     additionalProperties: false
     required: [need, fulfillment]
     properties:
       need:
+        examples:
+          - "NED004"
         $ref: "../metamodel.schema.yaml#/$defs/need_ref"
-        description: "The need being assessed."
+        description: "The need being assessed. Choose the need against which you are assessing this alternative."
       fulfillment:
+        examples:
+          - "poorly-met"
         $ref: "../metamodel.schema.yaml#/$defs/fulfillment_level"
         description: "How well this competitor serves this need."
       how:
@@ -322,20 +376,26 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: "Which actor types they serve well for this need (may not be all)."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       observed_at:
+        description: "Record when the fit assessment was made or last checked against evidence."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
 
   competitive_move:
+    description: "Record a dated competitor action and explain whether it changes your strategic choices."
     type: object
     additionalProperties: false
     required: [date, move_type, summary]
     properties:
       date:
+        description: "Use the date the competitive move occurred or was announced."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       move_type:
+        examples:
+          - "pricing-change"
         type: string
         enum:
           - product-launch
@@ -351,10 +411,12 @@ $defs:
           - messaging-change
           - regulatory-response
           - other
-        description: "Category of competitive action."
+        description: "Category of competitive action. Choose the category that best describes what changed in the market."
       summary:
+        examples:
+          - "Weekend rentals now include evening pickup at no extra charge."
         type: string
-        description: "What happened."
+        description: "What happened. State the observable change in terms reviewers can verify."
       impact_assessment:
         type: string
         description: "How this move affects our competitive position."
@@ -365,13 +427,15 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
-        description: "Needs affected by this move."
+        description: "Needs affected by this move. Link the needs whose fulfillment or importance may change after this move."
       affected_opportunities:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
         description: "Opportunities threatened or opened by this move."
       requires_response:
+        examples:
+          - false
         type: boolean
         description: "Whether this move requires a strategic response from us."
       response_ref:
@@ -381,7 +445,9 @@ $defs:
         type: string
         description: "Where this was observed (e.g., 'press release', 'Product Hunt', 'customer report')."
       observed_at:
+        description: "Record when the team observed or verified this move."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

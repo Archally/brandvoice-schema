@@ -10,29 +10,42 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   evidence:
+    description: Collect traceable observations and sources so claims can be reviewed.
     type: array
     items:
       $ref: "#/$defs/evidence_record"
 
 $defs:
   evidence_record:
+    description: >-
+      Capture what a source shows, how it was obtained, and which claims it bears on.
     type: object
     additionalProperties: false
     required: [id, title, type, date]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
       title:
+        description: >-
+          Name the observation or source so reviewers can identify it in citations.
         type: string
       type:
+        examples:
+          - "interview"
         type: string
         enum:
           - assumption
@@ -65,12 +78,19 @@ $defs:
           author taxonomy; a future curation pass may consolidate the
           research/* family.
       date:
+        description: Record when the finding was observed or the source was published.
+        examples:
+          - "2026-02-12"
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       source:
+        examples:
+          - "Volunteer coordinator interviews from the winter repair scheduling pilot"
         type: string
         description: "Human-readable source label for the evidence artifact or origin."
       source_type:
+        examples:
+          - "first-party"
         type: string
         enum:
           - first-party
@@ -108,6 +128,8 @@ $defs:
           intent, a future curation pass may split method (type) from origin
           (source_type).
       source_url:
+        examples:
+          - "https://example.org/research/repair-scheduling"
         type: string
         pattern: "^[a-z]+://.+$"
         description: "Canonical URL for the source when one exists."
@@ -115,12 +137,28 @@ $defs:
         type: string
         description: "Organization, platform, or person that published the source."
       method:
+        description: >-
+          Describe how observations were collected or how the source produced its
+          findings.
+        examples:
+          - "Semi-structured interviews about the most recent volunteer cancellation."
         type: string
       sample_size:
+        description: >-
+          Record the number of people or observations underlying the finding when
+          known.
+        examples:
+          - 8
         type: integer
       summary:
+        description: >-
+          State the relevant finding and any qualification reviewers need to interpret
+          it.
+        examples:
+          - "Six of eight coordinators recalled discovering an open shift after the final reminder."
         type: string
       confidence:
+        description: State the evidence level warranted by the source and method.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       supports:
         type: array
@@ -148,10 +186,12 @@ $defs:
           - ["EVD042"]
           - ["market.EVD042", "market.EVD051"]
       related_experiments:
+        description: Link experiments that produced or used this evidence record.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/test_ref"
       related_decisions:
+        description: Link decisions whose rationale draws on this evidence.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/decision_ref"
@@ -162,4 +202,6 @@ $defs:
           metamodel.geo_scope. Added in v1.4.0 - when omitted, viewers
           treat the record as geographically untagged.
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

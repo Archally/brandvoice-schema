@@ -35,14 +35,23 @@ required:
   - version
 properties:
   version:
+    description: "Track changes to the content of this model file using semantic versioning."
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: "Declare which Brandvoice schema release this file targets."
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: "Set the local namespace used to distinguish identifiers across model scopes."
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: "Add reusable labels that help readers find related records."
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   ecosystem_players:
+    examples:
+      - - id: EPL001
+          name: Neighborhood Repair Group
+          type: community
+          relationship_type: community-ally
     type: array
     description: >
       Cooperation-oriented profiles of people, organizations, communities,
@@ -63,6 +72,9 @@ $defs:
       the coopetition case where an entry is simultaneously a competitor.
     properties:
       id:
+        description: "Keep this identifier stable as the relationship progresses or changes owners."
+        examples:
+          - "EPL001"
         $ref: "../metamodel.schema.yaml#/$defs/ecosystem_player_ref"
       name:
         type: string
@@ -70,6 +82,8 @@ $defs:
           Human or organization name (e.g., "Sławomir Sobótka / Bottega IT Minds",
           "Architecture Weekly", "DevTalk podcast").
       type:
+        examples:
+          - "community"
         type: string
         enum: [individual, organization, community, platform, publication, event]
         description: >
@@ -78,6 +92,8 @@ $defs:
           distribution or content platform; publication = newsletter/blog/book;
           event = recurring conference, meetup, or summit.
       relationship_type:
+        examples:
+          - "community-ally"
         type: string
         enum:
           - referral-partner
@@ -102,6 +118,8 @@ $defs:
           content creator in the same domain; podcast-host = guest opportunity;
           mentor = source of expertise or introductions; other = free-form.
       cooperation_potential:
+        examples:
+          - "Run a monthly repair clinic where members can try tools before borrowing."
         type: string
         description: >
           Narrative description of why this relationship matters and what
@@ -115,6 +133,9 @@ $defs:
         type: string
         description: "Brief profile summary of who they are and what they do."
       website:
+        description: "Link a public page where reviewers can confirm this player's activities."
+        examples:
+          - "https://repair-group.example/events"
         type: string
         pattern: "^[a-z]+://.+$"
       also_competitor_ref:
@@ -150,6 +171,8 @@ $defs:
           Why this player is worth cooperating with - reputation, reach,
           credibility, audience, expertise, or unique assets.
       collaboration_ideas:
+        examples:
+          - ["Co-host a beginner repair clinic at the library."]
         type: array
         items:
           type: string
@@ -159,6 +182,8 @@ $defs:
           separates strategic *intent* (relationship_type) from tactical *next
           actions* the team can actually book.
       status:
+        examples:
+          - "prospective"
         type: string
         enum: [prospective, active, engaged, paused, lapsed]
         description: >
@@ -187,6 +212,8 @@ $defs:
           Use to distinguish a globally-reachable distribution channel from a
           country-specific referral partner. See metamodel.geo_scope.
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"

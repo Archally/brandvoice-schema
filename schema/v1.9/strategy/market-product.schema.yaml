@@ -12,12 +12,16 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   actors:
     type: array
@@ -58,18 +62,24 @@ properties:
     items:
       $ref: "#/$defs/audience"
   personas:
+    description: >-
+      Collect evidence-backed or hypothetical portraits that guide offer and
+      communication choices.
     type: array
     items:
       $ref: "#/$defs/persona"
   jobs:
+    description: Record the progress people seek under circumstances that make them act.
     type: array
     items:
       $ref: "#/$defs/job"
   value_propositions:
+    description: Connect each offer's value to the pains and gains of its audience.
     type: array
     items:
       $ref: "#/$defs/value_proposition"
   positioning:
+    description: Record how the brand wants buyers to compare it with alternatives.
     type: array
     items:
       $ref: "#/$defs/positioning"
@@ -81,55 +91,98 @@ properties:
 
 $defs:
   actor:
+    description: >-
+      Describe a participant in buying, using, influencing, or delivering an offering.
     type: object
     additionalProperties: false
     required: [id, name, role]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       name:
+        description: >-
+          Use a recognizable role label that can apply across real participants.
+        examples:
+          - "Volunteer coordinator"
         type: string
       description:
         type: string
         description: "Freeform context about who this actor is and why they matter."
       role:
+        description: Classify this participant by their part in adoption or delivery.
+        examples:
+          - "user"
         type: string
         enum: [buyer, user, influencer, champion, approver, gatekeeper, partner, internal]
       characteristics:
+        description: >-
+          Record observable attributes that explain how this participant behaves or
+          decides.
+        examples:
+          - - Coordinates shifts with volunteers who work different hours.
         type: array
         items:
           type: string
       priority:
+        description: >-
+          Rank the actor's relevance to the strategy before allocating attention.
         $ref: "../metamodel.schema.yaml#/$defs/priority"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   need:
+    description: >-
+      State the progress or problem that creates demand and record how it is served
+      today.
     type: object
     additionalProperties: false
     required: [id, statement, actors]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/need_ref"
       statement:
+        description: >-
+          State the problem in terms a person experiencing it would recognize.
+        examples:
+          - "Confirm every repair station has a volunteer before opening time."
         type: string
       actors:
+        description: Link the participants who experience or express this need.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       need_type:
+        description: Classify the main kind of progress people need from a solution.
+        examples:
+          - "functional"
         type: string
         enum: [functional, emotional, social, economic]
       urgency:
+        description: Rate how quickly the affected people need this problem resolved.
+        examples:
+          - "high"
         type: string
         enum: [low, medium, high, critical]
       evidence_level:
+        description: Record how strongly the available evidence supports this assertion.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       context_refs:
+        description: >-
+          Link the situations that make this need salient or change its urgency.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/context_ref"
@@ -150,6 +203,7 @@ $defs:
                 What currently serves this need. Use CPR### for known competitors
                 or freeform text for categories (e.g., 'manual spreadsheets', 'hiring freelancers').
             fulfillment:
+              description: Rate how well this alternative meets the need in practice.
               $ref: "../metamodel.schema.yaml#/$defs/fulfillment_level"
             friction_points:
               type: array
@@ -162,26 +216,49 @@ $defs:
                 type: string
               description: "What prevents switching (e.g., 'data lock-in', 'team inertia', 'contractual')."
             willingness_to_switch:
+              description: Record how ready people using this alternative are to change.
+              examples:
+                - "open"
               type: string
               enum: [resistant, reluctant, open, eager, desperate]
             observed_at:
+              description: >-
+                Date the observation so reviewers can judge whether the finding is
+                still current.
+              examples:
+                - "2026-02-12"
               type: string
               pattern: "^\\d{4}-\\d{2}-\\d{2}$"
             evidence_refs:
+              description: >-
+                Link source records that support the claims or choices captured here.
               $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   offering:
+    description: >-
+      Describe a product or service, whom it serves, and the alternatives buyers
+      consider.
     type: object
     additionalProperties: false
     required: [id, name, value_statement]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
       name:
+        description: Use the product or service name that buyers can recognize.
         type: string
       value_statement:
+        description: >-
+          Summarize the practical benefit the buyer should expect from using this
+          offering.
+        examples:
+          - "Publish a weekly roster and see which repair stations still need volunteers."
         type: string
       status:
         type: string
@@ -217,6 +294,7 @@ $defs:
         items:
           type: string
       solves_needs:
+        description: Link the needs this offering directly helps people meet.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
@@ -246,6 +324,7 @@ $defs:
         examples:
           - ["CPR003", "CPR007"]
       market_refs:
+        description: Identify the markets where this offering is relevant or available.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
@@ -260,41 +339,67 @@ $defs:
           Brand this offering belongs to in a multi-brand portfolio. When set,
           scoped views can filter offerings per brand; omit for shared offerings.
       proof_points:
+        description: Link proof that substantiates what the offering can deliver.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       linked_business_model:
+        description: >-
+          Link the business model elements that explain how this offering operates.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/model_ref"
       blueprint_links:
+        description: >-
+          Link Blueprint elements that implement or explain this Brandvoice record.
         $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   competitor:
+    description: >-
+      Describe an alternative buyers weigh for the same need, including established
+      workarounds.
     type: object
     additionalProperties: false
     required: [id, name, type]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
       name:
+        description: >-
+          Choose a label recognizable to buyers who consider this alternative.
         type: string
       type:
+        description: Classify how the alternative competes for the buyer's decision.
+        examples:
+          - "status-quo"
         type: string
         enum: [direct, indirect, substitute, status-quo]
       strengths:
+        description: Explain why a buyer would keep or choose this alternative.
+        examples:
+          - - Every volunteer already knows how to reply to the group chat.
         type: array
         items:
           type: string
       weaknesses:
+        description: Identify observed limitations that matter in the buyer's situation.
+        examples:
+          - - Last-minute replacements are easy to miss in a long thread.
         type: array
         items:
           type: string
       for_needs:
+        description: Link the needs that buyers try to meet with this alternative.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
@@ -312,6 +417,8 @@ $defs:
         $ref: "../metamodel.schema.yaml#/$defs/priority"
         description: "Overall competitive threat level."
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       geo_scope:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
@@ -321,42 +428,77 @@ $defs:
           market/competition.schema.yaml profile of the same CPR### ID.
           See metamodel.geo_scope. Added in v1.4.0.
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   context:
+    description: >-
+      Describe circumstances that change demand, available choices, or the way buyers
+      evaluate them.
     type: object
     additionalProperties: false
     required: [id, name, trigger]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/context_ref"
       name:
+        description: >-
+          Name a recurring situation contributors can use when linking demand evidence.
         type: string
       trigger:
+        description: Specify the event that makes the buyer seek progress now.
+        examples:
+          - "Two volunteers cancel the evening before the workshop."
         type: string
       constraints:
+        description: >-
+          Describe what limits the choices available to participants in this situation.
+        examples:
+          - - Replacement volunteers must be able to travel on short notice.
         type: array
         items:
           type: string
       market_conditions:
+        description: >-
+          Record external conditions that shape the options available in this
+          situation.
+        examples:
+          - - Shared community venues have few weekend openings.
         type: array
         items:
           type: string
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   audience:
+    description: >-
+      Group people by a relevant segmentation basis and identify their shared need.
     type: object
     additionalProperties: false
     required: [id, name, need]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       name:
+        description: >-
+          Use a segment label contributors can recognize across strategy and
+          activation.
         type: string
       need:
+        description: Summarize the shared need that makes these people a useful segment.
+        examples:
+          - "Arrange reliable staffing for a recurring community repair session."
         type: string
       description:
         type: string
@@ -371,9 +513,13 @@ $defs:
           Optional bridge to the canonical Actor primitive. Rationale: keeps
           legacy audience views aligned with actor-centric strategy models.
       segment_type:
+        description: Select the basis used to draw the boundaries of this segment.
+        examples:
+          - "behavioral"
         type: string
         enum: [demographic, behavioral, psychographic, firmographic, intent]
       priority:
+        description: Rank this segment's importance for allocation or validation effort.
         $ref: "../metamodel.schema.yaml#/$defs/priority"
       evidence_level:
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
@@ -383,8 +529,12 @@ $defs:
         examples:
           - hypothesis
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       blueprint_links:
+        description: >-
+          Link Blueprint elements that implement or explain this Brandvoice record.
         $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
       brand_ref:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
@@ -392,31 +542,53 @@ $defs:
           Optional brand this audience primarily belongs to in a portfolio. When set, scoped
           views (e.g. SB7 persona lists) can filter to this brand; omit for shared segments.
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   persona:
+    description: >-
+      Describe a representative individual whose goals and decision criteria inform
+      design and messaging.
     type: object
     additionalProperties: false
     required: [id, name, audience]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/persona_ref"
       name:
+        description: Give the portrait a recognizable label for use in discussions.
         type: string
       audience:
+        description: Link the segment this individual is intended to represent.
         $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       actor:
         $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: "Optional bridge to primitive Actor."
       goals:
+        description: >-
+          Describe what the individual wants to achieve in their own situation.
+        examples:
+          - - Spend less time chasing replies before each session.
         type: array
         items:
           type: string
       barriers:
+        description: >-
+          Describe what keeps this individual from progressing or trying a new
+          approach.
+        examples:
+          - - Occasional volunteers may ignore invitations to join another tool.
         type: array
         items:
           type: string
       decision_criteria:
+        description: >-
+          Record the tests this individual uses to decide whether an option fits.
+        examples:
+          - - Volunteers can confirm a shift without creating an account.
         type: array
         items:
           type: string
@@ -434,6 +606,8 @@ $defs:
         examples:
           - hypothesis
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       brand_ref:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
@@ -441,57 +615,99 @@ $defs:
           Optional brand this persona primarily supports. When set, SB7 and other scoped views
           can list personas per brand; omit if the persona applies across the portfolio.
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   job:
+    description: >-
+      Describe progress a person seeks that can be served by competing approaches.
     type: object
     additionalProperties: false
     required: [id, statement, audience]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/job_ref"
       statement:
+        description: >-
+          Express the desired progress from the person's perspective and relevant
+          circumstances.
+        examples:
+          - "When someone cancels, I want to confirm a replacement before the next session."
         type: string
       audience:
+        description: >-
+          Link the audience whose recurring circumstances give rise to this job.
         $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       need:
         $ref: "../metamodel.schema.yaml#/$defs/need_ref"
         description: "Optional bridge to primitive Need."
       job_type:
+        description: Classify the primary progress the person seeks to make.
+        examples:
+          - "functional"
         type: string
         enum: [functional, emotional, social]
       current_alternatives:
+        description: List the approaches people currently use to make this progress.
+        examples:
+          - - Send individual messages to volunteers who are usually available.
         type: array
         items:
           type: string
       desired_outcome:
+        description: Describe how the person would know the job was successfully done.
+        examples:
+          - "All stations show a confirmed volunteer before doors open."
         type: string
       evidence_level:
+        description: Record how strongly the available evidence supports this assertion.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   value_proposition:
+    description: >-
+      Explain why an audience should choose an offering for the progress it seeks.
     type: object
     additionalProperties: false
     required: [id, audience, value_statement]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/value_ref"
       offering:
         $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
         description: "Optional bridge to primitive Offering."
       audience:
+        description: Link the audience for whom this value proposition is intended.
         $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       value_statement:
+        description: Phrase the benefit as a result the audience cares about.
+        examples:
+          - "Find open repair shifts and fill them without chasing a message thread."
         type: string
       pains_addressed:
+        description: Identify existing frustrations the offer is designed to reduce.
+        examples:
+          - - Unclear ownership of last-minute shift replacements.
         type: array
         items:
           type: string
       gains_created:
+        description: >-
+          Describe improvements the offer enables once the audience adopts it.
+        examples:
+          - - A shared view of staffing gaps before the workshop opens.
         type: array
         items:
           type: string
@@ -510,10 +726,12 @@ $defs:
           Structured gain creators with explicit need linkage. Coexists with
           flat gains_created strings for lightweight capture.
       jobs_supported:
+        description: Link the jobs this value proposition helps the audience perform.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/job_ref"
       proof_points:
+        description: Link proof that supports the benefits claimed for this audience.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
@@ -523,21 +741,32 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
         description: "Opportunities this value proposition targets."
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   positioning:
+    description: >-
+      Define the market frame, differentiated claim, and proof that should shape buyer
+      comparisons.
     type: object
     additionalProperties: false
     required: [id, market_category, differentiated_claim]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/position_ref"
       brand_ref:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
         description: "Brand this positioning belongs to in a portfolio or endorsed-brand system."
       market_category:
+        examples:
+          - "Volunteer shift scheduling"
         type: string
         description: "Category label used publicly or internally to frame competition."
       category_strategy:
@@ -549,12 +778,16 @@ $defs:
           as its own modeling concern.
         properties:
           frame_of_reference:
+            examples:
+              - "Group chat signups and shared spreadsheets"
             type: string
             description: "What the buyer should compare this offer against."
           category_definition:
             type: string
             description: "How the category is defined in brand language."
           category_move:
+            examples:
+              - "redefine"
             type: string
             enum: [enter, redefine, create, defend, bridge]
             description: "Strategic move relative to the category."
@@ -562,10 +795,14 @@ $defs:
             type: string
             description: "Why this category frame matters for buyer interpretation."
       target_audiences:
+        description: >-
+          Link the audiences whose buyer comparisons this positioning is intended to
+          shape.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       market_refs:
+        description: Identify the markets in which this positioning should apply.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
@@ -575,12 +812,23 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
         description: "Opportunities that justify this positioning."
       differentiated_claim:
+        description: >-
+          State the relevant benefit buyers should associate with this brand over
+          alternatives.
+        examples:
+          - "See which repair stations still need coverage before sending reminders."
         type: string
       alternatives:
+        description: >-
+          Name the comparison options buyers recognize, including unmodeled
+          workarounds.
+        examples:
+          - - A shared spreadsheet with a separate group chat for reminders
         type: array
         items:
           type: string
       competitors:
+        description: Link the modeled alternatives against which the claim must hold.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
@@ -590,22 +838,35 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
         description: "Position maps where this positioning is visualized."
       reasons_to_believe:
+        description: Link the proof that makes the differentiated claim credible.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   business_model_element:
+    description: >-
+      Capture one canvas assumption and connect it to the strategy it depends on.
     type: object
     additionalProperties: false
     required: [id, block, statement]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/model_ref"
       block:
+        description: >-
+          Select the canvas block whose business question this statement addresses.
+        examples:
+          - "revenue-streams"
         type: string
         enum:
           - customer-segments
@@ -623,12 +884,20 @@ $defs:
           - unfair-advantage
           - key-metrics
       statement:
+        description: >-
+          State a testable assumption or operating choice for the selected block.
+        examples:
+          - "Community venues pay a quarterly fee for facilitated repair sessions."
         type: string
       linked_values:
+        description: >-
+          Link the value propositions this part of the business model supports.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/value_ref"
       linked_positions:
+        description: >-
+          Link positioning choices that depend on this part of the business model.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/position_ref"
@@ -648,10 +917,17 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
         description: "Offerings related to this block."
       market_refs:
+        description: >-
+          Identify the markets where this business model assumption is expected to
+          hold.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

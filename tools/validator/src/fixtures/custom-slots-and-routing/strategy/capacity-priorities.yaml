@@ -1,0 +1,8 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+priority_streams:
+  - id: PRI001
+    name: Core advisory stream
+    priority: 1
+    time_investment: "20h/month"
+    revenue_estimate: "10k/month"

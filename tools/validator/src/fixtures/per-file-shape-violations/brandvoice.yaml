@@ -1,0 +1,14 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: per-file shape violations fixture
+market:
+  substitutes:
+    $ref: "market/substitutes.competition.yaml"
+strategy:
+  capacity_priorities:
+    $ref: "strategy/capacity-priorities.yaml"
+  market_product:
+    $ref: "strategy/market-product.yaml"
+governance:
+  measurement:
+    $ref: "governance/measurement.yaml"

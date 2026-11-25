@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ## [Unreleased]
 
+## [1.9.3] - 2026-11-25
+
+### Summary
+
+- Field descriptions cover nearly every schema property, and a quarter of the properties carry examples, so editor tooltips and generated references explain each field.
+- The standalone validator reports the same errors and warnings as the model builder for composed models.
+- Compatibility: FULL for the schema: no field, type or relationship changed. The validator now reports a composed file whose name maps to no schema as an error; the model builder loads nothing from such a file, so move it into its plane folder (for example `market/competition.yaml`).
+
+### Added
+
+- **Schema version** - accepts `1.9.3` alongside earlier supported releases.
+- **Field documentation** - descriptions for nearly all properties and examples for about a quarter of them.
+
+### Fixed
+
+- **Validator** - validates the root file and each composed file as written, so a collection slot keeps the shape its schema declares.
+- **Validator** - reports shape violations inside each composed file, with the file path in every message, and reports a composed file that is missing.
+- **Validator** - checks typed references against the entity type the schema declares for them.
+- **Validator** - reports optional content gaps, such as a message without proof points, as warnings instead of errors.
+
 ## [1.9.2] - 2026-11-06
 
 ### Summary

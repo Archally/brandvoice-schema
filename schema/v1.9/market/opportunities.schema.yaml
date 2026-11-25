@@ -10,12 +10,16 @@ required:
   - version
 properties:
   version:
+    description: "Track changes to the content of this model file using semantic versioning."
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: "Declare which Brandvoice schema release this file targets."
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: "Set the local namespace used to distinguish identifiers across model scopes."
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: "Add reusable labels that help readers find related records."
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   opportunities:
     type: array
@@ -30,22 +34,30 @@ properties:
 
 $defs:
   opportunity:
+    description: "Frame an opening as a testable thesis about demand and strategic fit."
     type: object
     additionalProperties: false
     required: [id, name, thesis, status]
     properties:
       id:
+        description: "Keep the identifier stable as research changes the opportunity's assessment."
+        examples:
+          - "OPP006"
         $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
       name:
         type: string
-        description: "Short opportunity label."
+        description: "Short opportunity label. Name the opening in terms reviewers can recognize across research and planning."
       thesis:
+        examples:
+          - "Apartment residents will reserve tools online if weekend pickup is available."
         type: string
         description: >
           Full strategic thesis. Template: 'We believe [actor] has [need] that is
           [fulfillment level] because [gap]. Given [force], there is a window to
           [hypothesis].'
       status:
+        examples:
+          - "validating"
         type: string
         enum:
           - identified
@@ -54,21 +66,25 @@ $defs:
           - validated
           - pursued
           - abandoned
-        description: "Current state of opportunity investigation."
+        description: "Current state of opportunity investigation. Update the stage as the team investigates, validates, pursues, or abandons the opening."
       target_actors:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
-        description: "Actor segments this opportunity targets."
+        description: "Actor segments this opportunity targets. Link the actors expected to act on the opportunity."
       unmet_needs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
         description: "Needs that are underserved or unmet."
       demand_intensity:
+        examples:
+          - "emerging"
         $ref: "../metamodel.schema.yaml#/$defs/demand_intensity"
         description: "How strongly buyers signal demand in this space."
       buyer_readiness:
+        examples:
+          - "problem-aware"
         $ref: "../metamodel.schema.yaml#/$defs/buyer_readiness"
         description: "Dominant awareness stage of buyers in this opportunity."
       enabling_forces:
@@ -82,6 +98,7 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
         description: "Market forces that threaten or narrow this opportunity."
       time_horizon:
+        description: "Estimate when the opportunity is likely to become actionable."
         type: string
         enum: [immediate, near-term, medium-term, long-term]
       window_closes:
@@ -91,7 +108,7 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
-        description: "Markets this opportunity exists within."
+        description: "Markets this opportunity exists within. Link the markets whose boundaries constrain the opportunity estimate."
       estimated_size:
         type: string
         description: "Opportunity size estimate (e.g., '20% of $800M SAM = $160M')."
@@ -99,6 +116,8 @@ $defs:
         type: number
         description: "Machine-readable size in base currency units."
       current_gap:
+        examples:
+          - "Local rentals close before many residents finish work."
         type: string
         description: "What's missing in how the market currently addresses this need."
       competitor_refs:
@@ -132,19 +151,24 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/value_ref"
-        description: "Value propositions targeting this opportunity."
+        description: "Value propositions targeting this opportunity. Link the value propositions intended to address the opening."
       confidence:
+        description: "Choose the evidence level warranted by the research behind the thesis."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       validated_by:
+        examples:
+          - ["EVD014"]
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
-        description: "Evidence supporting this opportunity."
+        description: "Evidence supporting this opportunity. List evidence records that materially support the testable thesis."
       invalidated_by:
+        examples:
+          - ["EVD018"]
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
-        description: "Evidence challenging this opportunity."
+        description: "Evidence challenging this opportunity. List evidence records that contradict the thesis or one of its assumptions."
       related_experiments:
         type: array
         items:
@@ -155,6 +179,7 @@ $defs:
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
         description: "When this opportunity was first identified."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       geo_scope:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
@@ -162,34 +187,49 @@ $defs:
           Optional geographic applicability of this opportunity. See
           metamodel.geo_scope. Added in v1.4.0.
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   position_map:
+    description: "Compare alternatives on buyer-relevant dimensions and record gaps worth investigating."
     type: object
     additionalProperties: false
     required: [id, name, axes]
     properties:
       id:
+        description: "Keep the map identifier stable when evidence changes placements or axes."
         $ref: "../metamodel.schema.yaml#/$defs/position_map_ref"
       name:
         type: string
         description: "Map title (e.g., 'SMB PM Tools: Price vs. Automation Depth')."
       description:
+        description: "Explain the comparison question the map should help readers answer."
         type: string
       market_refs:
+        description: "Link the markets in which these comparisons are meaningful."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
       axes:
+        description: "Choose at least two dimensions buyers can use to evaluate alternatives."
+        examples:
+          - - name: Pickup hours
+              low_label: Weekday only
+              high_label: Evenings and weekends
+            - name: Cost per loan
+              low_label: Low cost
+              high_label: High cost
         type: array
         minItems: 2
         items:
           $ref: "#/$defs/map_axis"
       placements:
+        description: "Place the relevant alternatives on the axes defined for this map."
         type: array
         items:
           $ref: "#/$defs/map_placement"
       white_spaces:
+        description: "Record regions where buyers may lack suitable options."
         type: array
         items:
           $ref: "#/$defs/white_space"
@@ -198,11 +238,14 @@ $defs:
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
         description: "When this map was created or last validated."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   map_axis:
+    description: "Define a comparison dimension with interpretable endpoints for evaluating alternatives."
     type: object
     additionalProperties: false
     required: [name, low_label, high_label]
@@ -217,6 +260,8 @@ $defs:
         type: string
         description: "Label for the high end (e.g., 'Enterprise pricing')."
       buyer_importance:
+        examples:
+          - "high"
         $ref: "../metamodel.schema.yaml#/$defs/priority"
         description: "How much buyers weight this dimension in decisions."
       evidence_refs:
@@ -224,11 +269,14 @@ $defs:
         description: "Evidence that buyers evaluate on this axis."
 
   map_placement:
+    description: "Locate one entity using the dimensions defined by the parent map."
     type: object
     additionalProperties: false
     required: [entity, coordinates]
     properties:
       entity:
+        examples:
+          - "CPR001"
         type: string
         description: >
           The entity being placed. Use BRD### for own brand, CPR### for competitors.
@@ -237,6 +285,8 @@ $defs:
         type: string
         description: "Optional display label if different from entity name."
       coordinates:
+        examples:
+          - {"Pickup hours":20,"Cost per loan":35}
         type: object
         additionalProperties: true
         description: >
@@ -248,21 +298,27 @@ $defs:
         description: "Optional trend - where this entity is heading."
         properties:
           direction:
+            examples:
+              - {"Pickup hours":"increasing","Cost per loan":"stable"}
             type: object
             additionalProperties: true
             description: >
               Per-axis movement direction. Keys are axis names, values are
               'increasing', 'stable', or 'decreasing'.
           velocity:
+            description: "Classify how quickly the placement appears to be changing."
             type: string
             enum: [slow, moderate, fast]
       observed_at:
+        description: "Record the date represented by the available placement evidence."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
 
   white_space:
+    description: "Describe a mapped gap and the buyer signals that warrant investigating it."
     type: object
     additionalProperties: false
     required: [id, name, region]
@@ -277,6 +333,8 @@ $defs:
         type: string
         description: "Why this gap exists and why it matters."
       region:
+        examples:
+          - {"Pickup hours":{"min":70,"max":95},"Cost per loan":{"min":10,"max":40}}
         type: object
         additionalProperties: true
         description: >
@@ -287,6 +345,7 @@ $defs:
         type: string
         description: "Evidence of buyer interest in this region (e.g., 'search volume for affordable AI tools')."
       demand_intensity:
+        description: "Classify the strength of demand for options in this region."
         $ref: "../metamodel.schema.yaml#/$defs/demand_intensity"
       buyer_readiness:
         $ref: "../metamodel.schema.yaml#/$defs/buyer_readiness"
@@ -304,12 +363,16 @@ $defs:
       willingness_to_pay:
         type: object
         additionalProperties: false
-        description: "Buyer spending potential in this white space."
+        description: "Buyer spending potential in this white space. Record the price evidence and assumptions behind the assessment of buyer willingness."
         properties:
           estimate:
+            examples:
+              - "USD 10 to 15 per weekend"
             type: string
             description: "Price range estimate (e.g., '$50-100/mo', '$500-2000/yr')."
           estimate_numeric_low:
+            examples:
+              - 10
             type: number
             description: "Low end in base currency units (monthly)."
           estimate_numeric_high:
@@ -319,18 +382,25 @@ $defs:
             type: string
             description: "How this was estimated (e.g., 'competitor pricing + survey data')."
           price_sensitivity:
+            description: "Classify how readily buyers in this region change choices when prices change."
+            examples:
+              - "sensitive"
             type: string
             enum: [very-sensitive, sensitive, moderate, low-sensitivity, price-insensitive]
           confidence:
+            description: "Choose the evidence level warranted by the price research."
             $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
           evidence_refs:
+            description: "Link the evidence records a reviewer can consult to check these claims."
             $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       estimated_size:
         type: string
         description: "Revenue or volume potential of this white space."
       estimated_size_numeric:
+        description: "Provide the numeric estimate on the basis stated in the readable size estimate."
         type: number
       related_opportunities:
+        description: "Link the opportunity theses that propose ways to address this gap."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
@@ -345,4 +415,5 @@ $defs:
           type: string
         description: "What makes it hard to fill this gap (e.g., 'technical complexity', 'regulation')."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

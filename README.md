@@ -64,7 +64,7 @@ my-brand/
 
 ```yaml
 version: "1.0.0"
-schemaVersion: "1.9.2"
+schemaVersion: "1.9.3"
 name: "My Brand"
 description: "A brief summary of brand scope and market context."
 scope: my-brand

@@ -1,0 +1,10 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+scope: extra
+opportunities:
+  - id: extra.OPP001
+    name: Scoped shard opportunity
+    thesis: Opportunity stored in a suffix-style shard
+    status: exploring
+    white_space_refs: [WSP001]
+    position_map_refs: [PMP001]

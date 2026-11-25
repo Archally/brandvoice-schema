@@ -1,37 +1,99 @@
-import path from "node:path";
-
 export const PLANE_SUBDIRS = ["market", "strategy", "activation", "governance"];
 
-export function nestedSubKey(plane, fileName) {
-  const n = fileName.toLowerCase();
-  const stem = path.parse(fileName).name.toLowerCase();
+export const FILE_NAME_TO_SCHEMA = {
+  "brandvoice.yaml": "brandvoice.schema.yaml",
+  "market/landscape.yaml": "market/landscape.schema.yaml",
+  "market/competition.yaml": "market/competition.schema.yaml",
+  "market/opportunities.yaml": "market/opportunities.schema.yaml",
+  "market/ecosystem.yaml": "market/ecosystem.schema.yaml",
+  "strategy/brand-core.yaml": "strategy/brand-core.schema.yaml",
+  "strategy/market-product.yaml": "strategy/market-product.schema.yaml",
+  "strategy/messaging.yaml": "strategy/messaging.schema.yaml",
+  "strategy/visual-identity.yaml": "strategy/visual-identity.schema.yaml",
+  "strategy/capacity-priorities.yaml": "strategy/capacity.schema.yaml",
+  "activation/channels.yaml": "activation/channels.schema.yaml",
+  "activation/campaigns.yaml": "activation/campaigns.schema.yaml",
+  "governance/evidence.yaml": "governance/evidence.schema.yaml",
+  "governance/measurement.yaml": "governance/measurement.schema.yaml",
+  "governance/decisions.yaml": "governance/decisions.schema.yaml",
+  "governance/experiments.yaml": "governance/experiments.schema.yaml",
+  "migrations.yaml": "migration.schema.yaml",
+};
 
-  if (plane === "strategy") {
-    if (/\.market-product\.|^market-product\./i.test(n) || stem.startsWith("market-product")) return "market_product";
-    if (/\.messaging\.|\.messages\.|^messaging\.|^messages\./i.test(n) || stem.startsWith("messaging") || stem.startsWith("messages")) return "messaging";
-    if (/\.brand-core\.|^brand-core\./i.test(n) || stem.startsWith("brand-core")) return "brand_core";
-    if (/\.visual-identity\.|^visual-identity\./i.test(n) || stem.startsWith("visual-identity")) return "visual_identity";
-    if (/\.capacity-priorities\.|^capacity-priorities\./i.test(n) || stem.startsWith("capacity-priorities")) return "capacity_priorities";
+const PLANE_STEM_TO_SCHEMA = {
+  market: {
+    landscape: "market/landscape.schema.yaml",
+    markets: "market/landscape.schema.yaml",
+    forces: "market/landscape.schema.yaml",
+    competition: "market/competition.schema.yaml",
+    opportunities: "market/opportunities.schema.yaml",
+    ecosystem: "market/ecosystem.schema.yaml",
+  },
+  strategy: {
+    "brand-core": "strategy/brand-core.schema.yaml",
+    "market-product": "strategy/market-product.schema.yaml",
+    messaging: "strategy/messaging.schema.yaml",
+    "visual-identity": "strategy/visual-identity.schema.yaml",
+    "capacity-priorities": "strategy/capacity.schema.yaml",
+    capacity: "strategy/capacity.schema.yaml",
+  },
+  activation: {
+    channels: "activation/channels.schema.yaml",
+    campaigns: "activation/campaigns.schema.yaml",
+  },
+  governance: {
+    evidence: "governance/evidence.schema.yaml",
+    measurement: "governance/measurement.schema.yaml",
+    decisions: "governance/decisions.schema.yaml",
+    experiments: "governance/experiments.schema.yaml",
+  },
+};
+
+const PLANE_FILE_PATTERN = /^([^/]+)\/([^/]+)\.ya?ml$/u;
+
+export function planeOfPath(relativePath) {
+  const normalized = relativePath.replace(/\\/g, "/");
+  const firstSegment = normalized.split("/")[0];
+  if (PLANE_SUBDIRS.includes(firstSegment)) {
+    return firstSegment;
+  }
+  return null;
+}
+
+export function resolveDataFileSchemaPath(relativePath) {
+  const normalized = relativePath.replace(/\\/g, "/");
+  const directMatch = FILE_NAME_TO_SCHEMA[normalized];
+  if (directMatch) {
+    return directMatch;
+  }
+
+  const planeMatch = PLANE_FILE_PATTERN.exec(normalized);
+  if (!planeMatch) {
     return null;
   }
-  if (plane === "governance") {
-    if (/\.evidence\.|^evidence\./i.test(n) || stem.startsWith("evidence") || stem.startsWith("research-evidence")) return "evidence";
-    if (stem.startsWith("measurement")) return "measurement";
-    if (stem.startsWith("decisions")) return "decisions";
-    if (stem.startsWith("experiments")) return "experiments";
+
+  const planeName = planeMatch[1];
+  const planeStems = PLANE_STEM_TO_SCHEMA[planeName];
+  if (!planeStems) {
     return null;
   }
-  if (plane === "market") {
-    if (stem.startsWith("landscape") || stem === "landscape") return "landscape";
-    if (stem.startsWith("competition") || stem.startsWith("substitutes") || stem === "substitutes") return "competition";
-    if (stem.startsWith("opportunities") || stem.startsWith("cross-domain")) return "opportunities";
-    if (stem.startsWith("ecosystem") || stem === "ecosystem") return "ecosystem";
+
+  const segments = planeMatch[2].split(".");
+  const lastSegment = segments[segments.length - 1];
+  if (segments.length > 1) {
+    if (lastSegment === planeName) {
+      segments.pop();
+    }
+  }
+
+  const schemaStem = segments[segments.length - 1];
+  if (!schemaStem) {
     return null;
   }
-  if (plane === "activation") {
-    if (stem.startsWith("channels")) return "channels";
-    if (stem.startsWith("campaigns") || stem.startsWith("content")) return "campaigns";
-    return null;
+
+  const resolvedSchema = planeStems[schemaStem];
+  if (resolvedSchema) {
+    return resolvedSchema;
   }
   return null;
 }

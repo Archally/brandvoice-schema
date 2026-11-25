@@ -1,0 +1,16 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: custom slots and routing fixture
+market:
+  cross_domain_opportunities:
+    $ref: "market/cross-domain.opportunities.yaml"
+  substitutes:
+    $ref: "market/substitutes.competition.yaml"
+strategy:
+  capacity_priorities:
+    $ref: "strategy/capacity-priorities.yaml"
+  messages:
+    $ref: "strategy/messages.messaging.yaml"
+governance:
+  research_evidence:
+    $ref: "governance/research.evidence.yaml"

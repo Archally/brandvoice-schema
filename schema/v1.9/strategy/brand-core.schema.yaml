@@ -14,14 +14,20 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   brands:
+    description: >-
+      Record the distinct brand identities that guide strategy and expression.
     type: array
     items:
       $ref: "#/$defs/brand"
@@ -34,10 +40,15 @@ properties:
     items:
       $ref: "#/$defs/brand_script"
   archetypes:
+    description: >-
+      Document behavioral archetypes that give writers a consistent character to
+      portray.
     type: array
     items:
       $ref: "#/$defs/archetype"
   tone_guidelines:
+    description: >-
+      Collect writing behaviors and calibrations for use across communication contexts.
     type: array
     items:
       $ref: "#/$defs/tone"
@@ -50,6 +61,8 @@ properties:
     items:
       $ref: "#/$defs/verbal_guideline"
   distinctive_assets:
+    description: >-
+      Inventory recurring cues that help people recognize the brand across touchpoints.
     type: array
     items:
       $ref: "#/$defs/asset"
@@ -83,16 +96,38 @@ $defs:
         type: string
         description: "How the audience participates in the story (hero, witness, co-builder, movement member)."
       problem:
+        description: >-
+          Describe the obstacle the audience experiences before it can make progress.
+        examples:
+          - "Volunteer shifts are confirmed across too many separate messages."
         type: string
       guide:
+        description: Explain how the brand earns permission to help the audience act.
+        examples:
+          - "An experienced coordinator shares a checklist tested at weekly repair sessions."
         type: string
       plan:
+        description: >-
+          Outline the sequence the audience can follow to resolve the problem.
+        examples:
+          - "Post open shifts, invite volunteers, then confirm assignments in one place."
         type: string
       call_to_action:
+        description: Name the practical next step the story asks the audience to take.
+        examples:
+          - "Create your first shift schedule."
         type: string
       success:
+        description: >-
+          Show the audience what an improved situation looks like in practice.
+        examples:
+          - "The coordinator sees every filled shift before the workshop opens."
         type: string
       failure:
+        description: >-
+          Describe the credible cost of leaving the audience problem unresolved.
+        examples:
+          - "Unfilled shifts still come to light on the morning of the workshop."
         type: string
       core_tension:
         type: string
@@ -114,11 +149,14 @@ $defs:
       Shared narrative field bundle for brand-level and brand_script-level storytelling.
 
   brand_script:
+    description: Organize a reusable story for one brand and its intended audience.
     type: object
     additionalProperties: false
     required: [id, name, brand_ref, narrative]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/brand_script_ref"
       name:
         type: string
@@ -142,27 +180,46 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/persona_ref"
         description: "Personas this script primarily targets."
       is_default:
+        examples:
+          - true
         type: boolean
         description: >
           When multiple scripts exist for one brand, marks the script that should be used as the
           umbrella or primary story unless a message or UI selects another.
       status:
+        description: >-
+          Record the lifecycle state that governs how contributors should use this
+          entry.
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   brand:
+    description: >-
+      Describe the strategic intent and portfolio relationships that govern one
+      recognizable brand.
     type: object
     additionalProperties: false
     required: [id, name, promise, purpose]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
       name:
+        description: Use the name by which audiences recognize this brand.
+        examples:
+          - "Neighborhood Repair Scheduling"
         type: string
       brand_role:
+        examples:
+          - "service"
         type: string
         enum: [organization, product, service, portfolio, personal, initiative]
         description: >
@@ -170,6 +227,8 @@ $defs:
           whether the modeled brand is the parent system, a sub-brand, or a
           person-led identity with different communication obligations.
       architecture_role:
+        examples:
+          - "standalone-brand"
         type: string
         enum: [master-brand, endorsed-brand, sub-brand, standalone-brand, ingredient-brand]
         description: >
@@ -177,19 +236,28 @@ $defs:
           house, house of brands, and endorsement patterns without relying on
           narrative interpretation alone.
       purpose:
+        examples:
+          - "Help neighborhood repair groups keep useful things in service."
         type: string
         description: "Why the brand exists beyond revenue. Rationale: anchors strategic coherence."
       vision:
+        examples:
+          - "Every neighborhood has a reliable place to learn how to repair everyday items."
         type: string
         description: >
           Future state the brand aims to help create. Rationale: helps teams
           evaluate whether initiatives reinforce long-term direction.
       promise:
+        examples:
+          - "Know which repair stations are staffed before opening time."
         type: string
         description: >
           Primary value promise to customers. Rationale: clarifies the minimum
           outcome every message and experience should reinforce.
       values:
+        examples:
+          - - Share practical knowledge openly
+            - Make it easy for newcomers to ask for help
         type: array
         description: >
           Core decision principles. Rationale: translates brand intent into
@@ -197,6 +265,9 @@ $defs:
         items:
           type: string
       personality:
+        examples:
+          - - practical
+            - patient
         type: array
         items:
           type: string
@@ -208,18 +279,22 @@ $defs:
         allOf:
           - $ref: "#/$defs/narrative_backbone"
       archetypes:
+        description: Link the character models that guide this brand's behavior.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/archetype_ref"
       tone_refs:
+        description: Link the writing profiles that express this brand's voice.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
       asset_refs:
+        description: Link the distinctive cues approved for recurring brand expression.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/asset_ref"
       market_refs:
+        description: Identify the markets in which this brand has chosen to operate.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
@@ -249,47 +324,83 @@ $defs:
           Optional SWOT snapshot for this brand. Opportunities may link to OPP
           entities and threats may link to RSK entities when they exist.
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       status:
+        description: >-
+          Record the lifecycle state that governs how contributors should use this
+          entry.
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       blueprint_links:
+        description: >-
+          Link Blueprint elements that implement or explain this Brandvoice record.
         $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   archetype:
+    description: >-
+      Describe a recognizable character pattern and guard against its exaggerated
+      expression.
     type: object
     additionalProperties: false
     required: [id, name, description]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/archetype_ref"
       name:
+        description: >-
+          Choose a name contributors can recall when making a communication choice.
         type: string
       description:
+        description: >-
+          Describe the motives and behavior this character pattern contributes to the
+          brand.
         type: string
       anti_patterns:
+        description: >-
+          List ways the archetype can become exaggerated or misapplied in practice.
+        examples:
+          - - Treating a beginner's question as a test of competence
         type: array
         items:
           type: string
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   tone:
+    description: >-
+      Define observable writing behaviors and how they shift with audience
+      circumstances.
     type: object
     additionalProperties: false
     required: [id, label, do, avoid, dimensions]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
       label:
+        description: >-
+          Name this profile so writers can choose it quickly for an assignment.
         type: string
       do:
+        examples:
+          - - Use familiar verbs and name the next action in the first sentence.
         type: array
         items:
           type: string
         description: "Recommended writing behaviors. Rationale: convert tone intent into execution rules."
       avoid:
+        examples:
+          - - Avoid cheerfulness when explaining why a session was cancelled.
         type: array
         items:
           type: string
@@ -324,6 +435,8 @@ $defs:
             maximum: 2
             description: "-2 matter-of-fact ... +2 enthusiastic"
       context_notes:
+        description: >-
+          Record exceptions where the situation calls for a deliberate adjustment.
         type: array
         items:
           type: object
@@ -331,13 +444,26 @@ $defs:
           required: [context, adaptation]
           properties:
             context:
+              description: >-
+                Identify the situation or reader state that triggers the adjustment.
+              examples:
+                - "An attendee has arrived for a cancelled session."
               type: string
             adaptation:
+              description: >-
+                Explain how the wording should change when that situation occurs.
+              examples:
+                - "Lead with the cancellation and offer the next available session."
               type: string
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   verbal_guideline:
+    description: >-
+      Capture terminology and copy conventions that contributors can apply during
+      writing and review.
     type: object
     additionalProperties: false
     required: [id, name, rationale]
@@ -348,6 +474,8 @@ $defs:
           Dedicated verbal-guideline identifier. Rationale: keeps lexical and
           copy-system governance distinct from tonal guidance.
       name:
+        description: >-
+          Name the writing convention contributors should look up during editing.
         type: string
       rationale:
         type: string
@@ -361,12 +489,24 @@ $defs:
           required: [term, use_instead_of]
           properties:
             term:
+              description: >-
+                Give the approved wording that should appear in published copy.
+              examples:
+                - "repair session"
               type: string
             use_instead_of:
+              description: >-
+                List interchangeable expressions the author should replace with the
+                approved term.
+              examples:
+                - - fix event
               type: array
               items:
                 type: string
             notes:
+              description: >-
+                Explain where the preferred wording applies or when an exception is
+                appropriate.
               type: string
       banned_terms:
         type: array
@@ -377,10 +517,16 @@ $defs:
           required: [term, reason]
           properties:
             term:
+              description: Give the exact expression a reviewer should flag in copy.
               type: string
             reason:
+              description: >-
+                Explain the harm or ambiguity introduced by using this expression.
               type: string
             replacement:
+              description: >-
+                Give an alternative authors can use while preserving the intended
+                meaning.
               type: string
       inclusivity_rules:
         type: array
@@ -403,22 +549,35 @@ $defs:
           required: [context, on_brand]
           properties:
             context:
+              description: Identify the situation shared by the two wording samples.
               type: string
             on_brand:
+              description: >-
+                Show usable wording that follows the rule in the stated context.
               type: string
             off_brand:
+              description: Show wording that violates the rule in the same context.
               type: string
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   personal_brand_profile:
+    description: >-
+      Define how an individual expresses expertise while preserving the parent brand's
+      commitments.
     type: object
     additionalProperties: false
     required: [id, name, subject_brand_ref, signature_ideas]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/personal_brand_profile_ref"
       name:
         type: string
@@ -441,6 +600,8 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
         description: "Audience segments this personal brand is primarily designed to influence."
       signature_ideas:
+        examples:
+          - - Teach the repair process so people can repeat it on their own.
         type: array
         items:
           type: string
@@ -463,15 +624,25 @@ $defs:
           Guardrails clarifying what the personal brand should or should not own.
           Rationale: prevents conflict between person-led and org-led messaging.
       linked_messages:
+        description: >-
+          Link reusable messages through which the individual expresses their signature
+          ideas.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   authority_source:
+    description: >-
+      Describe the experience or recognition that makes an individual credible on a
+      specific topic.
     type: object
     additionalProperties: false
     required: [type, name]
@@ -481,18 +652,32 @@ $defs:
         enum: [role, experience, credential, publication, speaking, case-study, community, media, award, other]
         description: "Why this person is believable on the ideas they communicate."
       name:
+        description: >-
+          Name the specific credential, publication, activity, or other credibility
+          anchor.
         type: string
       topic:
+        description: State the subject this source gives the person standing to discuss.
+        examples:
+          - "Volunteer training for neighborhood repair sessions"
         type: string
       issuer:
+        description: >-
+          Name the organization or body responsible for this recognition or artifact.
         type: string
       year:
+        description: >-
+          Give the year the credential was awarded or the artifact was published.
+        examples:
+          - 2025
         type: integer
       url:
         type: string
         pattern: "^[a-z]+://.+$"
         description: "Canonical URL for this authority source when one exists."
       notes:
+        description: >-
+          Explain the source's relevance and any limits on the claims it supports.
         type: string
       counters_competitor_refs:
         type: array
@@ -501,26 +686,42 @@ $defs:
         description: "Competitor positioning claims this authority source directly counters."
 
   asset:
+    description: >-
+      Document a recognizable cue and the situations where repeated use builds brand
+      recall.
     type: object
     additionalProperties: false
     required: [id, name, type]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/asset_ref"
       name:
+        description: Use a label contributors can recognize when choosing brand assets.
         type: string
       type:
+        description: Choose the form through which people encounter and recall this cue.
+        examples:
+          - "verbal"
         type: string
         enum: [verbal, visual, sonic, mnemonic]
       cue:
+        examples:
+          - "A closing line that says Keep it in use."
         type: string
         description: "The recognizable marker used for memory structures."
       category_entry_points:
+        examples:
+          - - Looking for help repairing an item before replacing it
         type: array
         items:
           type: string
         description: "Usage contexts where this asset should trigger recall."
       evidence_level:
+        description: Record how strongly the available evidence supports this assertion.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

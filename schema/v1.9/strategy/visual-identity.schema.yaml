@@ -12,12 +12,16 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   logo_systems:
     type: array
@@ -62,23 +66,33 @@ properties:
     items:
       type: string
   accessibility_requirements:
+    description: >-
+      Record checks contributors should apply before approving visual brand materials.
     $ref: "#/$defs/accessibility_requirements"
 
 $defs:
   logo_system:
+    description: >-
+      Document an approved lockup and the conditions that preserve its legibility.
     type: object
     additionalProperties: false
     required: [name, purpose, usage_principles]
     properties:
       name:
+        description: >-
+          Name the lockup so contributors can select it from the asset library.
         type: string
       brand:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
         description: "Optional owning brand reference for multi-brand portfolios."
       purpose:
+        examples:
+          - "Compact mark for sign-up cards and narrow navigation headers."
         type: string
         description: "Why this lockup exists (for example primary mark, compact mark)."
       file_refs:
+        examples:
+          - - assets/brand/compact-mark.svg
         type: array
         description: "Asset or repository references for implementation handoff."
         items:
@@ -89,12 +103,21 @@ $defs:
         items:
           type: string
       clear_space_rule:
+        examples:
+          - "Leave at least one mark-stroke width clear on every side."
         type: string
         description: "Minimum visual buffer around the logo."
       min_size_rule:
+        examples:
+          - "At least 24 px wide on screen or 8 mm in print."
         type: string
         description: "Minimum size to preserve legibility."
       allowed_backgrounds:
+        description: >-
+          Specify the surfaces on which the mark remains legible and recognizable.
+        examples:
+          - - Solid warm white
+            - Solid charcoal with the reversed mark
         type: array
         items:
           type: string
@@ -109,46 +132,69 @@ $defs:
           Trademark and legal constraints. Rationale: prevents accidental misuse
           in external materials.
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   color_palette:
+    description: >-
+      Group colors by narrative intent and the design roles they should serve.
     type: object
     additionalProperties: false
     required: [name, intent, tokens]
     properties:
       name:
+        description: >-
+          Give this palette a label that distinguishes it from other approved sets.
         type: string
       brand:
+        description: Link the brand whose visual system this guidance belongs to.
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
       intent:
         type: string
         description: "Narrative role of the palette (for example premium, approachable)."
       tokens:
+        description: Define named colors and how contributors should apply them.
         type: array
         items:
           $ref: "#/$defs/color_token"
       combinations_to_avoid:
+        examples:
+          - - Do not set small white text on the amber accent.
         type: array
         description: "Combinations known to fail accessibility or visual harmony."
         items:
           type: string
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   color_token:
+    description: Record one reusable color value with its intended design function.
     type: object
     additionalProperties: false
     required: [name, value, role]
     properties:
       name:
+        description: Name the reusable color so designers can reference it consistently.
         type: string
       value:
+        description: Enter the approved hex value to reproduce this color consistently.
+        examples:
+          - "#244653"
         type: string
         pattern: "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"
       role:
+        description: >-
+          Assign the function that tells contributors when to select this color.
+        examples:
+          - "primary"
         type: string
         enum: [primary, secondary, accent, neutral, success, warning, danger, background, text, border, custom]
       usage_notes:
+        examples:
+          - "Use for primary action backgrounds with white text."
         type: string
         description: "Where and why this token should be used."
       contrast_ratio_target:
@@ -156,18 +202,24 @@ $defs:
         description: "Target WCAG contrast rule when this token is used for text."
 
   typography_system:
+    description: >-
+      Document type choices and hierarchy so layouts preserve a recognizable reading
+      order.
     type: object
     additionalProperties: false
     required: [name, rationale, families, hierarchy]
     properties:
       name:
+        description: Give the system a label for use across design and implementation.
         type: string
       brand:
+        description: Link the brand whose visual system this guidance belongs to.
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
       rationale:
         type: string
         description: "Why these type choices fit the brand promise and audience."
       families:
+        description: List approved font families and the reading roles they serve.
         type: array
         items:
           $ref: "#/$defs/font_family"
@@ -177,59 +229,101 @@ $defs:
         items:
           $ref: "#/$defs/type_style"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   font_family:
+    description: >-
+      Specify a typeface choice with its intended role and sourcing information.
     type: object
     additionalProperties: false
     required: [name, role]
     properties:
       name:
+        description: Enter the family name as it appears in design tools.
         type: string
       role:
+        description: Choose the text function this family is meant to serve.
+        examples:
+          - "body"
         type: string
         enum: [display, heading, body, mono, ui, fallback]
       source:
+        examples:
+          - "Bundled font files with the license in the design repository."
         type: string
         description: "Font source or licensing note."
       usage_notes:
+        description: >-
+          Explain when to use the family and any relevant substitution guidance.
         type: string
 
   type_style:
+    description: >-
+      Specify a repeatable text treatment for one level in the reading hierarchy.
     type: object
     additionalProperties: false
     required: [name, size, weight, line_height]
     properties:
       name:
+        description: >-
+          Name the text treatment so contributors can refer to it consistently.
         type: string
       size:
+        description: Enter the approved font size with its intended unit.
+        examples:
+          - "1rem"
         type: string
       weight:
+        description: Enter the weight that gives this treatment its intended prominence.
+        examples:
+          - "600"
         type: string
       line_height:
+        description: Set the line spacing that makes this treatment readable in context.
+        examples:
+          - "1.5"
         type: string
       tracking:
+        description: Set the letter spacing that suits this text treatment.
+        examples:
+          - "0.02em"
         type: string
       usage:
+        description: Describe where this treatment belongs in the reading hierarchy.
+        examples:
+          - "Use for station labels in the weekly roster."
         type: string
 
   imagery_guideline:
+    description: >-
+      Direct photo and illustration choices toward a consistent narrative effect.
     type: object
     additionalProperties: false
     required: [name, narrative_intent, do, avoid]
     properties:
       name:
+        description: >-
+          Name the image direction so contributors can find it during selection.
         type: string
       brand:
+        description: Link the brand whose visual system this guidance belongs to.
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
       narrative_intent:
         type: string
         description: "Emotional or strategic effect imagery should create."
       do:
+        description: Describe visual choices that express the intended story or mood.
+        examples:
+          - - Show hands and tools in use during a real repair.
         type: array
         items:
           type: string
       avoid:
+        description: >-
+          Describe visual choices that misrepresent the subject or undermine the
+          intended tone.
         type: array
         items:
           type: string
@@ -239,27 +333,40 @@ $defs:
         items:
           type: string
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   iconography_guideline:
+    description: Establish shared rules for creating icons that read as one system.
     type: object
     additionalProperties: false
     required: [name, style_principles]
     properties:
       name:
+        description: Name the icon system contributors should follow when adding assets.
         type: string
       style_principles:
+        description: >-
+          Describe the conventions that make icons consistent and recognizable at small
+          sizes.
         type: array
         items:
           type: string
       stroke_rule:
+        description: Define how stroke widths and endpoints behave across icons.
+        examples:
+          - "Use a 2 px stroke with round end caps on a 24 px grid."
         type: string
       corner_rule:
+        description: Define corner treatment to keep the icon set visually consistent.
         type: string
       motion_rule:
         type: string
         description: "Optional motion behavior for animated icon systems."
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   accessibility_requirements:
@@ -270,13 +377,30 @@ $defs:
       accessibility prevents late remediation and strengthens inclusivity.
     properties:
       contrast_standard:
+        description: >-
+          Name the contrast standard contributors should use when reviewing visual
+          combinations.
+        examples:
+          - "wcag-aa"
         type: string
         enum: [wcag-aa, wcag-aaa, custom]
       reduced_motion_policy:
+        description: >-
+          Describe how visual treatments should respond when reduced motion is
+          requested.
+        examples:
+          - "Replace animated progress transitions with a static state change."
         type: string
       text_on_color_policy:
+        description: Give contributors rules for pairing text with colored backgrounds.
         type: string
       image_alt_text_policy:
+        description: >-
+          Explain how to describe meaningful images and handle decorative images.
+        examples:
+          - "Describe the repair step shown when the photo conveys instructions."
         type: string
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

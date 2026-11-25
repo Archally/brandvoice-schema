@@ -1,0 +1,6 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+channels:
+  - id: CHN001
+    name: Primary newsletter
+    media_type: owned

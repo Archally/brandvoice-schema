@@ -1,77 +1,185 @@
 import fs from "node:fs";
 import path from "node:path";
-import { loadYaml, toPosixPath, mergeIntoPlane, mergeSliceDocument } from "./utils.mjs";
-import { PLANE_SUBDIRS, nestedSubKey } from "./schema-types.mjs";
+import { loadYaml, toPosixPath } from "./utils.mjs";
+import { PLANE_SUBDIRS, planeOfPath, resolveDataFileSchemaPath } from "./schema-types.mjs";
 
-export function resolveComposition(rootPath) {
-  const rootDir = path.dirname(rootPath);
-  const root = loadYaml(rootPath);
-  const files = { root: rootPath };
-  const errors = [];
-  const refTargetPosix = new Set();
-
-  function loadRefObject(node, fileKey) {
-    if (!node || typeof node !== "object" || Array.isArray(node)) return node;
-    if (Object.keys(node).length === 1 && typeof node.$ref === "string") {
-      const filePath = path.resolve(rootDir, node.$ref);
-      if (!fs.existsSync(filePath)) {
-        errors.push(`Missing composed file '${node.$ref}' from ${fileKey}`);
-        return node;
-      }
-      refTargetPosix.add(toPosixPath(path.relative(rootDir, filePath)));
-      files[node.$ref] = filePath;
-      return loadYaml(filePath);
-    }
-    const out = { ...node };
-    for (const [k, v] of Object.entries(node)) {
-      out[k] = loadRefObject(v, fileKey);
-    }
-    return out;
+function isPlainObject(value) {
+  if (!value) {
+    return false;
   }
-
-  const hydrated = loadRefObject(root, "brandvoice.yaml");
-  const supplementaryWarnings = [];
-  mergeUnreferencedSupplementaryFiles(hydrated, rootDir, refTargetPosix, supplementaryWarnings);
-  return { root: hydrated, files, errors, refTargetPosix, supplementaryWarnings };
+  if (typeof value !== "object") {
+    return false;
+  }
+  if (Array.isArray(value)) {
+    return false;
+  }
+  return true;
 }
 
-function mergeUnreferencedSupplementaryFiles(root, modelDir, refTargetPosix, warnings = []) {
-  for (const planeDir of PLANE_SUBDIRS) {
-    const dir = path.join(modelDir, planeDir);
-    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) continue;
+function isFileRefPlaceholder(node) {
+  if (!isPlainObject(node)) {
+    return false;
+  }
+  const keys = Object.keys(node);
+  if (keys.length !== 1) {
+    return false;
+  }
+  if (typeof node.$ref !== "string") {
+    return false;
+  }
+  return true;
+}
 
-    const names = fs
-      .readdirSync(dir)
-      .filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"))
+function isYamlFileName(fileName) {
+  if (fileName.endsWith(".yaml")) {
+    return true;
+  }
+  if (fileName.endsWith(".yml")) {
+    return true;
+  }
+  return false;
+}
+
+function collectPlaceholderRefs(node, collectedRefs) {
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      collectPlaceholderRefs(item, collectedRefs);
+    }
+    return;
+  }
+  if (!isPlainObject(node)) {
+    return;
+  }
+  if (isFileRefPlaceholder(node)) {
+    collectedRefs.push(node.$ref);
+    return;
+  }
+  for (const childValue of Object.values(node)) {
+    collectPlaceholderRefs(childValue, collectedRefs);
+  }
+}
+
+function loadDocumentEntry(relativePath, absolutePath) {
+  const schemaPath = resolveDataFileSchemaPath(relativePath);
+  const plane = planeOfPath(relativePath);
+  try {
+    const data = loadYaml(absolutePath);
+    return {
+      file: relativePath,
+      absolutePath,
+      plane,
+      schemaPath,
+      data,
+      parseError: null,
+    };
+  } catch (error) {
+    const parseMessage = error instanceof Error ? error.message : String(error);
+    return {
+      file: relativePath,
+      absolutePath,
+      plane,
+      schemaPath,
+      data: null,
+      parseError: parseMessage,
+    };
+  }
+}
+
+export function discoverModelDocuments(rootModelPath) {
+  const rootDir = path.dirname(rootModelPath);
+  const rootFileName = toPosixPath(path.basename(rootModelPath));
+  const rootDocument = loadDocumentEntry(rootFileName, rootModelPath);
+  if (rootDocument.schemaPath === null) {
+    rootDocument.schemaPath = "brandvoice.schema.yaml";
+  }
+
+  const documents = [rootDocument];
+  const files = { [rootDocument.file]: rootModelPath };
+  const errors = [];
+  const warnings = [];
+  const seenRelativePaths = new Set([rootDocument.file]);
+  const referencedExistingFiles = [];
+
+  const placeholderRefs = [];
+  collectPlaceholderRefs(rootDocument.data, placeholderRefs);
+
+  for (const refPath of placeholderRefs) {
+    const targetAbsolutePath = path.resolve(rootDir, refPath);
+    if (!fs.existsSync(targetAbsolutePath)) {
+      errors.push(`Missing composed file '${refPath}' from ${rootFileName}`);
+      continue;
+    }
+    if (!fs.statSync(targetAbsolutePath).isFile()) {
+      errors.push(`Missing composed file '${refPath}' from ${rootFileName}`);
+      continue;
+    }
+    const relativeTarget = toPosixPath(path.relative(rootDir, targetAbsolutePath));
+    referencedExistingFiles.push({
+      relativePath: relativeTarget,
+      absolutePath: targetAbsolutePath,
+    });
+  }
+
+  const migrationsAbsolutePath = path.join(rootDir, "migrations.yaml");
+  if (fs.existsSync(migrationsAbsolutePath)) {
+    if (fs.statSync(migrationsAbsolutePath).isFile()) {
+      if (!seenRelativePaths.has("migrations.yaml")) {
+        seenRelativePaths.add("migrations.yaml");
+        const migrationDocument = loadDocumentEntry("migrations.yaml", migrationsAbsolutePath);
+        documents.push(migrationDocument);
+        files[migrationDocument.file] = migrationsAbsolutePath;
+      }
+    }
+  }
+
+  for (const planeDir of PLANE_SUBDIRS) {
+    const planeAbsoluteDir = path.join(rootDir, planeDir);
+    if (!fs.existsSync(planeAbsoluteDir)) {
+      continue;
+    }
+    if (!fs.statSync(planeAbsoluteDir).isDirectory()) {
+      continue;
+    }
+
+    const fileNames = fs
+      .readdirSync(planeAbsoluteDir)
+      .filter((fileName) => isYamlFileName(fileName))
       .sort();
 
-    for (const name of names) {
-      const rel = path.join(planeDir, name).split(path.sep).join("/");
-      if (refTargetPosix.has(rel)) continue;
-
-      const filePath = path.join(dir, name);
-      if (!fs.statSync(filePath).isFile()) continue;
-
-      const data = loadYaml(filePath);
-      if (data == null || typeof data !== "object" || Array.isArray(data)) {
-        warnings.push(`Supplementary: skipped non-object ${rel}`);
+    for (const fileName of fileNames) {
+      const fileAbsolutePath = path.join(planeAbsoluteDir, fileName);
+      if (!fs.statSync(fileAbsolutePath).isFile()) {
         continue;
       }
-
-      if (!root[planeDir] || typeof root[planeDir] !== "object" || Array.isArray(root[planeDir])) {
-        root[planeDir] = {};
+      const relativePath = `${planeDir}/${fileName}`;
+      if (seenRelativePaths.has(relativePath)) {
+        continue;
       }
-      const planeNode = root[planeDir];
-
-      const targetKey = nestedSubKey(planeDir, name);
-      if (targetKey) {
-        if (!planeNode[targetKey] || typeof planeNode[targetKey] !== "object" || Array.isArray(planeNode[targetKey])) {
-          planeNode[targetKey] = {};
-        }
-        mergeSliceDocument(planeNode[targetKey], data);
-      } else {
-        mergeIntoPlane(planeNode, data, warnings);
-      }
+      seenRelativePaths.add(relativePath);
+      const shardDocument = loadDocumentEntry(relativePath, fileAbsolutePath);
+      documents.push(shardDocument);
+      files[relativePath] = fileAbsolutePath;
     }
   }
+
+  referencedExistingFiles.sort((left, right) => left.relativePath.localeCompare(right.relativePath));
+  for (const referenced of referencedExistingFiles) {
+    if (seenRelativePaths.has(referenced.relativePath)) {
+      continue;
+    }
+    seenRelativePaths.add(referenced.relativePath);
+    const extraDocument = loadDocumentEntry(referenced.relativePath, referenced.absolutePath);
+    documents.push(extraDocument);
+    files[referenced.relativePath] = referenced.absolutePath;
+  }
+
+  return {
+    root: rootDocument.data,
+    documents,
+    files,
+    errors,
+    supplementaryWarnings: warnings,
+  };
 }
+
+export const resolveComposition = discoverModelDocuments;

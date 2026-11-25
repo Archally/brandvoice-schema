@@ -1,0 +1,12 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+scope: category
+decisions:
+  - id: category.DEC001
+    title: Refined category decision
+    status: accepted
+    date: "2026-02-15"
+    rationale:
+      problem: Research showed a sharper frame
+      selected: Refined category framing
+    supersedes: [DEC001]

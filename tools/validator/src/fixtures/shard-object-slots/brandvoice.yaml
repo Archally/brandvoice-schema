@@ -1,0 +1,16 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: shard object slot fixture
+market:
+  opportunities:
+    $ref: "market/opportunities.yaml"
+activation:
+  channels:
+    $ref: "activation/channels.yaml"
+governance:
+  decisions:
+    $ref: "governance/decisions.yaml"
+  experiments:
+    $ref: "governance/experiments.yaml"
+  evidence:
+    $ref: "governance/evidence.yaml"

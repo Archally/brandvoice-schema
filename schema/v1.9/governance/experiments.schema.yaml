@@ -10,35 +10,58 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   experiments:
+    description: >-
+      Record tests that inform choices about messages, channels, and campaigns.
     type: array
     items:
       $ref: "#/$defs/experiment"
 
 $defs:
   experiment:
+    description: >-
+      Connect a testable hypothesis to its design, observations, and follow-up
+      decision.
     type: object
     additionalProperties: false
     required: [id, hypothesis, status]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/test_ref"
       hypothesis:
+        description: Predict a measurable response to a change under stated conditions.
+        examples:
+          - "A reminder with the number of open shifts will increase same-day confirmations."
         type: string
       method:
+        description: Select the method used to gather evidence for this hypothesis.
+        examples:
+          - "ab-test"
         type: string
         enum: [ab-test, multivariate, interview, survey, concept-test, incrementality, other]
       status:
+        description: Record the current stage of test execution and review.
         type: string
         enum: [planned, running, completed, cancelled]
       variants:
+        description: >-
+          Describe the treatments or control conditions being compared in the test.
+        examples:
+          - - name: Standard reminder
+            - name: Open-shift count
         type: array
         items:
           type: object
@@ -46,24 +69,37 @@ $defs:
           required: [name]
           properties:
             name:
+              description: Give the treatment a stable label used in result reporting.
               type: string
             message:
+              description: >-
+                Link the message copy shown to participants in this treatment.
               $ref: "../metamodel.schema.yaml#/$defs/message_ref"
             channel:
+              description: Link the delivery channel used by this treatment group.
               $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
             content:
+              description: >-
+                Link the content artifact presented as part of this treatment.
               $ref: "../metamodel.schema.yaml#/$defs/content_ref"
             action:
+              description: >-
+                Link the behavior participants are invited to perform in this
+                treatment.
               $ref: "../metamodel.schema.yaml#/$defs/action_ref"
       success_metrics:
+        description: Link the measures used to evaluate whether the treatment succeeded.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
       expected_outcomes:
+        description: Link the changes the test is designed to detect or inform.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
       context_refs:
+        description: >-
+          Link the circumstances under which the result should be interpreted.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/context_ref"
@@ -71,8 +107,17 @@ $defs:
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
         description: "Input evidence that informed the experiment design."
       result_summary:
+        description: >-
+          Summarize the observation and its practical implication for reviewers.
+        examples:
+          - "The open-shift count increased same-day confirmations by 6 percentage points."
         type: string
       result:
+        examples:
+          - winner: Open-shift count
+            effect_size: +6 percentage points in same-day confirmations
+            sample_size: 600
+            conclusion: winner-found
         type: object
         additionalProperties: false
         description: "Structured experiment result for programmatic analysis."
@@ -89,12 +134,20 @@ $defs:
             maximum: 1
             description: "Statistical confidence (0-1, e.g., 0.95 for 95%)."
           sample_size:
+            examples:
+              - 600
             type: integer
             description: "Total sample across all variants."
           conclusion:
+            description: >-
+              Classify the outcome using the evidence available at test close.
+            examples:
+              - "winner-found"
             type: string
             enum: [winner-found, no-significant-difference, inconclusive, stopped-early]
       decision_outcome:
+        description: >-
+          Link the decision made after interpreting the results and limitations.
         $ref: "../metamodel.schema.yaml#/$defs/decision_ref"
       produced_evidence:
         type: array
@@ -102,4 +155,6 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/evidence_ref"
         description: "Evidence records generated by this experiment's results."
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

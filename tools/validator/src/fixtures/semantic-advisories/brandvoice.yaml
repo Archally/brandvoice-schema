@@ -1,0 +1,9 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+name: semantic advisories fixture
+strategy:
+  messaging:
+    $ref: "strategy/messaging.yaml"
+activation:
+  campaigns:
+    $ref: "activation/campaigns.yaml"

@@ -1,0 +1,7 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+scope: pilot
+experiments:
+  - id: pilot.TST001
+    hypothesis: Pilot message lifts conversion rate
+    status: planned

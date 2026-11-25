@@ -1,0 +1,8 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+campaigns:
+  - id: CMP001
+    name: Active campaign without optional links
+    objective: Confirm optional campaign links stay advisory
+    start_date: "2026-05-01"
+    status: active

@@ -1,0 +1,8 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+campaigns:
+  - id: CMP001
+    name: Launch campaign
+    objective: Increase validated adoption
+    start_date: "2026-04-01"
+    north_star: MET001

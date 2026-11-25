@@ -1,0 +1,7 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+scope: regional
+channels:
+  - id: regional.CHN001
+    name: Regional newsletter
+    media_type: owned

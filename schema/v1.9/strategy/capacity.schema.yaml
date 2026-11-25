@@ -31,9 +31,13 @@ $defs:
         pattern: "^([a-z][a-z0-9-]*\\.)?PRI\\d{3,}$"
         description: "Typed entity ID, e.g. PRI001."
       name:
+        examples:
+          - "Facilitated repair workshops"
         type: string
         description: "Human-readable stream name."
       priority:
+        examples:
+          - 1
         type: integer
         minimum: 1
         description: "Rank within the plan (1 = highest priority)."
@@ -41,29 +45,43 @@ $defs:
         type: string
         description: "Why this stream is prioritized at this rank."
       time_investment:
+        examples:
+          - "12 working days per quarter"
         type: string
         description: "Estimated time cost (free text, e.g. '10 dni')."
       revenue_estimate:
+        examples:
+          - "EUR 8,000 to 12,000 per year"
         type: string
         description: "Expected annual revenue range (free text)."
       strategic_value:
+        examples:
+          - "Builds a repeatable route to training new repair coordinators."
         type: string
         description: "Qualitative strategic importance label."
       timing:
         type: string
         description: "Expected launch or milestone timing (free text)."
       dependencies:
+        examples:
+          - - Confirm access to a room with four workstations.
         type: array
         items:
           type: string
         description: "Prerequisite conditions or tasks before launch."
       offering_ref:
+        description: Link the offering that this stream is expected to deliver.
         $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
       opportunity_ref:
+        description: Link the opportunity that makes this investment worth prioritizing.
         $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   roadmap_phase:
@@ -82,22 +100,34 @@ $defs:
         type: string
         description: "Short phase label, e.g. 'Q2 2026: FUNDAMENT'."
       period:
+        examples:
+          - "April to June 2026"
         type: string
         description: "Human-readable calendar span, e.g. 'kwiecień-czerwiec 2026'."
       goals:
+        examples:
+          - - Run two pilot repair workshops and document the repeatable session format.
         type: array
         items:
           type: string
         description: "Concrete deliverables targeted in this phase."
       budget:
+        examples:
+          - "EUR 1,200 for venue and supplies"
         type: string
         description: "Estimated spend for the phase (free text)."
       kpi:
+        examples:
+          - "At least 12 attendees complete a guided repair by the end of June."
         type: string
         description: "Primary success metric(s) for the phase."
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   capacity_model:
@@ -109,14 +139,34 @@ $defs:
       Not extracted as a graph entity - used for dashboard and viewer context only.
     properties:
       total_working_days_per_year:
+        description: >-
+          Enter the annual pool of working days before deducting reserved time.
+        examples:
+          - 220
         type: integer
       reserved_for_administration:
+        description: >-
+          Estimate annual days for work such as scheduling, finance, and reporting.
+        examples:
+          - 24
         type: integer
       reserved_for_marketing_content:
+        description: >-
+          Estimate annual days needed for outreach and producing marketing materials.
+        examples:
+          - 30
         type: integer
       reserved_for_preparation:
+        description: >-
+          Estimate annual days spent preparing materials and settings for delivery.
+        examples:
+          - 36
         type: integer
       note:
+        description: >-
+          Explain the assumptions or seasonal constraints behind the allocation.
+        examples:
+          - "The workshop closes for the final two weeks of December."
         type: string
 
 type: object
@@ -129,10 +179,15 @@ additionalProperties: false
 # keys at root level would be a duplicate-key YAML error.)
 properties:
   version:
+    description: Record the version declared for this capacity planning file.
     type: string
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   capacity_model:
+    description: >-
+      Summarize annual working days and reservations before assigning time to delivery
+      streams.
     $ref: "#/$defs/capacity_model"
   priority_streams:
     type: array
@@ -156,17 +211,31 @@ properties:
       additionalProperties: true
       properties:
         id:
+          description: >-
+            Assign a stable identifier so capacity reviews can cite the same risk.
           type: string
           pattern: "^([a-z][a-z0-9-]*\\.)?RSK\\d{3,}$"
         name:
+          description: Name the event that could reduce available delivery capacity.
           type: string
         probability:
+          description: Estimate how likely the event is within this capacity plan.
+          examples:
+            - "medium"
           type: string
           enum: [low, medium, high]
         impact:
+          description: Rate the effect on delivery if this capacity risk occurs.
           type: string
           enum: [low, medium, high, critical]
         mitigation:
+          description: >-
+            Describe the action that lowers the probability or protects the delivery
+            schedule.
+          examples:
+            - "Cross-train one coordinator before the summer schedule begins."
           type: string
         evidence_refs:
+          description: >-
+            Link source records that support the claims or choices captured here.
           $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"

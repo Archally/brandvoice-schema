@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { after, test } from 'node:test';
 import { existsSync, mkdtempSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
 import { loadRules, loadExtensions, runChecker } from '@archally/semantic-checker';
@@ -58,23 +58,25 @@ function fixture(marketProduct = {}, extra = {}) {
   const directory = join(fixtureRoot, String(fixtureCount));
   mkdirSync(directory);
   const shards = {
-    'market-product.yaml': { version: '1.0.0', ...marketProduct },
-    'messaging.yaml': { version: '1.0.0', messages: extra.messages ?? [] },
-    'evidence.yaml': { version: '1.0.0', evidence: extra.evidence ?? [] },
-    'competition.yaml': { version: '1.0.0', competitors: extra.competitors ?? [] },
+    'strategy/market-product.yaml': { version: '1.0.0', ...marketProduct },
+    'strategy/messaging.yaml': { version: '1.0.0', messages: extra.messages ?? [] },
+    'governance/evidence.yaml': { version: '1.0.0', evidence: extra.evidence ?? [] },
+    'market/competition.yaml': { version: '1.0.0', competitors: extra.competitors ?? [] },
   };
   for (const [name, contents] of Object.entries(shards)) {
-    writeFileSync(join(directory, name), YAML.stringify(contents));
+    const filePath = join(directory, name);
+    mkdirSync(dirname(filePath), { recursive: true });
+    writeFileSync(filePath, YAML.stringify(contents));
   }
   writeFileSync(join(directory, 'brandvoice.yaml'), YAML.stringify({
     version: '1.0.0',
     name: 'Synthetic checker fixture',
     strategy: {
-      market_product: { $ref: 'market-product.yaml' },
-      messaging: { $ref: 'messaging.yaml' },
+      market_product: { $ref: 'strategy/market-product.yaml' },
+      messaging: { $ref: 'strategy/messaging.yaml' },
     },
-    market: { competition: { $ref: 'competition.yaml' } },
-    governance: { evidence: { $ref: 'evidence.yaml' } },
+    market: { competition: { $ref: 'market/competition.yaml' } },
+    governance: { evidence: { $ref: 'governance/evidence.yaml' } },
   }));
   const validation = validateModel({ model: directory, schemas: schemaDirectory });
   assert.deepEqual(validation.schemaErrors, [], 'Fixture must be schema-valid');
@@ -257,14 +259,16 @@ test('evidence coverage retains unscoped and scoped authored targets across supp
   }), ['ACT003']);
   fixtureCount += 1;
   const directory = join(fixtureRoot, String(fixtureCount));
+  const strategyDirectory = join(directory, 'strategy');
   const governanceDirectory = join(directory, 'governance');
+  mkdirSync(strategyDirectory, { recursive: true });
   mkdirSync(governanceDirectory, { recursive: true });
   writeFileSync(join(directory, 'brandvoice.yaml'), YAML.stringify({
     version: '1.0.0',
     name: 'Synthetic evidence composition regression',
-    strategy: { market_product: { $ref: 'market-product.yaml' } },
+    strategy: { market_product: { $ref: 'strategy/market-product.yaml' } },
   }));
-  writeFileSync(join(directory, 'market-product.yaml'), YAML.stringify({
+  writeFileSync(join(strategyDirectory, 'market-product.yaml'), YAML.stringify({
     version: '1.0.0',
     actors,
   }));

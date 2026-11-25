@@ -10,24 +10,40 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   north_star_metric:
+    examples:
+      - "KPI001"
+    description: >-
+      Identify the KPI used as the main indicator of sustained customer value.
     $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
   metrics:
+    description: Define reusable measures before attaching them to performance targets.
     type: array
     items:
       $ref: "#/$defs/metric"
   kpis:
+    description: Record the targets used to judge progress against strategic outcomes.
     type: array
     items:
       $ref: "#/$defs/kpi"
   outcomes:
+    examples:
+      - - id: OUT001
+          name: Confirmed repair station coverage
+          statement: More repair stations have confirmed coverage by Friday at noon.
+          measured_by:
+            - MET001
     type: array
     description: "Primitive outcomes tied to measurable business impact."
     items:
@@ -35,42 +51,76 @@ properties:
 
 $defs:
   metric:
+    description: Define how a measure is calculated, sourced, and maintained over time.
     type: object
     additionalProperties: false
     required: [id, name, formula]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
       name:
+        description: Name the measured quantity so it can be recognized in reports.
+        examples:
+          - "Friday repair station coverage rate"
         type: string
       formula:
+        description: >-
+          State the calculation with enough detail to reproduce the reported value.
+        examples:
+          - "Stations with a confirmed volunteer by Friday noon / stations scheduled for Saturday * 100"
         type: string
       cadence:
+        description: Choose how often new observations should be calculated or reported.
+        examples:
+          - "weekly"
         type: string
         enum: [real-time, daily, weekly, monthly, quarterly]
       source:
+        description: >-
+          Identify the system or dataset that supplies the calculation inputs.
+        examples:
+          - "Weekly roster snapshot taken on Fridays at noon"
         type: string
       owner:
+        description: >-
+          Name the role responsible for maintaining and explaining the measure.
+        examples:
+          - "Volunteer operations coordinator"
         type: string
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   kpi:
+    description: Associate a measure with a target and the outcomes it helps assess.
     type: object
     additionalProperties: false
     required: [id, name, metric, target]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
       name:
+        description: Name the performance objective so reviewers can locate it easily.
         type: string
       metric:
+        description: Link the measure used to decide whether the target was met.
         $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
       target:
+        description: Specify the desired value with a time horizon or review window.
+        examples:
+          - "At least 90% in each of the next four weekly reviews"
         type: string
       stage:
+        description: Record the reporting stage in models that use this field.
         type: string
         enum: [awareness, acquisition, activation, engagement, retention, referral, revenue, strategic]
       universal_phase:
@@ -79,22 +129,31 @@ $defs:
           Normalized journey phase for this KPI. Prefer this over
           the legacy stage enum for cross-schema queries.
       linked_campaigns:
+        description: >-
+          Link campaign initiatives whose performance is assessed with this target.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/campaign_ref"
       linked_messages:
+        description: Link messages whose effectiveness is assessed with this target.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/message_ref"
       linked_values:
+        description: Link value propositions this target helps to assess.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/value_ref"
       linked_outcomes:
+        description: Link desired changes whose progress is tracked by this target.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

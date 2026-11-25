@@ -11,12 +11,16 @@ required:
   - version
 properties:
   version:
+    description: "Track changes to the content of this model file using semantic versioning."
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: "Declare which Brandvoice schema release this file targets."
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: "Set the local namespace used to distinguish identifiers across model scopes."
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: "Add reusable labels that help readers find related records."
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   markets:
     type: array
@@ -25,27 +29,37 @@ properties:
       $ref: "#/$defs/market_definition"
   forces:
     type: array
-    description: "Environmental forces shaping market dynamics."
+    description: "Environmental forces shaping market dynamics. Record external developments that could change demand, buyer behavior, or competition."
     items:
       $ref: "#/$defs/market_force"
 
 $defs:
   market_definition:
+    description: "Define the demand boundary used to compare segments, alternatives, and sizing estimates."
     type: object
     additionalProperties: false
     required: [id, name, category]
     properties:
       id:
+        description: "Use a stable identifier so analyses can refer to the same market definition."
+        examples:
+          - "MKT003"
         $ref: "../metamodel.schema.yaml#/$defs/market_ref"
       name:
         type: string
         description: "Human-readable market label (e.g., 'US SMB project management SaaS')."
       category:
+        examples:
+          - "Household tool access"
         type: string
-        description: "Industry vertical or category name."
+        description: "Industry vertical or category name. Name the category buyers use to frame the alternatives they compare."
       description:
+        description: "Explain which buyers and uses fall inside the defined market boundary."
         type: string
       maturity:
+        description: "Classify the market's development using observed demand and adoption patterns."
+        examples:
+          - "growing"
         type: string
         enum: [emerging, growing, mature, declining]
       growth_rate:
@@ -59,19 +73,27 @@ $defs:
           multiple segments with independent sizing and assumptions.
         properties:
           tam:
+            description: "Estimate all demand within the stated market boundary before reach constraints."
+            examples:
+              - {"value":"40,000 households","value_numeric":40000,"unit":"users"}
             $ref: "#/$defs/sizing_tier"
           sam:
+            description: "Estimate the portion of demand reachable under the current service model."
             $ref: "#/$defs/sizing_tier"
           som:
+            description: "Estimate the portion of reachable demand the team could realistically capture."
             $ref: "#/$defs/sizing_tier"
           methodology_notes:
             type: string
             description: "Overall sizing approach (top-down, bottom-up, triangulated)."
           base_year:
+            examples:
+              - "2026"
             type: string
             pattern: "^\\d{4}$"
-            description: "Year the sizing data reflects."
+            description: "Year the sizing data reflects. Choose the year to which the market sizing inputs apply."
           evidence_refs:
+            description: "Link the evidence records a reviewer can consult to check these claims."
             $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       segments:
         type: array
@@ -81,14 +103,17 @@ $defs:
         items:
           $ref: "#/$defs/market_segment"
       key_competitors:
+        description: "Link the alternatives most relevant to buyers within this market."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/competitor_ref"
       actors:
+        description: "Link the roles whose demand or buying decisions shape this market."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       contexts:
+        description: "Link the situations in which buyers recognize or act on this demand."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/context_ref"
@@ -96,7 +121,7 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
-        description: "Environmental forces affecting this market."
+        description: "Environmental forces affecting this market. Link the external developments shaping demand or competition in this market."
       position_maps:
         type: array
         items:
@@ -106,12 +131,13 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
-        description: "Identified opportunities within this market."
+        description: "Identified opportunities within this market. Link the opportunities the team is considering within this market."
       observed_at:
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
         description: "When this market definition was last validated."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       geo_scope:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
@@ -119,26 +145,34 @@ $defs:
           Optional geographic applicability of this market definition. See
           metamodel.geo_scope. Added in v1.4.0.
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   sizing_tier:
+    description: "Express one sizing estimate with its unit, assumptions, and evidentiary basis."
     type: object
     additionalProperties: false
     required: [value]
     properties:
       value:
+        examples:
+          - "40,000 households"
         type: string
         description: "Total size estimate (e.g., '$4.2B', '120M users')."
       value_numeric:
+        examples:
+          - 40000
         type: number
         description: "Machine-readable value in base currency units."
       currency:
         type: string
         description: "ISO 4217 currency code (e.g., 'USD', 'EUR')."
       unit:
+        examples:
+          - "users"
         type: string
         enum: [revenue, users, transactions, units, other]
-        description: "What the value measures."
+        description: "What the value measures. Choose what is counted so reviewers can compare estimates on the same basis."
       methodology:
         type: string
         description: "How this tier was calculated (e.g., 'Gartner 2025 × US SMB share')."
@@ -158,11 +192,16 @@ $defs:
           $ref: "#/$defs/sizing_segment"
         description: "Breakdown of this tier into sub-segments."
       confidence:
+        description: "Choose the evidence level warranted by the data and method behind the estimate."
+        examples:
+          - "weak-signal"
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
 
   sizing_segment:
+    description: "Record a portion of a sizing estimate and explain its relationship to the parent total."
     type: object
     additionalProperties: false
     required: [name, value]
@@ -172,8 +211,9 @@ $defs:
         description: "Segment name (e.g., 'Real estate agents', 'Freelance designers')."
       value:
         type: string
-        description: "Segment size estimate."
+        description: "Segment size estimate. Include a readable unit or range when presenting the segment estimate."
       value_numeric:
+        description: "Provide the amount on the same basis used for the parent estimate."
         type: number
       share_of_parent:
         type: string
@@ -182,63 +222,83 @@ $defs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
-        description: "Actor types in this segment."
+        description: "Actor types in this segment. Link the actor groups counted in this portion of the estimate."
       needs:
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
-        description: "Primary needs of this segment."
+        description: "Primary needs of this segment. Link the needs whose demand is included in this sizing segment."
       growth_rate:
+        description: "State the change over a named period so it can be compared with other estimates."
         type: string
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
 
   market_segment:
+    description: "Describe a recognizable portion of market demand and why it merits separate analysis."
     type: object
     additionalProperties: false
     required: [name]
     properties:
       name:
+        description: "Name the group using a trait that distinguishes it from nearby segments."
+        examples:
+          - "Apartment residents without tool storage"
         type: string
       description:
+        description: "Explain what gives this group a distinct buying situation or demand pattern."
         type: string
       segment_type:
+        description: "Choose the main basis used to draw the segment boundary."
+        examples:
+          - "use-case"
         type: string
         enum: [geographic, vertical, firmographic, behavioral, use-case]
       actors:
+        description: "Link the roles whose needs or decisions characterize this segment."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       needs:
+        description: "Link the needs that explain why the segment merits separate analysis."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
       sizing:
         $ref: "#/$defs/sizing_tier"
-        description: "Optional segment-level sizing."
+        description: "Optional segment-level sizing. Estimate this segment using the units and assumptions appropriate to its scope."
       growth_rate:
+        description: "State how fast demand is changing and over what period."
         type: string
       penetration:
         type: string
         description: "Current market penetration for this segment (e.g., '8% adoption')."
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   market_force:
+    description: "Describe an external change and trace its effect on the market."
     type: object
     additionalProperties: false
     required: [id, name, force_type, direction]
     properties:
       id:
+        description: "Keep this identifier stable as observations about the force accumulate."
         $ref: "../metamodel.schema.yaml#/$defs/market_force_ref"
       name:
         type: string
         description: "Force name (e.g., 'AI adoption in SMB operations')."
       description:
+        description: "Explain how the development affects buyers, sellers, or the conditions of competition."
         type: string
       force_type:
+        examples:
+          - "behavioral"
         type: string
         enum:
           - technological
@@ -251,13 +311,17 @@ $defs:
           - behavioral
         description: "Category of force. Aligns with PESTEL + industry/behavioral."
       direction:
+        examples:
+          - "accelerating"
         type: string
         enum: [emerging, accelerating, stable, decelerating, reversing]
-        description: "Current trajectory of this force."
+        description: "Current trajectory of this force. Classify how the force is changing relative to previous observations."
       impact:
         $ref: "../metamodel.schema.yaml#/$defs/priority"
         description: "Assessed impact level (reuses priority enum: critical/high/medium/low)."
       time_horizon:
+        examples:
+          - "near-term"
         type: string
         enum: [immediate, near-term, medium-term, long-term]
         description: >
@@ -274,10 +338,13 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: "Actors most impacted by this force."
       affected_markets:
+        description: "Link the markets in which the force has a plausible effect."
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/market_ref"
       creates_opportunities:
+        examples:
+          - ["OPP006"]
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/opportunity_ref"
@@ -288,11 +355,14 @@ $defs:
           type: string
         description: "Threat descriptions created by this force."
       observed_at:
+        description: "Date the observation so later reviewers can reassess its relevance."
         type: string
         pattern: "^\\d{4}-\\d{2}-\\d{2}$"
       confidence:
+        description: "Classify the evidence supporting the force and its projected effect."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       evidence_refs:
+        description: "Link the evidence records a reviewer can consult to check these claims."
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       geo_scope:
         $ref: "../metamodel.schema.yaml#/$defs/geo_scope"
@@ -300,4 +370,5 @@ $defs:
           Optional geographic applicability of this market force. See
           metamodel.geo_scope. Added in v1.4.0.
       tags:
+        description: "Add reusable labels that help readers find related records."
         $ref: "../metamodel.schema.yaml#/$defs/tags"

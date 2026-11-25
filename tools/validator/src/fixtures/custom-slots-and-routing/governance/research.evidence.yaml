@@ -1,0 +1,9 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+evidence:
+  - id: EVD001
+    title: Routing evidence record
+    type: research
+    date: "2026-03-01"
+    summary: Grounded routing observation
+    supports: [OPP001, CPR001, MFR001, PRI001, MSG001]

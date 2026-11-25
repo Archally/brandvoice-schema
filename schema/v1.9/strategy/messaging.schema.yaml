@@ -11,26 +11,35 @@ required:
   - version
 properties:
   version:
+    description: Record the version declared for this Brandvoice model file.
     $ref: "../metamodel.schema.yaml#/$defs/semver"
   schemaVersion:
+    description: Identify the Brandvoice schema revision used to author this file.
     $ref: "../metamodel.schema.yaml#/$defs/schema_version"
   scope:
+    description: Set the context prefix that identifies the namespace for this file.
     $ref: "../metamodel.schema.yaml#/$defs/context_prefix"
   tags:
+    description: Add short labels that help contributors group and find related records.
     $ref: "../metamodel.schema.yaml#/$defs/tags"
   journey_stages:
+    description: >-
+      Define meaningful points in the progression from discovery to continued use.
     type: array
     items:
       $ref: "#/$defs/journey_stage"
   actions:
+    description: List observable behaviors that communications are intended to prompt.
     type: array
     items:
       $ref: "#/$defs/action"
   outcomes:
+    description: Record changes that can be observed after the intended behaviors occur.
     type: array
     items:
       $ref: "#/$defs/outcome"
   proof_points:
+    description: Collect reusable support for claims made across messages and channels.
     type: array
     items:
       $ref: "#/$defs/proof_point"
@@ -43,73 +52,136 @@ properties:
     items:
       $ref: "#/$defs/message_house"
   messages:
+    examples:
+      - - id: MSG001
+          title: Open repair shifts
+          core_statement: Check open repair shifts and confirm one from the same roster.
+          intended_actions:
+            - ACN001
+          expected_outcomes:
+            - OUT001
+    description: >-
+      Store reusable statements shaped for specific audiences, situations, and actions.
     type: array
     items:
       $ref: "#/$defs/message"
 
 $defs:
   journey_stage:
+    description: >-
+      Define a point in the journey by what the audience is trying to accomplish.
     type: object
     additionalProperties: false
     required: [id, name]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
       name:
+        description: Use a stage label that campaign authors can recognize and reuse.
         type: string
       intent:
+        description: >-
+          Describe what the audience wants to learn, decide, or do at this point.
+        examples:
+          - "Check whether volunteers can confirm shifts without creating an account."
         type: string
       universal_phase:
+        description: >-
+          Map the local stage to a shared phase for cross-journey comparisons.
         $ref: "../metamodel.schema.yaml#/$defs/universal_phase"
       order:
+        description: >-
+          Set the stage sequence when presenting this journey as an ordered
+          progression.
+        examples:
+          - 2
         type: integer
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   action:
+    description: >-
+      Describe an observable step a communication asks someone to take in context.
     type: object
     additionalProperties: false
     required: [id, name]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/action_ref"
       name:
+        description: Name the behavior with a verb that makes completion recognizable.
+        examples:
+          - "Confirm a repair shift"
         type: string
       action_type:
+        description: >-
+          Classify the behavior for comparison across channels and journey stages.
+        examples:
+          - "custom"
         type: string
         enum: [discover, click, read, subscribe, request-demo, trial, purchase, refer, retain, custom]
       actor:
+        description: Link the participant expected to perform this behavior.
         $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       stage:
         $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
         description: "Journey stage this action belongs to."
       channel:
+        description: Identify where the audience is expected to complete this action.
         $ref: "../metamodel.schema.yaml#/$defs/channel_ref"
       cta:
+        examples:
+          - "Confirm my Saturday shift"
         type: string
         description: "Call-to-action text or template."
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   outcome:
+    description: >-
+      Describe a desired change and connect it to signals that show whether it
+      happened.
     type: object
     additionalProperties: false
     required: [id, name]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
       name:
+        description: >-
+          Name the observed or desired change so it is recognizable in reviews.
         type: string
       description:
+        description: >-
+          Explain why this change matters in its business or audience context.
         type: string
       statement:
+        examples:
+          - "More repair stations have confirmed coverage by Friday at noon."
         type: string
         description: "Formal outcome statement for measurement context."
       success_signal:
+        description: Describe the observable event or change that indicates progress.
+        examples:
+          - "The roster shows a confirmed volunteer for each open station."
         type: string
       target:
+        examples:
+          - "90% of stations confirmed by Friday at noon"
         type: string
         description: "Quantitative target for this outcome."
       measured_by:
@@ -123,43 +195,73 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/metric_ref"
         description: "Additional related metrics (may overlap with measured_by)."
       linked_kpis:
+        description: >-
+          Link the performance targets used to assess progress toward this change.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/kpi_ref"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   proof_point:
+    description: >-
+      Pair a claim with its supporting material so writers can cite it responsibly.
     type: object
     additionalProperties: false
     required: [id, claim, evidence]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
       claim:
+        description: State the specific assertion that the proof needs to support.
+        examples:
+          - "Coordinators can see unfilled repair stations without reading a chat thread."
         type: string
       evidence:
+        description: Summarize what the material actually shows about the claim.
+        examples:
+          - "In a task walkthrough, coordinators identified every unfilled station from the roster view."
         type: string
       source:
+        examples:
+          - "Roster usability walkthrough with volunteer coordinators"
         type: string
         description: "Source of proof (case study, benchmark, research, testimonial)."
       evidence_level:
+        description: Record how strongly the available evidence supports this assertion.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_level"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   message_house:
+    description: >-
+      Organize a unifying claim, supporting arguments, and proof for a specific
+      audience.
     type: object
     additionalProperties: false
     required: [id, name, roof_claim, pillars]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
       name:
+        description: >-
+          Name the architecture so contributors can find the right claim hierarchy.
         type: string
       brand_ref:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
@@ -175,6 +277,8 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
         description: "Primitive-aligned actor targets for this architecture."
       roof_claim:
+        examples:
+          - "Keep every repair station staffed with one shared roster."
         type: string
         description: >
           The umbrella statement every pillar reinforces. Rationale: gives
@@ -183,29 +287,47 @@ $defs:
         type: string
         description: "Optional mission, purpose, or belief statement that grounds the house."
       positioning_refs:
+        description: >-
+          Link the positioning choices that the house turns into communication.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/position_ref"
       pillars:
+        description: >-
+          Organize the supporting arguments that make the roof claim persuasive.
         type: array
         minItems: 1
         items:
           $ref: "#/$defs/message_pillar"
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       status:
+        description: >-
+          Record the lifecycle state that governs how contributors should use this
+          entry.
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   message_pillar:
+    description: >-
+      Define one argument that supports the roof claim and can be substantiated.
     type: object
     additionalProperties: false
     required: [id, title, summary]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/message_pillar_ref"
       title:
+        examples:
+          - "Make staffing gaps visible"
+        description: Give the argument a concise label for use in briefs.
         type: string
       summary:
         type: string
@@ -221,16 +343,25 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
         description: "Proof points substantiating this pillar."
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"
 
   message:
+    description: >-
+      Capture reusable copy with its audience, purpose, intended behavior, and
+      supporting proof.
     type: object
     additionalProperties: false
     required: [id, title, core_statement]
     properties:
       id:
+        description: >-
+          Assign a stable reference so other model records can link to this entry.
         $ref: "../metamodel.schema.yaml#/$defs/message_ref"
       title:
+        description: >-
+          Give the message a working label that helps contributors recognize it.
         type: string
       brand_ref:
         $ref: "../metamodel.schema.yaml#/$defs/brand_ref"
@@ -241,49 +372,78 @@ $defs:
           Optional link to a specific brand narrative script (e.g. SB7 row) when the brand has
           multiple scripts. Rationale: disambiguates message house lines per audience story.
       audience:
+        description: Link the audience segment for which this wording was developed.
         $ref: "../metamodel.schema.yaml#/$defs/audience_ref"
       actor:
+        description: >-
+          Link the participant whose situation or behavior this message addresses.
         $ref: "../metamodel.schema.yaml#/$defs/actor_ref"
       needs:
+        description: Link the needs that make this message relevant to its recipient.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/need_ref"
       offering:
+        description: Identify the offering this communication concerns or promotes.
         $ref: "../metamodel.schema.yaml#/$defs/offering_ref"
       journey_stages:
+        description: >-
+          Identify the stages when the audience is ready to hear this message.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/journey_stage_ref"
       intended_actions:
+        description: Link the behaviors this communication should prompt or support.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/action_ref"
       expected_outcomes:
+        description: Link the changes expected when people act on the message.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/outcome_ref"
       context_refs:
+        description: Link the situations in which the message is relevant to recipients.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/context_ref"
       core_statement:
+        description: >-
+          Write the central idea in language the intended audience can understand.
+        examples:
+          - "Check open repair shifts and confirm one from the same roster."
         type: string
       supporting_points:
+        description: >-
+          Add the benefits or reasons that make the central statement persuasive.
+        examples:
+          - - See unfilled stations at a glance.
+            - Volunteers can confirm from the invitation.
         type: array
         items:
           type: string
       framework_pattern:
+        description: >-
+          Choose a structure that sets the order and role of message elements.
+        examples:
+          - "pas"
         type: string
         enum: [message-house, sb7, aida, pas, bab, stdc, custom]
       pattern_blocks:
+        examples:
+          - problem: Open shifts get buried in chat.
+            agitation: A missing volunteer can leave a station closed.
+            solution: See and share open shifts from one roster.
         type: object
         additionalProperties: true
         description: "Optional framework-specific fields."
       tone:
+        description: Link the writing profiles that govern this message's delivery.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/tone_ref"
       proof_points:
+        description: Link the proof writers can draw on when using this message.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/proof_ref"
@@ -293,18 +453,29 @@ $defs:
           $ref: "../metamodel.schema.yaml#/$defs/message_house_ref"
         description: "Message houses this message derives from."
       evidence_refs:
+        description: >-
+          Link source records that support the claims or choices captured here.
         $ref: "../metamodel.schema.yaml#/$defs/evidence_refs"
       linked_values:
+        description: Link the value propositions that this communication expresses.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/value_ref"
       linked_positioning:
+        description: Link the positioning choices this message is meant to reinforce.
         type: array
         items:
           $ref: "../metamodel.schema.yaml#/$defs/position_ref"
       status:
+        description: >-
+          Record the lifecycle state that governs how contributors should use this
+          entry.
         $ref: "../metamodel.schema.yaml#/$defs/lifecycle_status"
       blueprint_links:
+        description: >-
+          Link Blueprint elements that implement or explain this Brandvoice record.
         $ref: "../metamodel.schema.yaml#/$defs/optional_blueprint_links"
       tags:
+        description: >-
+          Add short labels that help contributors group and find related records.
         $ref: "../metamodel.schema.yaml#/$defs/tags"

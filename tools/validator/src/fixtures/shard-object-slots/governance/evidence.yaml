@@ -1,0 +1,19 @@
+version: "1.0.0"
+schemaVersion: "1.9.0"
+evidence:
+  - id: EVD001
+    title: Shard indexing check
+    type: research
+    date: "2026-03-01"
+    summary: Supports all main and shard entities
+    supports:
+      - OPP001
+      - extra.OPP001
+      - PMP001
+      - WSP001
+      - CHN001
+      - regional.CHN001
+      - DEC001
+      - category.DEC001
+      - TST001
+      - pilot.TST001
